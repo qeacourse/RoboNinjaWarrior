@@ -1,0 +1,33 @@
+.ipynb_checkpoints
+*.swp
+.DS_Store
+
+*.mat
+*.zip
+*.csv
+*Companion*.html
+*.html
+
+## source https://github.com/github/gitignore/blob/master/TeX.gitignore
+Icon*
+*.aux
+*.lof
+*.log
+*.lot
+*.fls
+*.out
+*.toc
+*.fmt
+*.fot
+*.cb
+*.cb2
+.*.lb
+
+
+## Build tool auxiliary files:
+*.fdb_latexmk
+*.synctex
+*.synctex(busy)
+*.synctex.gz
+*.synctex.gz(busy)
+*.pdfsync
