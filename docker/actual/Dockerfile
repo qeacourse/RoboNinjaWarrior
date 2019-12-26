@@ -1,4 +1,4 @@
-FROM paulruvolo/qeacourse:simulated
+FROM qeacourse/robodocker:simulated
 MAINTAINER Paul Ruvolo Paul.Ruvolo@olin.edu
 
 ENV DEBIAN_FRONTEND=noninteractive
