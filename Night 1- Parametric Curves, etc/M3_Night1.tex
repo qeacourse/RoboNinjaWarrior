@@ -1,0 +1,283 @@
+\documentclass[M3_Night1_Solutions]{subfiles}
+
+\IfSubStr{\jobname}{\detokenize{Solutions}}{\toggletrue{solutions}}{\togglefalse{solutions}}
+
+\fancypagestyle{firstpage}
+
+{\rhead{Night1 \linebreak \textit{Version: \today}}}
+
+\title{Night 1: Parametric Curves and Motion}
+\author{Quantitative Engineering Analysis}
+\date{Spring 2019}
+
+\begin{document}
+
+\maketitle
+\thispagestyle{firstpage}
+
+\section{Learning Goals}
+By the end of this assignment, you should feel confident with the following:
+\bi
+\item Visualizing parametric curves.
+\item Defining vector functions for a given curve.
+\item Computing relevant unit vectors like tangent, normal, and binormal.
+\item Computing the curvature and torsion of a curve.
+\item Computing the length of a curve.
+\item Interpreting motion in terms of these concepts.
+\ei
+
+\section{Overview and Orientation}
+
+In Module 1 we introduced the concept of parametric curves. We are now going to return to this subject, but in a more general framework using vectors and matrices and concepts from linear algebra.
+
+This assignment draws from material in multivariable and vector calculus, and any textbook in these subjects will have related material. Keywords include {\bf parametric curves},  {\bf curve length}, and {\bf line integral}. Good sources include {\bf Paul's Online Math Notes} - the section on Calculus III. The relevant {\bf Kahn} videos are also useful.
+
+Although you can evaluate the derivatives and integrals in this assignment by hand, you can also use {\bf MATHEMATICA}, and we have provided a starter notebook for this purpose. We also provide a starter MATLAB script to visualize the curve and the relevant unit vectors.
+
+\section{Parametric Curves [2 Hrs]}
+In Module I we considered curves in the plane, represented by either an explicit function, $y = f(x)$ or $x = f(y)$, an implicit function $f(x,y) = 0$, or a set of parametric equations
+\[x = f(u), y = g(u) \]
+where we treat $u$ as a parameter. Each value of $u$ defines a point $(f(u),g(u))$ which we can plot. If we collect all the points defined by $u \in [a,b]$, then we get a parametric curve. In Module 1, we did not limit ourselves to curves in the plane. For example, in 3D we defined
+\[x = f(u), y = g(u), z = h(u) \]
+and the collection of points so defined trace out a curve in 3D.
+
+An alternative to these coordinate definitions involves representing each point with a position vector, $\r(u)$. Since the position vector depends on a single parameter $u$, the end of the position vector traces out a curve in space. If we limit ourselves to 3D, we will usually use the following notation
+\[ \r(u) = x(u) \ihat + y(u) \jhat + z(u) \khat, \; u \in [a,b]\]
+where $\ihat$, $\jhat$, and $\khat$ are the standard Cartesian unit vectors. In a sense the vector function $\r(u)$ lifts the interval $[a,b]$ and deforms it in order to produce a curve in space.
+
+One major advantage of this notation is that we can take derivatives of this vector function with respect to the parameter $u$
+\begin{eqnarray*}
+\r'(u) &=& \frac{d}{du} \left(x(u) \ihat + y(u) \jhat + z(u) \khat \right), \\
+&=& x'(u) \ihat + y'(u) \jhat + z'(u) \khat,
+\end{eqnarray*}
+since the Cartesian unit vectors are constant. We can interpret the derivative as follows: for any given value of $u$ this vector is tangent to the parametric curve. At times we might be more interested in a unit tangent vector $\That$, which we can obtain by normalizing the derivative
+\[ \That = \frac{\r'}{|\r'|} \]
+Since we can also interpret this vector in turn as a position vector, taking its derivative should produce a vector normal to the tangent vector, which we will define as the normal vector to the original curve. The unit normal vector $\Nhat$ is therefore
+\[ \Nhat = \frac{\That'}{|\That'|} \]
+Finally, we can use both the unit tangent vector and the unit normal vector to define a unit binormal vector $\Bhat$ as follows
+\[\Bhat = \That \times \Nhat \]
+Taken together, these three unit vectors forms an orthonormal basis of 3D space. This is known as the Frenet-Serret frame, and some applications can be found on the Wikipedia page concerning {\tt Frenet-Serret Formulas}.
+
+In addition to these unit vectors, parametric curves in 2D and 3D are often described in terms of their curvature $\kappa$ and torsion $\tau$. The curvature is the normalized rate of change of the unit tangent vector
+\[\kappa = \frac{|\That'|}{|\r'|} \]
+and measures how quickly a curve is changing direction - a large value of the curvature means the curve is changing direction rapidly. The curvature is always non-negative. A straight-line would have zero curvature.
+
+The torsion is the normalized rate of change of the unit binormal vector in the direction opposite to the unit normal
+\[\tau = -\Nhat \cdot \frac{\Bhat'}{|\r'|} \]
+and measures the rate at which a curve is twisting out of the plane - a large value of the torsion means the curve is rapidly twisting out of the plane. A curve in the plane has zero torsion. The torsion can be positive or negative, and convention dictates that a right-handed curve has positive torsion.
+
+Now that we know how to define a general parametric curve, we are ready to compute with it. For example, we could compute the length of the curve. In order to do so, let's lay down a set of points in the $u$-domain separated by $\Delta u$. Each point is mapped to the space curve, and the approximate length of each section of the curve is
+\[ \Delta L = |\mathbf{r}'(u)| \Delta u \]
+Refining this for smaller $\Delta u$ and then summing up the pieces results in the integral
+\[ L = \int_a^b |\mathbf{r}'(u)| \; du \]
+which defines the length of the curve.
+
+A common example is the parametric representation for a circle of radius $R$, centered at the origin in the $xy$-plane. If we define
+\[ \r(u) = R \cos u \; \ihat + R \sin u \; \jhat, \; u \in [0,2 \pi] \]
+then the circle is traced out once in the counterclockwise direction starting at $(R,0)$. In this way, we can identify the parameter $u$ as being the angle from the x-axis to a point on the circle.
+
+Let's compute the various unit tangent vectors, the curvature and the torsion. The first derivative is
+\[\r'(u) = -R \sin u \; \ihat + R \cos u \; \jhat \]
+The unit tangent vector is
+\begin{eqnarray*}
+\That &=& \frac{\r'}{|\r'|}  \\
+&=& - \sin u \; \ihat + \cos u \; \jhat
+\end{eqnarray*}
+and is tangent to the circle. The unit normal vector is
+\begin{eqnarray*}
+\Nhat &=&   \frac{\That'}{|\That'|} \\
+&=& -\cos u \; \ihat - \sin u \; \jhat
+\end{eqnarray*}
+and is normal to the circle, pointing inward. The unit binormal vector is
+\begin{eqnarray*}
+\Bhat &=&  \That \times \Nhat \\
+&=& (- \sin u \; \ihat + \cos u \; \jhat) \times (-\cos u \; \ihat - \sin u \; \jhat) \\
+&=& (\sin^2 u + \cos^2 u) \; \khat \\
+&=& \khat
+\end{eqnarray*}
+and is out of the plane of the circle. The curvature of the circle is
+\begin{eqnarray*}
+ \kappa &=& \frac{|\That'|}{|\r'|} \\
+ &=& \frac{1}{R}
+ \end{eqnarray*}
+and is inversely proportional to the radius of the circle. The torsion of the circle is
+\begin{eqnarray*}
+\tau &=& -\Nhat \cdot \frac{\Bhat'}{|\r'|} \\
+&=& 0
+\end{eqnarray*}
+is zero because the circle is a plane curve and the binormal vector is a constant.
+\
+For the length of the curve, we have
+\[|\r'(u)| =  R \]
+and the integral becomes
+\[L = \int_0^{2 \pi} R du = 2 \pi R \]
+which is the circumference of a circle of radius R as expected!
+
+\newthought{\textbf{Note:}  For the following problems, computing the various vectors by hand can get very messy as the complexity of the function increases. It is recommended you use Mathematica to find the expressions for each vector symbolically, and use Mathematica for visualization.}
+% in the first problem block, make sure to use the series option for enumerate
+\begin{enumerate}[series=exercises, label=\textbf{Exercise} (\arabic*)]
+\item Find a vector function $\r(u)$ in the plane whose trace is a circle centered at $(x_0,y_0)$ with radius $R$. 
+\be
+\item Visualize the circle for different centers and radii. 
+\item What is the unit tangent vector? 
+\item What is the unit normal vector? 
+\item What is the unit binormal vector? 
+\item What is the curvature and torsion? 
+\item Set up the integral to compute the perimeter of the circle, and evaluate it.
+\item Visualize the curve and the unit vectors in MATLAB.
+\ee
+\begin{quote}
+This is an introductory question designed to get you comfortable building a vector function. We already examined the vector function for a circle centered at the origin, so modifying it for a circle centered somewhere else should not be too complicated. The various vectors should be straightforward, the curvature and torsion shouldn't depend on where the circle is centered, and you should know what the length of the curve is going to be.
+\end{quote}
+
+\item Find a vector function $\r(u)$ in the plane whose trace is an ellipse centered at $(x_0,y_0)$ with semi-major axis $a$, and semi-minor axis $b$, $b<a$. 
+\be 
+\item Visualize the ellipse for different centers and semi-major and semi-minor axes. 
+\item What is the unit tangent vector? 
+\item What is the unit normal vector? 
+\item What is the unit binormal vector? 
+\item What is the curvature and torsion? 
+\item Set up the integral to compute the perimeter of the ellipse, and numerically evaluate it for a specific case of $(x_0,y_0), a, b$.
+\item Visualize the curve and the unit vectors in MATLAB.
+\ee
+\begin{quote}
+This question is designed to extend your ability to define a vector function. You already defined the vector function for a circle, so modifying it for an ellipse should not be too complicated. Although the various vectors are straightforward to define, nothing will really simplify and you will want to visualize your results. Although it is not hard to setup the integral to compute the perimeter of the ellipse you will find that the integral involves elliptic integrals which cannot be evaluated using elementary functions. Check out this page at the \href{http://www.ams.org/notices/201208/rtx120801094p.pdf}{American Mathematical Society} for an interesting review.
+\end{quote}
+
+%\item A generalized cardioid in the plane can be define by the vector function
+%\[ \r(u) = 2a \left((b - \cos u)\cos u + (1-b)\right) \; \ihat + 2a \left(b - \cos u \right)\sin u \; \jhat, \; u \in [0, 2\pi] \]
+%with $a \in [0,1]$, $b \in [0,1]$.
+%\begin{enumerate}
+%\item Visualize this curve for different values of $a$ and $b$.
+%\item What is the unit tangent vector? 
+%\item What is the unit normal vector? 
+%\item What is the unit binormal vector? 
+%\item What is the curvature and torsion? 
+%\item Interpret the variables $a$ and $b$, and the parameter $u$.
+%\item Set up the integral to compute the length of the curve, and evaluate it if possible. Otherwise, numerically evaluate it for a specific case of the variables.
+%\end{enumerate}
+%\begin{quote}
+%Now we are giving you a more complicated vector function, and asking you to visualize it and compute with it, as you change a couple of variables. We will use this vector function again soon, so understanding it well is a good idea.
+%\end{quote}
+
+\item A helix in 3D can be defined by the vector function
+\[ \r(u) = a \cos u \; \ihat + a \sin u \; \jhat + bu \; \khat, a>0, b>0, u \ge 0 \]
+\begin{enumerate}
+\item Visualize this curve for different values of $a$ and $b$. 
+\item What is the unit tangent vector? 
+\item What is the unit normal vector?
+\item What is the unit binormal vector? 
+\item What is the curvature and torsion?
+%\item Interpret the variables $a$ and $b$, and the parameter $u$.
+\item Set up the integral to compute the length of the helix corresponding to 5 complete turns, and evaluate it.
+\item Visualize the curve and the unit vectors in MATLAB.
+\end{enumerate}
+\begin{quote}
+So far we have been limited to the plane, and we need an example in 3D. The helix is about as basic and important as it comes, and shows up in all sorts of places. Visualizing the unit vectors associated with the curve is more challenging because they live in 3D, and we are asking you to define the domain so that the helix completes 5 turns. You should also find that the curvature and torsion of the helix are constant, and indeed any space curve with constant curvature and torsion is an helix. We often define a helix in terms of its radius $a$, and its pitch $2 \pi b$, which is the height of the helix after one complete turn.
+\end{quote}
+\ee
+
+\clearpage
+
+\section{Motion of Bodies [2 Hrs]}
+
+So far we've been talking about the intrinsic geometry of curves. However, there is an intimate connection between the geometry of curves and the motion of bodies.
+
+Assume a body is moving in space and is described by a position vector $\r(t)$ defined in terms of a fixed laboratory frame. In component form we write
+\[\r(t) = x(t) \ihat + y(t) \jhat + z(t) \khat \]
+where $t$ is time. The units of $\r(t)$ are length.
+
+The derivative with respect to time of this position vector defines the velocity of the body
+\[\v(t) = \r'(t) = x'(t) \ihat + y'(t) \jhat + z'(t) \khat \]
+and the second derivative with respect to time of this position vector defines the acceleration of this body
+\[\a(t) = \r''(t) = x''(t) \ihat + y''(t) \jhat + z''(t) \khat \]
+
+It will be instructive now to ask how the velocity vector and acceleration vector are oriented with respect to the path of the body through space. If we treat $t$ as a parameter, and view the motion of the body as a parametric curve, then we can use the machinery of parametric curves to answer this question.
+
+Let's start with the velocity vector. We know from our earlier work that the derivative $\r'(t)$ is tangent to the curve, and it therefore makes sense to express the velocity in terms of the unit tangent vector $\That$
+\[\v(t) = v(t) \That(t) \]
+where $v(t)$ is the linear speed of the body in the tangent direction, and we explicitly note that $\That(t)$ is a function of $t$, i.e. the unit tangent direction changes as we move along the curve.
+
+What about the acceleration $\a(t)$? If we take the derivative of the velocity we see that
+\begin{eqnarray*}
+\a(t) &=& \frac{d}{dt} \left(v(t) \That(t) \right) \\
+&=& \frac{dv}{dt} \That + v \frac{d \That}{dt} \\
+\end{eqnarray*}
+Recall from earlier that the rate of change of the unit tangent vector is related to the unit normal vector
+\[ \frac{d \That}{dt} = |\That'| \Nhat \]
+and the magnitude of the rate of change of the unit tangent vector is related to the curvature
+\[|\That'| = \kappa |\r'| \]
+Since $|\r'| = v$ we have
+\[  \frac{d \That}{dt} = \kappa v \Nhat \]
+so that the acceleration becomes
+\[\a(t) = \frac{dv}{dt} \That + \kappa v^2 \Nhat \]
+Let's pause for a moment to consider this. We have expressed the acceleration of a moving body in terms of the unit tangent vector and the unit normal vector, so we will often talk about the tangential acceleration and normal acceleration of a body. The magnitude of the tangential acceleration is just the rate of change of the linear speed. On the other hand, the magnitude of the normal acceleration is proportional to the square of the linear speed and the curvature of the path along which the body is moving.
+
+Consider the example of a body moving in a circle of radius $R$ at some constant linear speed $v$. What is the position vector for such a body? Well, we know that it should look like a parametric circle, so let's define
+\begin{eqnarray*}
+x &=& R \cos(\omega t) \\
+y &=& R \sin(\omega t)
+\end{eqnarray*}
+where $\omega$ is a variable that we need to define. In vector notation we have
+\[\r(t) = R \cos(\omega t) \ihat + R \sin(\omega t) \jhat \]
+so that the velocity vector is
+\[\v(t) = -R \omega \sin(\omega t) \ihat + R \omega \cos(\omega t) \jhat \]
+which is always tangential to the circle and has magnitude $v$ given by
+\[v = R \omega \]
+so that the velocity can be expressed as
+\[\v(t) = R \omega \That \]
+where the unit tangent vector $\That$ is simply
+\[\That = -\sin(\omega t) \ihat + \cos(\omega t) \jhat \]
+We should now recognize $\omega$ as the angular velocity of the body as it moves in uniform circular motion. The acceleration vector is
+\[\a(t) = -R \omega^2 \cos(\omega t) \ihat - R \omega^2 \sin(\omega t) \jhat \]
+which is always normal to the circle and has magnitude $a$ given by
+\[a = R \omega^2 \]
+so that the acceleration can be expressed as
+\[\a(t) = R \omega^2 \Nhat \]
+where the unit normal vector $\Nhat$ is simply
+\[ \Nhat = -\cos(\omega t) \ihat - \sin(\omega t) \jhat \]
+A body in uniform circular motion has no tangential component of acceleration - it is purely normal. Using the earlier expression for the angular velocity we could just as easily write the normal component of the acceleration as
+\[a_N = \frac{v^2}{R} \]
+which hopefully agrees with some results you saw a long time ago in school. It also connects to our earlier expression since the normal component of acceleration should be $\kappa v^2$, and $\kappa = \frac{1}{R}$ for a circle.
+
+\begin{enumerate}[resume=exercises, label=\textbf{Exercise} (\arabic*)]
+\item Consider a body moving with the following position vector
+\[\r(t) = a \cos(c t) \ihat + b \sin (c t) \jhat \]
+where $a>0$, $b>0$, and $c > 0$. Assume that position is measured in meters and time in seconds.
+\be
+\item Describe the path that the body takes. How long does it take to return to its starting position? How far has it traveled in this time?
+\item Determine the velocity of this moving body. How does the linear speed depend on $a$, $b$, and $c$?
+\item Determine the acceleration of this moving body, and decompose the acceleration into the unit tangent and unit normal directions.
+\item Visualize the motion in MATLAB.
+\ee
+\begin{quote}
+Here we have a body moving on a path that corresponds to a curve that we studied earlier, and so in many ways this is nothing new. However, the motion of a body consists of both the path and "how" it moves along it. Interpreting the velocity and acceleration in terms of the variables $a$, $b$, and $c$ will help you build your understanding of these concepts. I highly recommend that you test your understanding by visualizing the motion in MATLAB last, i.e. build a set of predictions, and then test them via your MATHEMATICA implementation.
+\end{quote}
+
+\item Consider a body moving in 3D with position vector
+\[\r(t) = a \cos(c t) \ihat + a \sin(c t) \jhat + b c t \khat \]
+Assume that the position is measured in meters and time is measured in seconds.
+\be
+\item Describe the path that the body takes. Interpret the variables $a$, $b$, and $c$.
+\item Determine the velocity of this moving body. How does the linear speed depend on $a$, $b$, and $c$?
+\item Determine the acceleration of this moving body, and decompose the acceleration into the unit tangent and unit normal directions.
+\item Visualize the motion in MATLAB.
+\ee
+\begin{quote}
+Here we have a body moving in 3D on a curve that we have seen before. Again, I highly recommend that you test your understanding by visualizing the motion in MATHEMATICA last.
+\end{quote}
+
+%\item Consider a body undergoing non-uniform circular motion with radius $R$ so that it's angular velocity is linearly increasing with time, $\omega = \alpha t$, i.e. the body starts off at rest and speeds up.
+%\be
+%\item Define a position vector for this moving body. How long does the body take to make it's first loop? Second loop?
+%\item Determine the velocity and of this moving body. How does the linear speed depend on $R$ and $\alpha$?
+%\item Determine the acceleration of this moving body, and decompose the acceleration into the unit tangent and unit normal directions. Explain the result.
+%\item Visualize the motion in MATLAB.
+%\ee
+%\begin{quote}
+%You've probably seen and thought about uniform circular motion before. Often it is easier to understand a concept by looking at one just a little more complicated, so here we ask you to consider non-uniform circular motion. Although the path is the same curve, the motion is different. Again, I highly recommend that you test your understanding by visualizing the motion in MATLAB last.
+%\end{quote}
+
+\end{enumerate}
+
+\end{document}
