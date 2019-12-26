@@ -18,6 +18,7 @@ ENV ROS_HOSTNAME=10.0.75.2
 # install ros packages
 RUN apt-get update && apt-get install -y \
     software-properties-common \
+    ros-melodic-pointcloud-to-laserscan \
     wget \
     unzip \ 
     hping3 \
