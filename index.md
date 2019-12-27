@@ -7,24 +7,28 @@ Todo include module overview
 
 ## Overview and Pedagogy of Quantitative Engineering Analysis
 
- <iframe width="560" height="315"
+<p align="center">
+ <iframe width="336" height="189"
 src="https://www.youtube.com/embed/MFL4gd2IMm8" 
 frameborder="0" 
 allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" 
 allowfullscreen></iframe>
-
-## Module Overview
+</p>
 
 ## Robot Platform
 
-![A picture of a Neato robotic vacuum cleaner with a custom remote control interface based on Raspberry Pi](How to/Pictures/neato_overview.jpeg)
+
+<p align="center">
+<img src="How to/Pictures/neato_overview.jpeg" alt="A picture of a Neato robotic vacuum cleaner with a custom remote control interface based on Raspberry Pi" width="70%" height="70%">
+</p>
 
 ### Supporting Documents and Tutorials
 
-* [Meeto your Neato!: Environment Setup and Connecting](How to/Environment Setup and Connecting to the Neatos.pdf) 
+* [Meeto your Neato!: Environment Setup and Connecting](How to/Environment Setup and Connecting to the Neatos.pdf)
+* [Sample Code](Sample code/sample_code.html)
 * For teaching team members: [Platform Conversion Instructions](How to/Platform Conversion Instructions.pdf)
 * For teaching team members: Raspberry Pi Setup (NEED TO CREATE)
-* For teaching team members: Shopping list (NEED TO CREATE)
+* For teaching team members: [Shopping list](How to/shopping_list.html)
 
 ## Intro to Mobile Robotics
 
@@ -35,8 +39,9 @@ allowfullscreen></iframe>
 
 ## Challenge 1: Crossing the Bridge of Doom
 
-![A student taking a cell phone picture of a robot traversing a spiral wooden track called teh Bridge of Doom](website_graphics/bridge_of_death.jpg "A Neato traversing the Bridge of Doom")
-
+<p align="center">
+<img src="website_graphics/bridge_of_death.jpg" alt="A student taking a cell phone picture of a robot traversing a spiral wooden track called The Bridge of Doom" width="70%" height="70%">
+</p>
 
 ### Schedule and Supporting Documents
 
@@ -49,7 +54,7 @@ allowfullscreen></iframe>
 
 ## Challenge 2: Flatland
 
-TODO: are there any pictures of Flatland?
+TODO: write description
 
 ### Schedule and Supporting Documents
 
@@ -66,7 +71,9 @@ In the past we've done a version of this challenge where the Neato uses its acce
 
 ### Challenge 3: The Gauntlet
 
-![alt text](website_graphics/gauntlet.png "Logo Title Text 1")
+<p align="center">
+<img src="website_graphics/gauntlet.png" alt="A Neato robot amidst an obstacle course called The Gauntlet" width="70%" height="70%">
+</p>
 
 ### Schedule and Supporting Documents
 
