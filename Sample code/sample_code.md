@@ -1,5 +1,6 @@
-
-# Sample MATLAB Code for Robo Ninja Warrior
+---
+title: "Sample MATLAB Code for Robo Ninja Warrior"
+---
 
 ## Teleoperation and LIDAR visualization
 

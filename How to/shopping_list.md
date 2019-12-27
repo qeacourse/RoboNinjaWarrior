@@ -1,5 +1,6 @@
-
-# Shopping List for Neato Robot Platform
+---
+title: "Shopping List for Neato Robot Platform"
+---
 
 <p align="center">
 <img src="Pictures/neato_overview.jpeg" alt="A picture of a Neato robotic vacuum cleaner with a custom remote control interface based on Raspberry Pi" width="60%" height="60%">

@@ -1,2 +1,12 @@
-theme: jekyll-theme-minimal
+theme: minimal-mistakes-jekyll
 logo: website_graphics/olinlogo.png
+title: "Robo Ninja Warrior"
+
+defaults:
+  # _pages
+  - scope:
+      path: ""
+      type: pages
+    values:
+      layout: single
+      toc: true
