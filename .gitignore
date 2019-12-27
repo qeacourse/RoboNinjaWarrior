@@ -22,7 +22,9 @@ Icon*
 *.cb
 *.cb2
 .*.lb
-
+*.bbl
+*.dvi
+*.blg
 
 ## Build tool auxiliary files:
 *.fdb_latexmk
