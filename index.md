@@ -1,15 +1,42 @@
-# Integrating Math, Physics, and Engineering: Robo Ninja Warrior
+---
+layout: splash
 
+feature_row:
+  - image_path: https://img.youtube.com/vi/MFL4gd2IMm8/0.jpg
+    alt: "A thumbnail image for a video.  The text QEA Olin College of Engineering appears on a textured blue background"
+    title: "Course Overview"
+    excerpt: "QEA is a highly interdisciplinary, integrated course for teaching technical content."
+    url: "#course-philosophy"
+    btn_label: "Course Philosophy"
+    btn_class: "btn--primary"
+  - image_path: How to/Pictures/neato_overview.jpeg
+    alt: "A picture of a Neato robotic vacuum cleaner with a custom remote control interface based on Raspberry Pi"
+    title: "Robot Platform"
+    excerpt: "We use a customized version of a Neato Robot vacuum cleaner.  We chose this platform due to its low price and powerful sensors."
+    url: "#robot-details"
+    btn_label: "Robot Details"
+    btn_class: "btn--primary"
+  - image_path: website_graphics/bridge_of_death.jpg
+    alt: "A student taking a cell phone picture of a robot traversing a spiral wooden track called The Bridge of Doom"
+    title: "Module Overview"
+    excerpt: "The module centers around 3 robotics challenges that each teach core math, physics, and engineering content."
+    url: "#module-details"
+    btn_label: "Module Details"
+    btn_class: "btn--primary"
+---
+# Robo Ninja Warrior: Integrating Math, Physics, and Engineering
 *Inspired to learn more?  E-mail <a href="mailto:Collaboratory@olin.edu">Collaboratory@olin.edu</a>.*
 
 The Robo Ninja Warrior teaches a wide array of math, physics, and engineering content through fun, hands-on, and customizable challenges. The module includes three challenges that each provide scaffolded opportunities to master new theory and then immediately apply it to programming a mobile robot to accomplish a task.
 
 The module utilizes a low-cost robotic platform that supports powerful sensors, including LIDAR, bump detectors, wheel encoders, and accelerometers.  The robot platform can be put together for around $350, and allows students to program it remotely on their own laptops using MATLAB's ROS toolbox.  This structure leads to an easy to manage classroom that can scale to many robots and many students.
 
+{% include feature_row %}
 
-## Overview and Pedagogy of Quantitative Engineering Analysis
 
-QEA is an interdisicplinary, integrated, course for students to become proficient in learning new technical content and successfully completing projects that have a significant analytical component to them.  This video summarizes some of the rationale and specific pedagogy behind the course.
+## <a name="course-philosophy"/> Course Philosophy
+
+Quantitative Engineering Analysis (QEA) is an interdisciplinary, integrated, course for students to become proficient in learning new technical content and successfully completing projects that have a significant analytical component to them.  This video summarizes some of the rationale and specific pedagogy behind the course.
 
 <p align="center">
  <iframe width="448" height="252"
@@ -21,15 +48,14 @@ allowfullscreen></iframe>
 
 This module is part of a 12-credit, two course sequence at Olin College called Quantitative Engineering Analysis.  This module sits within [the first, 8-credit part of the course](https://olin.smartcatalogiq.com/en/2019-20/Catalog/Courses-Credits-Hours/ENGR-Engineering/2000/CIE2019A).
 
-## Robot Platform
 
-We use a customized version of a Neato Robot vacuum cleaner.  We chose this platform due to its low price and powerful sensors.  All information you need to build your own customized Neato is included below.
+## <a name="robot-details"/> Robot Details
+
+All information you need to build your own customized Neato is included below.
 
 <p align="center">
 <img src="How to/Pictures/neato_overview.jpeg" alt="A picture of a Neato robotic vacuum cleaner with a custom remote control interface based on Raspberry Pi" width="70%" height="70%">
 </p>
-
-### Supporting Documents and Tutorials
 
 * [Meeto your Neato!: Environment Setup and Connecting](How to/Environment Setup and Connecting to the Neatos.pdf)
 * [Sample Code](Sample code/sample_code.html)
@@ -37,7 +63,8 @@ We use a customized version of a Neato Robot vacuum cleaner.  We chose this plat
 * For teaching team members: Raspberry Pi Setup (NEED TO CREATE)
 * For teaching team members: [Shopping list](How to/shopping_list.html)
 
-## Intro to Mobile Robotics
+
+## <a name="module-details"/> Intro to Mobile Robotics
 
 The opening day of the course includes a number of activities to introduce fundamental concepts in mobile robotics.  The work is largely conceptual and lays the groundwork for the quantitative work to come.
 
