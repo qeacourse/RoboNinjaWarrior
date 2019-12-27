@@ -26,6 +26,8 @@ Icon*
 *.dvi
 *.blg
 
+_site
+
 ## Build tool auxiliary files:
 *.fdb_latexmk
 *.synctex
