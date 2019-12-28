@@ -1,6 +1,7 @@
 remote_theme:  mmistakes/minimal-mistakes
 logo: "/website_graphics/olinlogo.png"
 title: "Robo Ninja Warrior"
+baseurl: "/"
 
 plugins:
   - jekyll-paginate
