@@ -23,6 +23,49 @@ feature_row:
     url: "#module-details"
     btn_label: "Module Details"
     btn_class: "btn--primary"
+
+feature_row_robot:
+  - image_path: How to/Pictures/neato_overview.jpeg
+    alt: "A picture of a Neato robotic vacuum cleaner with a custom remote control interface based on Raspberry Pi"
+    excerpt: "The documentation below will allow you and your students to connect to the either the physical Neato robot or a simulator.  If you'd like to put your own physical robot, the information you need to build your own customized Neato is included as well.
+
+    ### Student Facing Documentation\n
+    * [Meeto your Neato!: Environment Setup and Connecting](How to/Environment Setup and Connecting to the Neatos.pdf)\n
+    * [Sample Code](Sample code/sample_code.html)\n
+
+    ### Teaching Team Documentation \n
+    * [Platform Conversion Instructions](How to/Platform Conversion Instructions.pdf)\n
+    * Raspberry Pi Setup (NEED TO CREATE)\n
+    * [Shopping list](How to/shopping_list.html)
+"
+
+feature_row_bod:
+  - image_path: website_graphics/bridge_of_death.jpg
+    alt: "A student taking a cell phone picture of a robot traversing a spiral wooden track called The Bridge of Doom"
+    excerpt: "
+    The Bridge of Doom challenge involves programming the robot to successfully drive over a harrowing bridge.  The bridge is made less harrowing since students have a parametric equation defining its shape.  Students learn about robot kinematics, curves and motion, and using distance sensors to correct for errors.
+
+    ### Schedule and Supporting Documents
+
+    * [Night 1: Parametric Curves and Motion](Night 1- Parametric Curves, etc/M3_Night1.pdf) <!-- solutions seem to be missing [(Night 1 with Solutions)](Night 1- Parametric Curves, etc/M3_Night1_Solutions.pdf) -->\n
+    * [Day 2: Curves, Motion, and Neato](Day 2- Curves, Motion, and Neato/M3_Day2.pdf)\n
+    * [Night 2: Angular Velocity, NEATOs, and Partial\n Derivatives](Night 2- Robot Velocities, Partial Derivs, Chain Rule/M3_Night2.pdf) ([night 2 with solutions](Night 2- Robot Velocities, Partial Derivs, Chain Rule/M3_Night2_Solutions.pdf))\n
+    * [Day 3: Encoders, Mapping, and Intro to the Bridge of Doom](Day 3- Encoders and Mapping/M3_Day3.pdf)\n
+    * [Night 3: Crossing the Bridge of Doom](Night 3- Bridge of Doom/M3_Night3.pdf)"
+
+feature_row_gauntlet:
+  - image_path: website_graphics/gauntlet.png
+    alt: "A Neato robot amidst an obstacle course called The Gauntlet"
+    excerpt: "The Gauntlet is an obstacle course with four difficulty settings (students can choose which one to complete).  The challenge teaches robust optimization techniques, line and curve fitting, frames of reference, potential fields, and basic path planning.
+
+    ### Schedule and Supporting Documents
+
+    * [Night 5: Polar LIDAR Express](Night 5- LIDAR/M3_Night5.pdf) ([night 5 with solutions](Night 5- LIDAR/M3_Night5_Solutions.pdf))\n
+    * [Day 6: The RANSAC Algorithm and Finding Lines](Day 6- RANSAC/M3_Day6.pdf)\n
+    * [Night 6: Frames of Reference and LIDAR](Night 6- Frames of Reference and LIDAR/M3_Night6.pdf) ([night 6 with solutions](Night 6- Frames of Reference and LIDAR/M3_Night6_Solutions.pdf))\n
+    * [Day 7: Potential Fields](Day 7- Potentials and Gauntlet intro/M3_Day7.pdf)\n
+    * [Night 7, Day 8, Night 8: The Gauntlet](Night 7 and 8- Gauntlet Challenge/M3_Night7_and_8.pdf)\n
+    * [Day 9: Module and QEA Synthesis and Reflection](Day 9 - Final Event/FinalEvent.pdf)"
 ---
 # Robo Ninja Warrior: Integrating Math, Physics, and Engineering
 *Inspired to learn more?  E-mail <a href="mailto:Collaboratory@olin.edu">Collaboratory@olin.edu</a>.*
@@ -39,11 +82,7 @@ The module utilizes a low-cost robotic platform that supports powerful sensors, 
 Quantitative Engineering Analysis (QEA) is an interdisciplinary, integrated, course for students to become proficient in learning new technical content and successfully completing projects that have a significant analytical component to them.  This video summarizes some of the rationale and specific pedagogy behind the course.
 
 <p align="center">
- <iframe width="448" height="252"
-src="https://www.youtube.com/embed/MFL4gd2IMm8"
-frameborder="0"
-allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-allowfullscreen></iframe>
+ <iframe src="https://www.youtube.com/embed/MFL4gd2IMm8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </p>
 
 This module is part of a 12-credit, two course sequence at Olin College called Quantitative Engineering Analysis.  This module sits within [the first, 8-credit part of the course](https://olin.smartcatalogiq.com/en/2019-20/Catalog/Courses-Credits-Hours/ENGR-Engineering/2000/CIE2019A).
@@ -51,18 +90,7 @@ This module is part of a 12-credit, two course sequence at Olin College called Q
 
 ## <a name="robot-details"/> Robot Details
 
-All information you need to build your own customized Neato is included below.
-
-<p align="center">
-<img src="How to/Pictures/neato_overview.jpeg" alt="A picture of a Neato robotic vacuum cleaner with a custom remote control interface based on Raspberry Pi" width="70%" height="70%">
-</p>
-
-* [Meeto your Neato!: Environment Setup and Connecting](How to/Environment Setup and Connecting to the Neatos.pdf)
-* [Sample Code](Sample code/sample_code.html)
-* For teaching team members: [Platform Conversion Instructions](How to/Platform Conversion Instructions.pdf)
-* For teaching team members: Raspberry Pi Setup (NEED TO CREATE)
-* For teaching team members: [Shopping list](How to/shopping_list.html)
-
+{% include feature_row id="feature_row_robot" type="left" %}
 
 ## <a name="module-details"/> Intro to Mobile Robotics
 
@@ -74,20 +102,7 @@ The opening day of the course includes a number of activities to introduce funda
 
 ## Challenge 1: Crossing the Bridge of Doom
 
-The Bridge of Doom challenge involves programming the robot to successfully drive over a harrowing bridge.  The bridge is made less harrowing since students have a parametric equation defining its shape.  Students learn about robot kinematics, curves and motion, and using distance sensors to correct for errors.
-
-<p align="center">
-<img src="website_graphics/bridge_of_death.jpg" alt="A student taking a cell phone picture of a robot traversing a spiral wooden track called The Bridge of Doom" width="70%" height="70%">
-</p>
-
-### Schedule and Supporting Documents
-
-
-* [Night 1: Parametric Curves and Motion](Night 1- Parametric Curves, etc/M3_Night1.pdf) <!-- solutions seem to be missing [(Night 1 with Solutions)](Night 1- Parametric Curves, etc/M3_Night1_Solutions.pdf) -->
-* [Day 2: Curves, Motion, and Neato](Day 2- Curves, Motion, and Neato/M3_Day2.pdf)
-* [Night 2: Angular Velocity, NEATOs, and Partial Derivatives](Night 2- Robot Velocities, Partial Derivs, Chain Rule/M3_Night2.pdf) ([night 2 with solutions](Night 2- Robot Velocities, Partial Derivs, Chain Rule/M3_Night2_Solutions.pdf))
-* [Day 3: Encoders, Mapping, and Intro to the Bridge of Doom](Day 3- Encoders and Mapping/M3_Day3.pdf)
-* [Night 3: Crossing the Bridge of Doom](Night 3- Bridge of Doom/M3_Night3.pdf)
+{% include feature_row id="feature_row_bod" type="left" %}
 
 ## Challenge 2: Flatland
 
@@ -106,22 +121,9 @@ In the past we've done a version of this challenge where the Neato uses its acce
 * [Link to an image of students watching their robot ascent the mountain](website_graphics/annie_nina_mount_doom.jpg)
 * [Link to video of a student's robot ascending the mountain](https://www.youtube.com/watch?v=t7Caw4KeEV4)
 
-### Challenge 3: The Gauntlet
+## Challenge 3: The Gauntlet
 
-The Gauntlet is an obstacle course with four difficulty settings (students can choose which one to attack).  The challenge teaches robust optimization techniques, line and curve fitting, frames of reference, potential fields, and basic path planning.
-
-<p align="center">
-<img src="website_graphics/gauntlet.png" alt="A Neato robot amidst an obstacle course called The Gauntlet" width="70%" height="70%">
-</p>
-
-### Schedule and Supporting Documents
-
-* [Night 5: Polar LIDAR Express](Night 5- LIDAR/M3_Night5.pdf) ([night 5 with solutions](Night 5- LIDAR/M3_Night5_Solutions.pdf))
-* [Day 6: The RANSAC Algorithm and Finding Lines](Day 6- RANSAC/M3_Day6.pdf)
-* [Night 6: Frames of Reference and LIDAR](Night 6- Frames of Reference and LIDAR/M3_Night6.pdf) ([night 6 with solutions](Night 6- Frames of Reference and LIDAR/M3_Night6_Solutions.pdf))
-* [Day 7: Potential Fields](Day 7- Potentials and Gauntlet intro/M3_Day7.pdf)
-* [Night 7, Day 8, Night 8: The Gauntlet](Night 7 and 8- Gauntlet Challenge/M3_Night7_and_8.pdf)
-* [Day 9: Module and QEA Synthesis and Reflection](Day 9 - Final Event/FinalEvent.pdf)
+{% include feature_row id="feature_row_gauntlet" type="left" %}
 
 ## Conclusion and Learning More
 
