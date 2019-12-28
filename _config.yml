@@ -1,4 +1,4 @@
-theme: minimal-mistakes-jekyll
+remote_theme:  mmistakes/minimal-mistakes
 logo: website_graphics/olinlogo.png
 title: "Robo Ninja Warrior"
 
