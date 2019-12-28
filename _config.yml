@@ -2,6 +2,15 @@ remote_theme:  mmistakes/minimal-mistakes
 logo: website_graphics/olinlogo.png
 title: "Robo Ninja Warrior"
 
+plugins:
+  - jekyll-paginate
+  - jekyll-sitemap
+  - jekyll-gist
+  - jekyll-feed
+  - jemoji
+  - jekyll-include-cache
+
+
 defaults:
   # _pages
   - scope:
