@@ -1,7 +1,7 @@
 remote_theme:  mmistakes/minimal-mistakes
-logo: "/website_graphics/olinlogo.png"
+logo: "https://qeacourse.github.io/RoboNinjaWarrior/website_graphics/olinlogo.png"
 title: "Robo Ninja Warrior"
-baseurl: "/"
+repository: qeacourse/RoboNinjaWarrior
 
 plugins:
   - jekyll-paginate
