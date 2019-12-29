@@ -1,5 +1,6 @@
 ---
 layout: splash
+title: "Robo Ninja Warrior: Integrating Math, Science, and Engineering"
 header:
   overlay_color: "#000"
   overlay_filter: "0.4"
