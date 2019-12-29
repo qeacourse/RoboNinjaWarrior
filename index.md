@@ -71,10 +71,10 @@ feature_row_gauntlet:
     * [Day 9: Module and QEA Synthesis and Reflection](Day 9 - Final Event/FinalEvent.pdf)"
 ---
 
-The Robo Ninja Warrior module teaches a wide array of math, physics, and engineering content through fun, hands-on, and customizable challenges. The module includes three challenges that each provide scaffolded opportunities to master new theory and then immediately apply it to programming a mobile robot to accomplish a task.  Robo Ninja Warrior is part of a 12-credit, two course sequence at Olin College called Quantitative Engineering Analysis.  This module sits within [the first, 8-credit part of the course](https://olin.smartcatalogiq.com/en/2019-20/Catalog/Courses-Credits-Hours/ENGR-Engineering/2000/CIE2019A).
+The Robo Ninja Warrior module teaches math, physics, and engineering content through fun, hands-on, and customizable challenges. The module includes three challenges that provide scaffolded opportunities to master new theory and apply it to programming a mobile robot to accomplish a task.  Robo Ninja Warrior is part of a 12-credit, two course sequence at Olin College called Quantitative Engineering Analysis.  This module sits within [the first, 8-credit part of the course](https://olin.smartcatalogiq.com/en/2019-20/Catalog/Courses-Credits-Hours/ENGR-Engineering/2000/CIE2019A).
 
 
-We uses a low-cost robotic platform with powerful sensors, including LIDAR, bump detectors, wheel encoders, and an accelerometer.  The robot can be put together for around $350, and allows students to program it remotely on their own laptops using MATLAB's ROS toolbox.  This structure leads to an easy to manage classroom experience that can scale to many robots and many students.
+We uses a low-cost robotic platform with powerful sensors, including LIDAR, bump detectors, wheel encoders, and an accelerometer.  The robot can be put together for $350 and allows students to program it remotely on their own laptops using MATLAB's ROS toolbox.  This structure leads to an easy to manage classroom that can scale to many robots and many students.
 
 
 {% include feature_row %}
