@@ -1,25 +1,28 @@
 ---
 layout: splash
-
+header:
+  overlay_color: "#000"
+  overlay_filter: "0.4"
+  overlay_image: website_graphics/robo_splash.jpg
 feature_row:
   - image_path: https://img.youtube.com/vi/MFL4gd2IMm8/0.jpg
     alt: "A thumbnail image for a video.  The text QEA Olin College of Engineering appears on a textured blue background"
-    title: "Course Overview"
+    title: "Key Features of QEA"
     excerpt: "QEA is a highly interdisciplinary, integrated course for teaching technical content."
     url: "#course-philosophy"
-    btn_label: "Course Philosophy"
+    btn_label: "More details about QEA"
     btn_class: "btn--primary"
   - image_path: How to/Pictures/neato_overview.jpeg
     alt: "A picture of a Neato robotic vacuum cleaner with a custom remote control interface based on Raspberry Pi"
     title: "Robot Platform"
-    excerpt: "We use a customized version of a Neato Robot vacuum cleaner.  We chose this platform due to its low price and powerful sensors."
+    excerpt: "We chose to customized a Neato Robot vacuum for its low price and powerful sensors."
     url: "#robot-details"
     btn_label: "Robot Details"
     btn_class: "btn--primary"
   - image_path: website_graphics/bridge_of_death.jpg
     alt: "A student taking a cell phone picture of a robot traversing a spiral wooden track called The Bridge of Doom"
     title: "Module Overview"
-    excerpt: "The module centers around 3 robotics challenges that each teach core math, physics, and engineering content."
+    excerpt: "The module uses 3 robotics challenges to teach math, physics, and engineering content."
     url: "#module-details"
     btn_label: "Module Details"
     btn_class: "btn--primary"
@@ -27,7 +30,7 @@ feature_row:
 feature_row_robot:
   - image_path: How to/Pictures/neato_overview.jpeg
     alt: "A picture of a Neato robotic vacuum cleaner with a custom remote control interface based on Raspberry Pi"
-    excerpt: "The documentation below will allow you and your students to connect to the either the physical Neato robot or a simulator.  If you'd like to put your own physical robot, the information you need to build your own customized Neato is included as well.
+    excerpt: "The documentation describes both how to connect to the the physical robot or a simulator and how to build your own customized Neato.
 
     ### Student Facing Documentation\n
     * [Meeto your Neato!: Environment Setup and Connecting](How to/Environment Setup and Connecting to the Neatos.pdf)\n
@@ -49,7 +52,7 @@ feature_row_bod:
 
     * [Night 1: Parametric Curves and Motion](Night 1- Parametric Curves, etc/M3_Night1.pdf) <!-- solutions seem to be missing [(Night 1 with Solutions)](Night 1- Parametric Curves, etc/M3_Night1_Solutions.pdf) -->\n
     * [Day 2: Curves, Motion, and Neato](Day 2- Curves, Motion, and Neato/M3_Day2.pdf)\n
-    * [Night 2: Angular Velocity, NEATOs, and Partial\n Derivatives](Night 2- Robot Velocities, Partial Derivs, Chain Rule/M3_Night2.pdf) ([night 2 with solutions](Night 2- Robot Velocities, Partial Derivs, Chain Rule/M3_Night2_Solutions.pdf))\n
+    * [Night 2: Angular Velocity, Neato, and Partial\n Derivatives](Night 2- Robot Velocities, Partial Derivs, Chain Rule/M3_Night2.pdf) ([night 2 with solutions](Night 2- Robot Velocities, Partial Derivs, Chain Rule/M3_Night2_Solutions.pdf))\n
     * [Day 3: Encoders, Mapping, and Intro to the Bridge of Doom](Day 3- Encoders and Mapping/M3_Day3.pdf)\n
     * [Night 3: Crossing the Bridge of Doom](Night 3- Bridge of Doom/M3_Night3.pdf)"
 
@@ -67,17 +70,19 @@ feature_row_gauntlet:
     * [Night 7, Day 8, Night 8: The Gauntlet](Night 7 and 8- Gauntlet Challenge/M3_Night7_and_8.pdf)\n
     * [Day 9: Module and QEA Synthesis and Reflection](Day 9 - Final Event/FinalEvent.pdf)"
 ---
-# Robo Ninja Warrior: Integrating Math, Physics, and Engineering
-*Inspired to learn more?  E-mail <a href="mailto:Collaboratory@olin.edu">Collaboratory@olin.edu</a>.*
 
-The Robo Ninja Warrior teaches a wide array of math, physics, and engineering content through fun, hands-on, and customizable challenges. The module includes three challenges that each provide scaffolded opportunities to master new theory and then immediately apply it to programming a mobile robot to accomplish a task.
+The Robo Ninja Warrior module teaches a wide array of math, physics, and engineering content through fun, hands-on, and customizable challenges. The module includes three challenges that each provide scaffolded opportunities to master new theory and then immediately apply it to programming a mobile robot to accomplish a task.  Robo Ninja Warrior is part of a 12-credit, two course sequence at Olin College called Quantitative Engineering Analysis.  This module sits within [the first, 8-credit part of the course](https://olin.smartcatalogiq.com/en/2019-20/Catalog/Courses-Credits-Hours/ENGR-Engineering/2000/CIE2019A).
 
-The module utilizes a low-cost robotic platform that supports powerful sensors, including LIDAR, bump detectors, wheel encoders, and accelerometers.  The robot platform can be put together for around $350, and allows students to program it remotely on their own laptops using MATLAB's ROS toolbox.  This structure leads to an easy to manage classroom that can scale to many robots and many students.
+
+We uses a low-cost robotic platform with powerful sensors, including LIDAR, bump detectors, wheel encoders, and an accelerometer.  The robot can be put together for around $350, and allows students to program it remotely on their own laptops using MATLAB's ROS toolbox.  This structure leads to an easy to manage classroom experience that can scale to many robots and many students.
+
 
 {% include feature_row %}
 
+*Inspired to learn more?  E-mail <a href="mailto:Collaboratory@olin.edu">Collaboratory@olin.edu</a>.*
 
-## <a name="course-philosophy"/> Course Philosophy
+
+## <a name="course-philosophy"/> QEA in a Nutshell
 
 Quantitative Engineering Analysis (QEA) is an interdisciplinary, integrated, course for students to become proficient in learning new technical content and successfully completing projects that have a significant analytical component to them.  This video summarizes some of the rationale and specific pedagogy behind the course.
 
@@ -85,14 +90,13 @@ Quantitative Engineering Analysis (QEA) is an interdisciplinary, integrated, cou
  <iframe src="https://www.youtube.com/embed/MFL4gd2IMm8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </p>
 
-This module is part of a 12-credit, two course sequence at Olin College called Quantitative Engineering Analysis.  This module sits within [the first, 8-credit part of the course](https://olin.smartcatalogiq.com/en/2019-20/Catalog/Courses-Credits-Hours/ENGR-Engineering/2000/CIE2019A).
-
 
 ## <a name="robot-details"/> Robot Details
 
 {% include feature_row id="feature_row_robot" type="left" %}
 
 ## <a name="module-details"/> Intro to Mobile Robotics
+
 
 The opening day of the course includes a number of activities to introduce fundamental concepts in mobile robotics.  The work is largely conceptual and lays the groundwork for the quantitative work to come.
 
@@ -102,7 +106,7 @@ The opening day of the course includes a number of activities to introduce funda
 
 ## Challenge 1: Crossing the Bridge of Doom
 
-{% include feature_row id="feature_row_bod" type="left" %}
+{% include feature_row id="feature_row_bod" type="right" %}
 
 ## Challenge 2: Flatland
 
@@ -118,8 +122,8 @@ In the Flatland challenge, students program their robot to ascend a virtual moun
 
 In the past we've done a version of this challenge where the Neato uses its accelerometer to implement steepest ascent to navigate to the top of a physical mountain.
 
-* [Link to an image of students watching their robot ascent the mountain](website_graphics/annie_nina_mount_doom.jpg)
-* [Link to video of a student's robot ascending the mountain](https://www.youtube.com/watch?v=t7Caw4KeEV4)
+* [An image of students watching their robot ascent the mountain](website_graphics/annie_nina_mount_doom.jpg)
+* [A video of a student's robot ascending the mountain](https://www.youtube.com/watch?v=t7Caw4KeEV4)
 
 ## Challenge 3: The Gauntlet
 
@@ -131,4 +135,4 @@ The Robo Ninja Warrior module serves as a point of integration between many of t
 
 ### Other Documents on QEA
 
-* Siddhartan Govindasamy, Rebecca J. Christianson, John Geddes, Christopher Lee, Samantha Michalka, Paul Ruvolo, Mark H. Somerville, Alexandra Coso Strong: [A Contextualized, Experiential Learning Approach to Quantitative Engineering Analysis](https://ieeexplore.ieee.org/document/8658526), FIE 2018.
+* S. Govindasamy, R.J. Christianson, J. Geddes, C. Lee, S. Michalka, P. Ruvolo, M.H. Somerville, A.C. Strong: [A Contextualized, Experiential Learning Approach to Quantitative Engineering Analysis](https://ieeexplore.ieee.org/document/8658526), FIE 2018.
