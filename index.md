@@ -35,12 +35,12 @@ feature_row_robot:
 
     ### Student Facing Documentation\n
     * [Meeto your Neato!: Environment Setup and Connecting](How to/Environment Setup and Connecting to the Neatos.pdf)\n
-    * [Sample Code](Sample code/sample_code.html)\n
+    * [Sample Code](Sample code/sample_code)\n
 
     ### Teaching Team Documentation \n
     * [Platform Conversion Instructions](How to/Platform Conversion Instructions.pdf)\n
-    * Raspberry Pi Setup (NEED TO CREATE)\n
-    * [Shopping list](How to/shopping_list.html)
+    * [Raspberry Pi Setup](How to/setup_raspberry_pi)\n
+    * [Shopping list](How to/shopping_list)
 "
 
 feature_row_bod:
