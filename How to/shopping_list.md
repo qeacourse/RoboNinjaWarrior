@@ -19,6 +19,7 @@ The robot platform for the module is based on the robot vacuum cleaning products
 * USB Battery Pack (approximately 5000 mAH is good, e.g., this is [a good battery pack](https://www.amazon.com/Anker-Upgraded-Candy-Bar-High-Speed-Technology/dp/B06XS9RMWS/ref=sr_1_2?keywords=anker+5000+mah+battery&qid=1577474346&sr=8-2))
 * 5Ghz, High Performance WiFi adapter (we've found these to be essential for good performance).  The provided image is designed for the [TP-LINK Archer T2UH AC600](https://www.amazon.com/TP-Link-Archer-T2UH-Dual-Band-Compatible/dp/B00UZRVY12).
 * [Small, right angle USB cables](https://www.amazon.com/Cable-Matters-Combo-Pack-Right-Inches/dp/B00S8GU03A/ref=sr_1_2?keywords=left+right+angle+usb+micro&qid=1577474620&s=electronics&sr=1-2) (these are needed for getting the Pi to fit in the Neatos dustbin)
+* [A 16x2 AdaFruit LCD Display with Buttons](https://www.amazon.com/Adafruit-Industries-Positive-Keypad-Raspberry/dp/B00L1FN3TS/ref=sr_1_2?keywords=Adafruit+RGB+Positive+16x2&qid=1577734238&s=industrial&sr=1-2-catcorr) (this is handy for seeing IP address and connection strength)
 
 ## Other Supporting infrastructure
 
