@@ -38,9 +38,9 @@ feature_row_robot:
     * [Sample Code](Sample code/sample_code)\n
 
     ### Teaching Team Documentation \n
+    * [Shopping list](How to/shopping_list)
     * [Platform Conversion Instructions](How to/Platform Conversion Instructions.pdf)\n
     * [Raspberry Pi Setup](How to/setup_raspberry_pi)\n
-    * [Shopping list](How to/shopping_list)
 "
 
 feature_row_bod:
