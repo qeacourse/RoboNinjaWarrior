@@ -37,10 +37,10 @@ feature_row_robot:
     * [Meeto your Neato!: Environment Setup and Connecting](How to/Environment Setup and Connecting to the Neatos.pdf)\n
     * [Sample Code](Sample code/sample_code)\n
 
-    ### Teaching Team Documentation \n
-    * [Shopping list](How to/shopping_list)
+    ### Teaching Team Documentation\n
+    * [Shopping list](How to/shopping_list)\n
     * [Platform Conversion Instructions](How to/Platform Conversion Instructions.pdf)\n
-    * [Raspberry Pi Setup](How to/setup_raspberry_pi)\n
+    * [Raspberry Pi Setup](How to/setup_raspberry_pi)
 "
 
 feature_row_bod:
