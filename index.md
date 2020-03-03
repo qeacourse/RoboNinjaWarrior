@@ -35,7 +35,7 @@ feature_row_robot:
 
     ### Student Facing Documentation\n
     * [Meeto your Neato!: Environment Setup and Connecting](How to/Environment Setup and Connecting to the Neatos.pdf)\n
-    * [Sample Code](Sample code/sample_code)\n
+    * [Sample Code](Sample_code/sample_code)\n
 
     ### Teaching Team Documentation\n
     * [Shopping list](How to/shopping_list)\n
