@@ -1,0 +1,12 @@
+---
+layout: single
+classes: wide
+---
+<h1>Context and Summary</h1>
+{{ content }}
+
+<h1>Source Code Listing</h1>
+<a href="{{ page.matlab_source }}">download source</a>
+{% highlight matlab %}
+{% include_relative {{ page.matlab_source }} %}
+{% endhighlight %}

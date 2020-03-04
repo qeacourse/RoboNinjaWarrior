@@ -1,0 +1,233 @@
+\documentclass{tufte-handout}
+
+\usepackage{../CommonLatexPackages/fall2018_preamble_v1.0}
+\fancypagestyle{firstpage}
+
+{\rhead{Day 3 \linebreak \textit{Version: \today}}}
+
+\title{Day 3: Encoders, Mapping, and Intro to the Bridge of Doom}
+\author{Quantitative Engineering Analysis}
+\date{Spring 2019}
+
+\begin{document}
+
+\maketitle
+\thispagestyle{firstpage}
+
+\section{Schedule}
+\bi
+\item 0900-0915: Quiz
+\item 0915-0945: Debrief and Synthesis
+\item 0945-1030: Measured Paths
+\item 1030-1045: Coffee
+\item 1045-1215: Encoders in Action
+\item 1215-1230: Preview of the Overnight
+\ei
+
+\section{Quiz [15 minutes]}
+
+For this quiz, consider the following parametric curve,
+\[ \r(u)= a \cos u \ihat + a \sin u \jhat, \] 
+where $u$ is a function of time $t$,
+\[ u=b t^2, \]
+and $a$ and $b$ are positive constants.
+
+\be
+\item If your robot drives this curve, it will:
+\be
+\item Drive an ellipse at constant speed.
+\item Drive upward in a spiral.
+\item Drive in a circle at increasing speed.
+\item Spin in place.
+\item Do something not listed above.
+\ee
+
+\item The linear velocity $\frac{d {\mathbf r}}{dt}$ of the robot can be expressed using the chain rule as:
+\be
+\item $\frac{\partial {\mathbf r}}{\partial a}\frac{\partial a}{\partial t}$+$\frac{\partial {\mathbf r}}{\partial b}\frac{\partial b}{\partial t}$
+\item $\frac{\partial {\mathbf r}}{\partial u}\frac{\partial u}{\partial t}$
+\item $\frac{\partial {\mathbf r}}{\partial u}\frac{\partial t}{\partial u}$
+\item None of the above.
+
+\ee
+\item What is the linear speed?
+\be
+\item $2bt$
+\item $2abt$
+\item $ab$
+\item None of the above.
+\ee
+
+\item What is the angular speed?
+\be
+\item $2bt$
+\item $2ab$
+\item $2at$
+\item $\hat{\textbf k}$
+\item None of the above.
+\ee
+\ee
+
+\section{Debrief and Synthesis [30 minutes]}
+
+\begin{enumerate}[series=exercises, label=\textbf{Exercise} (\arabic*)]
+\item Briefly discuss the overnight with your table-mates, and make a list of concepts you feel solid on, and concepts you feel shaky on. Make a list of important definitions that you encountered in the overnight.
+\item During class and in the overnight exercises we have been building capacity towards having the NEATO robot drive along a curve. Of course there are lots of different ways to parameterize a curve, each of which would correspond to different motion of the NEATO. Let's take a few minutes to review those concepts here. With your table, please answer the following questions on the board given a circle of radius R,
+\[ \r(u) = R \cos u \ihat + R \sin u \jhat, \; u \in [0,2 \pi] \]
+and the following parameterizations:
+\begin{eqnarray*}
+u(t) &=& \alpha t \\
+u(t) &=& \alpha t^2 \\
+u(t) &=& \alpha (2 + sin(t)) t
+\end{eqnarray*}
+
+\begin{enumerate}
+\item Qualitatively describe the motion of the NEATO in each case.
+\item How long does it take to traverse the curve once? (Your answer should depend on $\alpha$)
+\item How would you find the linear velocity of a robot traveling along the curve? What is the direction of this velocity? (It would be really great if you employed the chain rule here and kept your work as general as possible.)
+\item How would you find the angular velocity? What is the direction of the angular velocity? (It would be really great if you employed the chain rule here and kept your work as general as possible.)
+\item Having found the linear and angular velocity, how would you find the left and right wheel speeds for the differential drive?
+\item The robot has a maximum wheel speed of 0.3 m/s. How would you choose $\alpha$ to ensure your robot never exceeds this speed limit?
+\end{enumerate}
+\end{enumerate}
+
+
+\section{Measured Paths [45 minutes]}
+One potential source of error that you may have identified in the in class and overnight exercises is that your robot is not able to instantaneously achieve a desired $V_L$ and $V_R$ when you send it a particular motor command. Given the pesky laws of physics, instead, the robot needs to accelerate to the desired velocity.  In order to get a more accurate picture of what the robot actually did, we can use \emph{measurements} of the wheel velocities to give us a more accurate estimate of the robot's actual path in the world.  Our Neato is outfitted with sensors called \emph{wheel encoders}, which provide accurate estimates of the linear travel of each wheel over time. Knowing the linear travel and the time between measurements, the velocity of each wheel can be calculated.  Next, you'll be determining formulas to update the robot's position and heading given measured values of $V_L$ and $V_R$.
+
+\begin{enumerate}[resume=exercises, label=\textbf{Exercise} (\arabic*)]
+\item Suppose that at time $t$ your robot is at position ${\mathbf r}(t)$, with a heading of $\theta(t)$.  Let's further assume that at $t=0$ the robot is stationary and pointing along $\theta = 0$, which corresponds to the robot facing along the positive x-axis of the room.
+
+\begin{enumerate}
+\item Draw a picture on the board to make sure that you are clear as to the definition of the coordinate system.
+
+\item Sketch a (fairly smooth) potential trajectory that your robot will be driving. Choose several points along the curve seperated by $\Delta t$. Sketch in the unit tangent and unit normal vector at each point. 
+
+\item Sketch an estimated plot of your robot's linear and angular speeds as a function of time as it traverses your curve.
+
+\item Sketch an estimated plot of your robot's tangential and normal components of acceleration as a function of time as it traverses your curve.
+
+\item On the board, sketch a qualitative version of your estimate of right and left wheel velocity as a function of time.
+
+\end{enumerate}
+ 
+ For a discretized path (expressed in terms of short time increments rather than continuously) you can, assuming that the time-step $\Delta t$ is small, approximate a path by a series of movements in ${\mathbf r}$ and movements about the center of the robot in $\theta$. The velocity of the robot is
+\begin{eqnarray*}
+\frac{d {\mathbf r}}{dt} &=& v \hat{\mathbf T} \\
+\frac{d \theta}{dt} &=& \omega
+\end{eqnarray*}
+where $v$ is the linear speed, $\omega$ is the angular velocity in the $\hat{\mathbf k}$ direction, and since the robot is always oriented along the path we can define $\hat{\mathbf T}$ in relation to the global (classroom fixed) coordinate system as
+\[\hat{\mathbf T} = \cos \theta \hat{\mathbf{i}} + \sin \theta \hat{\mathbf{j}} \]
+
+\begin{enumerate}[resume]
+\item Given measured values for $V_L$ and $V_R$ determine the values of ${\mathbf r}(t+\Delta t)$, and $\theta(t+\Delta t)$ which represent the position and heading of your robot at time $t+\Delta t$.
+\end{enumerate}
+
+
+\end{enumerate}
+
+
+
+%\vspace{1em}
+%\fbox{\begin{minipage}{30em}
+%Potential solution:
+%
+%Subtracting our expression for $V_L$ from $V_R$ we obtain.
+%\begin{align}
+%V_R - V_L &= \omega d \nonumber \\
+%\omega &= \frac{V_R - V_L}{d}
+%\end{align}
+%
+%Additionally, we have that the robot's ICC is given by the following equation.
+%\begin{align}
+%\mbox{ICC} &= \begin{bmatrix} x - R \sin \theta \\ y  + R \cos \theta \end{bmatrix}
+%\end{align}
+%
+%\begin{align}
+%\theta' &= \theta + \omega \Delta t \\
+%\begin{bmatrix} x' \\ y' \end{bmatrix} &= \begin{bmatrix} \cos(\omega \Delta t) & -\sin ( \omega \Delta t) \\ \sin( \omega \Delta t) & \cos(\omega \Delta t ) \end{bmatrix} \left ( \begin{bmatrix} x  \\ y \\\end{bmatrix} - \mbox{ICC} \right)+ \mbox{ICC}
+%\end{align}
+%\end{minipage}}
+
+
+\vspace{1em}
+
+\section{Coffee Break [15 minutes]}
+
+\section{Encoders in Action [90 minutes]}
+
+Next, you will complete a series of simple experiments with the NEATO, similar to those conducted at the end of Monday's class, while simultaneously collecting motion data. In order to do this, we have provided you a nice little script written by Paul Ruvolo (edited by Jeff Dusek) which you can use to collect the wheel position encoder data while you are running your experiment (which you can easily convert to velocities by taking the difference between two adjacent positions and dividing it by the timestep). The Matlab function \emph{diff} will likely be useful in this process.  Note that the robot's initial position is arbitrary. 
+
+The script for collecting encoder data is called \href{https://drive.google.com/file/d/0B0UHkPLHsgyoTDdPdEd2eXBuU28/view?usp=sharing}{collectDataset.m} and is linked here and to the Canvas assignment. It is also available from the sample code page. To collect encoder data, run the function \emph{collectDataset('filename.mat')} from your command window. This will bring up a new figure window with the title ``Dataset Collection Window''. To start data collection , hit the space bar while focusing on the figure window. You will see the message ``Starting Dataset Collection'' in your command window if everything is working as intended. You can then run your personal script to control the robot, and encoder data will be collected in the background. When your robot motion has concluded, re-focus on the ``Dataset Collection Window'', and hit the space bar to stop data collection. You will see the message  ``Stopping Dataset Collection'' in your command window.
+
+After you stop the data collection, you will have a file \emph{filename.mat} in your current directory. If you load this file, you will find a matrix ``dataset'' that contains the encoder and accelerometer data recorded from the robot. For this exercise and the upcoming challenge you only care about the encoder data in columns 2 and 3, and the time stamps in column 1 (recall this data is linear travel of the wheel). The form of the data is:
+\begin{align}
+dataset=[ time,Pos_{left},Pos_{right}, AccelX, AccelY, AccelZ]
+\end{align}
+
+\textbf{Important:} If you include a loop in your personal robot control script, make sure to include a pause of the form \emph{pause(0.1)} within the loop. Otherwise, Matlab will try to execute that loop as fast as possible and will prevent the data collection script from recording encoder data.
+
+
+
+\textbf{Complete the following simple experiments. For each experiment, record the encoder data for analysis using the \emph{collectDataset} function.}
+
+\begin{enumerate}[resume=exercises, label=\textbf{Exercise} (\arabic*)]
+\item Using the basic robot motion code from Monday's class (copied below), have the robot complete three complete counterclockwise and three complete clockwise circles around the robot's center (i.e $V_R$=-$V_L$ or the opposite). Collect and plot the left and right wheel encoder data. 
+\begin{enumerate} 
+\item Does the plot of the wheel linear travel look as you would expect?
+\item Find the linear and angular velocity at for each time step and plot them. Do they match your expectations?
+\end{enumerate}
+
+\begin{verbatim}
+pub = rospublisher('/raw_vel');
+msg = rosmessage(pub);
+msg.Data = [V_R, V_L];
+send(pub, msg);
+
+prompt = 'Press Enter to Stop Robot';
+str = input(prompt,'s');
+if isempty(str)
+    msg.Data=[0,0];
+    send(pub,msg)
+end
+\end{verbatim}
+
+\item Using the \href{https://drive.google.com/file/d/1sq7yFwfhzcaJakDrcUYzD9HJHjxzhBs8/view?usp=sharing}{driveforward.m} function introduced in the overnight, conduct three experiments where the robot drives a specified distance at increasing speeds. Collect and plot the encoder data.
+\begin{enumerate}
+\item Does the linear distance traveled collected by the encoders match the distance input to the function?
+\item If the values do not match, why not?
+\item Plot the linear and angular velocity as a function of time. Do they match your expectations?
+\end{enumerate}
+
+\item Calculate the left and right wheel velocities needed to drive a circle of radius 0.5m in 20s. Use the code from Monday's class (above) to drive the circle while simultaneously collecting the wheel encoder data. 
+\begin{enumerate}
+\item Plot the anticipated trajectory of your robot in Matlab. You may want to use the Matlab command \emph{axis EQUAL} to make sure your circle looks nice and circular.
+\item In the same figure, plot the actual trajectory of your robot. How closely do they match?
+\item Quantifying error is an important part of any experiment. For the circular path, how would you calculate error between the anticipated trajectory and the actual path of the robot? Are you interested in total accumulated error? Average error and each time step? Distance away from the ``ideal'' curve at each time stop (e.g. are you stying within a lane)? Does something else make sense? On the whiteboard draw sketches of what each of these types of error would represent visually, and come up with mathematical expressions.
+\end{enumerate}
+
+\end{enumerate}
+
+
+
+
+\subsection{Extension: Encoders in Real-Time}
+You can also read the robot's wheel positions real-time from the \emph{/encoders} ROS topic and use this to plot the robot's motion real-time as it moves through the exercise...or even to correct for motion errors to bring it back closer to the desired path!
+
+\begin{enumerate}[resume=exercises, label=\textbf{Exercise} (\arabic*)]
+\item Modify the \href{https://drive.google.com/file/d/1sq7yFwfhzcaJakDrcUYzD9HJHjxzhBs8/view?usp=sharing}{driveforward.m} function to use encoder feedback instead of time to determine when to stop the robot.
+
+\item Try writing a function that commands the NEATO to drive a square with the side length as an input variable. Think about using the encoder feedback to determine when to turn, and whether the robot has turned 90 degrees. The \emph{`/cmd\_vel'} Ros topic might be a good option here because it takes the linear and angular velocity as inputs. If the square is too easy, how about driving a star? 
+
+\item Feedback from the encoders can be used to correct the robot's position if it strays from the planned trajectory. Think about how you could calculate error between the anticipated and actual path, and what actions would need to be takent to reduce that error.
+
+\end{enumerate}
+
+
+\section{Preview of the Overnight [15 minutes]}
+
+Introduction to the Bridge of Doom challenge.
+
+%more fun to let them try it first IMO -ET \todo{could possibly demo a traverse of the bridge here}
+
+\end{document}

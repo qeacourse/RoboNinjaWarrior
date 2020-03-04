@@ -1,0 +1,10 @@
+Find the solutions to night 1
+With regards to night 1, determine which is the correct solutions file (Geddes or not Geddes)
+Do we need StewardOnPartialGradient.pdf (can't check it into Github)
+add license (need to consult with other QEA faculty)
+check for back or forward references to other modules
+M3 night 6, multiply defined labels
+Add image of charging tower
+add raspi setup instructions (with link to img)
+figure out why we can't use relative link to olin logo
+Customize minimal mistakes template to allow feature row--right to use left float for body

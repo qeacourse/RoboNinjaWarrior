@@ -1,0 +1,132 @@
+
+%% Don't change any of these definitions.
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{xstring}
+\usepackage{subfiles}
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,
+    urlcolor=cyan,
+}
+\usepackage{enumerate}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage[iso,american]{isodate}
+\usepackage{fancyhdr}
+\usepackage{todonotes}
+\usepackage{xcolor}
+\usepackage[tikz]{bclogo}
+\usepackage[framemethod=tikz]{mdframed}
+\usepackage{lipsum}
+\usepackage{bm}
+\usepackage[many]{tcolorbox}
+\usepackage{optidef}
+
+
+\setcounter{secnumdepth}{2}
+
+%%
+%% These definitions are meant to make your life easier. They provide shortcut commands for lots of common latex commands
+
+\newcommand{\bi}{\begin{itemize}}
+\newcommand{\ei}{\end{itemize}}
+\newcommand{\be}{\begin{enumerate}}
+\newcommand{\ee}{\end{enumerate}}
+\newcommand{\beq}{\begin{equation}}
+\newcommand{\eeq}{\end{equation}}
+
+\newcommand{\twobytwo}[4]{\ensuremath{\begin{bmatrix} #1 & #2 \\ #3 & #4\end{bmatrix}}}
+\newcommand{\threebythree}[9]{\ensuremath{\begin{bmatrix} #1 & #2 & #3 \\ #4 & #5 & #6 \\ #7 & #8 & #9 \end{bmatrix}}}
+\newcommand{\threebytwo}[6]{\ensuremath{\begin{bmatrix} #1 & #2  \\ #3 & #4  \\ #5 & #6  \end{bmatrix}}}
+\newcommand{\twobythree}[6]{\ensuremath{\begin{bmatrix} #1 & #2 & #3 \\ #4 & #5 & #6\end{bmatrix}}}
+
+\newcommand{\onebytwo}[2]{\ensuremath{\begin{bmatrix} #1 & #2 \end{bmatrix}}}
+\newcommand{\onebythree}[3]{\ensuremath{\begin{bmatrix} #1 & #2 & #3 \end{bmatrix}}}
+
+\newcommand{\twobyone}[2]{\ensuremath{\begin{bmatrix} #1 \\ #2 \end{bmatrix}}}
+\newcommand{\threebyone}[3]{\ensuremath{\begin{bmatrix} #1 \\ #2 \\ #3 \end{bmatrix}}}
+
+\newcommand{\fourbyone}[4]{\ensuremath{\begin{bmatrix} #1 \\ #2 \\ #3 \\ #4 \end{bmatrix}}}
+
+
+\newcommand{\That}{\hat{\mathbf{T}}}
+\newcommand{\T}{\mathbf{T}}
+\newcommand{\Nhat}{\hat{\mathbf{N}}}
+\newcommand{\N}{\mathbf{N}}
+\newcommand{\R}{\mathbf{R}}
+\newcommand{\A}{\mathbf{A}}
+\renewcommand{\L}{\mathbf{L}}
+\newcommand{\M}{\mathbf{M}}
+\newcommand{\Bhat}{\hat{\mathbf{B}}}
+\renewcommand{\C}{\mathbf{C}}
+\renewcommand{\S}{\mathbf{S}}
+\renewcommand{\v}{\mathbf{v}}
+\renewcommand{\t}{\mathbf{t}}
+\renewcommand{\u}{\mathbf{u}}
+\renewcommand{\r}{\mathbf{r}}
+\renewcommand{\a}{\mathbf{a}}
+\newcommand{\e}{\mathbf{e}}
+\newcommand{\x}{\mathbf{x}}
+\newcommand{\y}{\mathbf{y}}
+\newcommand{\z}{\mathbf{z}}
+\newcommand{\ihat}{\hat{\textbf{\i}}}
+\newcommand{\jhat}{\hat{\textbf{\j}}}
+\newcommand{\khat}{\hat{\mathbf{k}}}
+
+%% these lines allow you to include / remove various parts of the TeX document
+\newtoggle{solutions}
+
+
+\newcommand{\iftoggleverb}[1]{%
+  \ifcsdef{etb@tgl@#1}
+    {\csname etb@tgl@#1\endcsname\iftrue\iffalse}
+    {\etb@noglobal\etb@err@notoggle{#1}\iffalse}%
+}
+
+
+\newcommand{\solution}[1] {
+\iftoggle{solutions}{
+
+\textbf{Solution:}
+
+#1
+}
+
+}
+
+
+\lstset{basicstyle = \ttfamily,columns=fullflexible,upquote=true}
+
+\newtcolorbox{myboxi}[1][]{
+  breakable,
+  title=#1,
+  colback=white,
+  colbacktitle=white,
+  coltitle=black,
+  fonttitle=\bfseries,
+  bottomrule=0pt,
+  toprule=0pt,
+  leftrule=3pt,
+  rightrule=3pt,
+  titlerule=0pt,
+  arc=0pt,
+  outer arc=0pt,
+  colframe=black,
+}
+
+\newcommand{\bex}{\begin{enumerate}[resume=exercises, label=\textbf{Exercise} (\arabic*)]}
+
+\newcommand{\eex}{\end{enumerate}}
+
+\makeatletter
+\DeclareRobustCommand{\volume}{\text{\volumedash}V}
+\newcommand{\volumedash}{%
+  \makebox[0pt][l]{%
+    \ooalign{\hfil\hphantom{$\m@th V$}\hfil\cr\kern0.08em--\hfil\cr}%
+  }%
+}
+\makeatother

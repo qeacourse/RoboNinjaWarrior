@@ -1,0 +1,214 @@
+\documentclass{tufte-handout}
+
+\usepackage{../CommonLatexPackages/fall2018_preamble_v1.0}
+\fancypagestyle{firstpage}
+
+
+\title{Day 7: Potential Fields}
+
+\author{Quantitative Engineering Analysis}
+\date{Spring 2019}
+
+\begin{document}
+
+
+%
+%\newcommand{\twobytwo}[4]{\ensuremath{\begin{bmatrix} #1 & #2 \\ #3 & #4\end{bmatrix}}}
+%\newcommand{\threebythree}[9]{\ensuremath{\begin{bmatrix} #1 & #2 & #3 \\ #4 & #5 & #6 \\ #7 & #8 & #9 \end{bmatrix}}}
+%\newcommand{\threebytwo}[6]{\ensuremath{\begin{bmatrix} #1 & #2  \\ #3 & #4  \\ #5 & #6  \end{bmatrix}}}
+%
+%\newcommand{\onebytwo}[2]{\ensuremath{\begin{bmatrix} #1 & #2 \end{bmatrix}}}
+%\newcommand{\onebythree}[3]{\ensuremath{\begin{bmatrix} #1 & #2 & #3 \end{bmatrix}}}
+%
+%\newcommand{\twobyone}[2]{\ensuremath{\begin{bmatrix} #1 \\ #2 \end{bmatrix}}}
+%\newcommand{\threebyone}[3]{\ensuremath{\begin{bmatrix} #1 \\ #2 \\ #3 \end{bmatrix}}}
+%
+%\newcommand{\fourbyone}[4]{\ensuremath{\begin{bmatrix} #1 \\ #2 \\ #3 \\ #4 \end{bmatrix}}}
+%
+%\newcommand{\That}{\hat{\mathbf{T}}}
+%\newcommand{\T}{\mathbf{T}}
+\newcommand{\V}{\mathbf{V}}
+\newcommand{\F}{\mathbf{F}}
+%\newcommand{\Nhat}{\hat{\mathbf{N}}}
+%\newcommand{\R}{\mathbf{R}}
+%\newcommand{\A}{\mathbf{A}}
+%\renewcommand{\L}{\mathbf{L}}
+%\newcommand{\M}{\mathbf{M}}
+%\newcommand{\Bhat}{\hat{\mathbf{B}}}
+%\renewcommand{\C}{\mathbf{C}}
+%\renewcommand{\S}{\mathbf{S}}
+\renewcommand{\v}{\mathbf{v}}
+\renewcommand{\t}{\mathbf{t}}
+\renewcommand{\u}{\mathbf{u}}
+\renewcommand{\r}{\mathbf{r}}
+\renewcommand{\a}{\mathbf{a}}
+%\newcommand{\e}{\mathbf{e}}
+%\newcommand{\x}{\mathbf{x}}
+%\newcommand{\y}{\mathbf{y}}
+%\newcommand{\ihat}{\hat{\textbf{\i}}}
+%\newcommand{\jhat}{\hat{\textbf{\j}}}
+%\newcommand{\khat}{\hat{\mathbf{k}}}
+\newcommand{\rhat}{\hat{\mathbf{r}}}
+
+
+
+
+
+\maketitle
+\thispagestyle{firstpage}
+
+\section*{Schedule}
+\begin{itemize}
+\item 9:00-9:15- Quiz
+\item 9:15-9:30 - Debrief of overnight
+\item 9:30-10:15 - Potentials part I
+\item 10:15-10:30 - Coffee
+\item 10:30-11:30 - Potentials part II
+\item 11:30-12:15 - Gauntlet decomposition
+\item 12:15-12:30 - Partnering survey and group discussion
+\end{itemize}
+
+
+\section{Quiz [15 mins]}
+
+Please complete the following questions:
+
+\be
+\item Frame G has the standard basis vectors. Frame M has the same origin, but is rotated counterclockwise by 90 degrees.
+\be
+\item Express the point $(1,2)_G$ in frame M.
+\item Express the point $(-3,1)_M$ in frame G.
+\ee
+\item Frame G has the standard basis vectors. Frame M has its origin at $(1,1)_G$, and is rotated counterclockwise by 180 degrees.
+\be
+\item Express the point $(2,3)_G$ in frame M.
+\item Express the point $(3,-1)_M$ in frame G.
+\ee
+\ee
+
+\section{Debrief [15 mins]}
+
+\begin{enumerate}[series=exercises, label=\textbf{Exercise} (\arabic*)]
+\item With your table, identify a list of key concepts/take home messages/things you learned in the overnight assignment about frames of reference.
+\item Try to resolve your confusions from the overnight assignment and the quiz with the folks at your table and by talking to an instructor.
+\ee
+
+\clearpage
+
+\section{Overview}
+
+Over the weekend, you worked with using coordinate transformations to create a map from multiple LIDAR scans taken at different positions of the robot, and identifying multiple linear objects within that map using the RANSAC algorithm.  To complete the challenge, you need two additional pieces of the puzzle:  you need to be able to identify the goal, which is of circular cross section rather than being a line, and you need to be able to transform your map of obstacles and goals into a landscape that you can navigate using gradient ascent.  Today's class will focus on creating a potential field for the robot to descend. In the overnight, you will identify circles and make significant steps toward your completion of The Gauntlet.
+
+
+
+
+\section{Scalar Fields/Vector Fields, or How to Get a Robot to Go Downhill [2 hr incl.\ coffee break]}
+So....we need to find a way through The Gauntlet!  At this point, let's assume that we know where a bunch of obstacles are, and where our goal is.  We need to find a way past the obstacles and to the goal.  In the Flatland challenge, we used gradient ascent to navigate to the top of the ``mountain''....if only there were a way to create a 'landscape' from the obstacles and the goals such that following the gradient would navigate us around the obstacles and towards the goal...
+
+Physics to the rescue!  The physics of forces provides us with the concept of a {\it potential field}, which defines an energy landscape where low potentials (low energies) are found at attractive locations and high potentials (high energies) are found at repulsive locations, and following the negative gradient (gradient descent) routes you away from obstacles and towards goals.  In our robot challenge, we will be borrowing this concept to navigate the robot through the Gauntlet to the goal.
+
+\subsection{Scalar and Vector Fields - Reading}
+Scalar and vector fields are mathematical objects which are ubiquitous across many disciplines.  You have already been working with both of these concepts already, so all we are doing here is formalizing the definitions.
+
+\newthought{A scalar field} is simply a function which is defined across a space of inputs and outputs a scalar value.  The input space can be of any dimensionality.  As an example, a function which defines the temperature profile at all points in the air in the QEA classroom, $T(x,y,z)$ is a scalar field with a three dimensional input.  Another example of a scalar field is the elevation of a mountain as a function of two-dimensional position, $H(x,y)$.  A scalar field then is a function $f$ which accepts a vector as an input and outputs a scalar---we can either use the notation $f(x,y,z)$ which specifies the components of the input, or the more general notation $f(\r)$. If we want to be even more specific, we can write $f: \R^N \rightarrow \R$, which is shorthand notation for f takes real values in N dimensions as input and outputs a real value.
+
+\newthought{A vector field} is a function which is defined across a space of inputs and outputs a vector.  An example of this would be the velocity of the air currents at all points in the QEA classroom $\V(x,y,z) = V_x \ihat + V_y \jhat + V_z \khat$, where $V_x$ is the component of the velocity in the x-direction etc. (Although this is a widely used notation, it can be confusing because $V_x$ is also the notation used to define the partial derivative of V with respect to x!)  Another example is the gradient function of the surface of a mountain $\nabla H = \frac{\partial H}{\partial x} \ihat + \frac{\partial H}{\partial y} \jhat$. A vector field then is a function $\F$ which accepts a vector as an input and outputs a vector of the same number of dimensions---again we can either use the notation $\F(x,y,z)$, or the more general notation $\F(\r)$, where $\F: \R^N \rightarrow \R^N$.
+
+\subsection{Examples of Scalar and Vector Fields}
+Based on these definitions, generate a list of at least 6 common quantities and classify them as a scalar field or a vector field, e.g. the pressure of a gas. Try to include entities that you are familiar with and at least one example that is new to you.
+
+\subsection{Visualizing Scalar and Vector Fields}
+Use the provided Matlab script ScalarFieldGradient to visualize the scalar fields (using contour plot to show the level curves) and the associated gradient vector fields (using quiver plot) of the following functions:
+\begin{enumerate}[resume=exercises, label=\textbf{Exercise} (\arabic*)]
+\item  $f(x,y) = 12-(x-2)^2 -(y-4)^2$
+\item  $f(x,y) = \sin(x) + \cos(y)$
+\item  $f(\r) = \frac{1}{|\r|}$
+\item  A function of two variables of your choice...find something cool!
+\ee
+
+\subsection{Applying these ideas to the Gauntlet - Conceptual}
+Now that you've thought about how scalar fields and vector fields relate, we'd like you to conceptually think about how this might apply to helping a NEATO navigate the gauntlet.  
+\begin{enumerate}[resume=exercises, label=\textbf{Exercise} (\arabic*)]
+\item On the board, make a drawing of the Gauntlet with the NEATO at one corner, and the BoB at the other.  
+\item Sketch in a scalar field that, if used for gradient descent, would enable the NEATO to find the BoB.   
+\item Check that your scalar field works by sketching in the gradient as well.
+\ee
+
+\subsection{Building a potential field}
+It's great that we can {\it imagine} a scalar potential that would allow the NEATO to navigate.  The question is how do we {\it build} one.  Here are some math games to help you think about how to do this.
+
+\begin{enumerate}[resume=exercises, label=\textbf{Exercise} (\arabic*)]
+\item Imagine that you had a scalar potential field $V(x,y)$ in two dimensions for which it was true that
+$$ \frac{\partial^2 V}{\partial x^2}+  \frac{\partial^2 V}{\partial y^2}  = 0$$ in some region.  By dragging out the Hessian and the properties of minimums and maximums, {\it show at the board that such a function cannot have any maximums or minimums in that region}.  See, we told you that Hessian thing would come back!
+\item  Now let's do an example... Let $V(x,y) = \ln \sqrt{x^2 + y^2}$.    Note that $V$ is not defined at the origin!!
+\be 
+\item What is $V$ in polar coordinates (note: this question is just here to make you realize that it's actually a pretty function, and to make it easier to visualize)?
+\item Show that, for this function,  $ \frac{\partial^2 V}{\partial x^2} +  \frac{\partial^2 V}{\partial y^2}  = 0$ for all points other than the origin.
+\item Using your brain and a marker, make a sketch of a contour plot of $V$. 
+\item Using your brain and a marker, make a quiver plot of  $\nabla V$
+\item How would a NEATO performing gradient descent behave if you put it on a flatland that looked like $V$?
+\item Is $V$ a ``repulsive'' or an ``attractive'' potential?  Why?
+\ee
+\item And another example... Now consider the potential $V(x,y) = \ln \sqrt{x^2 + y^2} -  \ln \sqrt{(x-1)^2 + y^2}$
+\be
+\item Show that, for this function,  $ \frac{\partial^2 V}{\partial x^2} +  \frac{\partial^2 V}{\partial y^2}  = 0$ for all points other than at the origin and at the point $(1,0)$.
+\item Using your brain and a marker, make a sketch of a contour plot of $V$. 
+\item Use Mathematica to confirm your understanding of the shape of $V$.
+\item Using your brain and a marker, make a quiver plot of  $\nabla V$
+\item How would a NEATO performing gradient descent behave if you put it on a flatland that looked like $V$?
+\item Which parts of $V$ are repulsive?  Attractive?
+\ee
+\item Note that effectively what you've done above is (1) found {\it an} example of a function that has no maxes or mins in a given region, and (2) used that basic function to build a more complicated function that also has no maxes or mins. Note that because $\frac{\partial^2}{\partial x^2}$ is distributive, you can add up lots of such basic functions and still get a total function that satisfies the requirement that $ \frac{\partial^2 V}{\partial x^2} +  \frac{\partial^2 V}{\partial y^2}  = 0$ for some region. So let's try to generalize this: we will make an ``attractive'' line segment.  Let
+$$V(x,y) = \int_0^1 \ln \sqrt{(x-x_0)^2 + y^2} \; dx_0$$
+\be
+\item Interpret the equation above.  Where is the ``attractive line segment'' located?
+\item Sketch the contour plot and gradient.
+\item Using MATLAB, create a contour plot of this scalar potential.
+\item Now imagine you wanted to create a ``repulsive circle''.  How would you do so?  Try it.
+\ee
+\ee
+
+\section{Gauntlet decomposition [45 min]}
+You have had a lot of practice decomposing problems at this point, so here are just a few pointers:
+\begin{enumerate}[resume=exercises, label=\textbf{Exercise} (\arabic*)]
+\item Read the description of The Gauntlet Challenge. Resolve any questions you have with your table and/or an instructor.
+\item Create a concept map of the challenge. Identify relevant math concepts, skills, tools, past assignments, scripts you've already written, etc.\ that are relevant to this challenge. List anything new you will need to learn.
+\item At a high level, outline (5-ish) major steps in solving the challenge. What issues do you anticipate at each step? 
+\item For each step, plan how you will verify that what you're doing is working. This plan should involve making some plots.
+\ee
+
+\section{Partner survey and group discussion [15 min]}
+Answer \href{https://docs.google.com/forms/d/e/1FAIpQLSer8NScuVmUpTgT363HeB8-3Bl3-OJrOvEBCnkUzB9tuWLGeg/viewform?usp=sf_link}{this survey} by the end of class or we will pair you with your nemesis.
+
+
+\section{Optional Extension: the Best-Fit Circle}
+
+If you plan to identify and locate the Bucket of Benevolence in The Gauntlet challenge, you will need to be able to find and fit a circle. These steps will guide you through the process of creating a circle-fitting algorithm of your own design. Feel free to get started during class if you have extra time.
+
+
+Assume that you have collected a set of $N$ data points $(x_i,y_i)$. We'd like you to pose the task of fitting the best-fit circle as an Optimization problem.  So let's assume that the scan data contains a single (possibly noisy) circle.
+
+\begin{enumerate}[series=extension, label=\textbf{Extension} (\arabic*)]
+\item What are the different ways of describing a circle? Think about explicit, implicit, and parametric representations. Don't forget that there are various ways of describing a circle using each of these representations.
+\item For each of these representations, how many decision variables are there?  What are they for the different formulations?
+\item Now propose an objective function that you can minimize in order to find the best-fit circle. 
+Draw a picture that explains your formulation of the problem (i.e., that illustrates your data points, your decision variables, and your objective function)
+\item What kind of optimization problem is this?
+ \item Are there any constraints?Are they linear or nonlinear in the decision variables?
+\item How might you solve this problem algebraically?  
+\item Now imagine that you wanted to fit a circle using something more like a RANSAC approach.   Describe the algorithm you would use, assuming that you knew the radius of the circle your were fitting (a la BoB).
+\item What if you didn't know the radius?  How would you have to modify your RANSAC approach?
+\ee
+
+
+At this point, you have a couple of approaches in mind, and you've thought through the details of each. Let's test your ideas now by implementing in MATLAB.
+
+\begin{enumerate}[resume=extension, label=\textbf{Extension} (\arabic*)]
+\item Write pseudocode for finding the best-fit circle using one of your methods.
+\item Generate some test points that lie on a circle of radius 2. Rather than generating points on the entire circle, let's generate points on an arc of 120 degrees to mimic the extent of the data we might get from the NEATO.
+\item Test your methods on this data. How good is your best-fit circle? Do your results depend on which method you use, or how you initialize the method?
+\item Now incorporate a little noise into your test data set by perturbing the radius of each of your data points (consider using the MATLAB function \emph{randn} to do this). How does this affect your results?  Make sure to try your code a couple of times to get a representative picture of how well it works on different noisy data samples.
+\ee
+
+
+\end{document}

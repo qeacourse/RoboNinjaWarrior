@@ -1,0 +1,117 @@
+\documentclass{tufte-handout}
+
+\usepackage{../CommonLatexPackages/fall2018_preamble_v1.0}
+\fancypagestyle{firstpage}
+
+{\rhead{Day 5 \linebreak \textit{Version: \today}}}
+
+\title{Day 5: Flatland Challenge}
+\author{Quantitative Engineering Analysis}
+\date{Spring 2019}
+
+\begin{document}
+
+\maketitle
+\thispagestyle{firstpage}
+
+\section{Schedule}
+\bi
+\item 0900-0915: Quiz
+\item 0915-0930: Debrief
+\item 0930-1030: Gradient Ascent in MATLAB
+\item 1030-1045: Coffee
+\item 1045-1215: Flatland
+
+\ei
+
+\section{Quiz [15 min]}
+
+You are standing on the side of a hill trying to decide which way to walk in order to reach the top. 
+Taking due north as the positive $y$ direction (0 degrees) and due east as the positive $x$ direction (90 degrees) , the height $h$ of a point on the hillside can be described by the expression 
+\[ h = 500 - 0.01x^2 - 0.02y^2,\]
+where $x$, $y$ and $h$ are given in feet.  Your location is $(20, 20, 488)$.  
+\be
+\item If you start walking due west, will you be heading directly towards the top of the hill?
+\item Will your elevation change faster if you head west or southwest?
+\item What will your rate of ascent be if you start walking in the direction of steepest ascent?
+\item In which direction should you start walking in order to reach the top of the hill quickest?  
+\item If you change your mind and decide you want to stroll without exertion, remaining at an elevation of 488 feet, in which direction should you head initially?
+\ee
+
+
+\section{Debrief [15 min]}
+
+Discuss the overnight with your table-mates, and make a list of concepts you feel solid on, and concepts you feel shaky on. Make a list of plus and deltas for this assignment. This debrief is short, but you will be applying the concepts from the overnight during the next exercise.
+
+\section{Gradient Ascent in MATLAB [60 min]}
+
+In the overnight you started thinking through the computational process of gradient ascent. In this exercise we would like you to work with a partner to implement gradient ascent in MATLAB. Recall that if $f(\r)$ is a scalar function of a position vector $\r$, the points determined by gradient ascent are given by
+\[\r_{i+1} = \r_{i} + \lambda_{i} \nabla f(\r_i), \; i = 1, \ldots \]
+where $\lambda_{i}$ is the relative size of the step that we take in the direction of the gradient. There are various schemes for choosing these, and in the overnight you considered gradient ascent with a simple proportionality
+\[\lambda_{i+1} = \delta \lambda_{i} \]
+where both $\delta$ and $\lambda_0$ are thoughtfully chosen for the problem at hand.
+
+\be
+\item Work with your partner on pseudo-code for the algorithm. Keep it general: $f$ is a general scalar function of a vector $\r$. You are going to want to use a loop - a "while" loop would be a good choice - what would be a reasonable stopping criterion?
+\item When you are happy with your pseudo-code, develop a script or function that: 
+\be
+\item Automatically determines the discrete points $\r_1$, $\r_2$, $\ldots$ given an initial point $\r_0$.
+\item Can be tuned by varying $\delta$ and $\lambda_0$.
+\ee
+\ee
+
+You should implement your method on the function that we met in the overnight
+\[ f(x,y) = xy - x^2 - y^2 -2x -2y + 4 \]
+and in order to validate your approach you will want to visualize the contours and the discrete points.
+
+\section{Coffee [15 min]}
+
+\section{Flatland [90 min]}
+
+During this session, you will develop a method and implementation to drive your NEATO on the floor of the classroom in a way that physically realizes the method of Steepest Ascent. The mountain you will "climb" is defined as follows: (this should look somewhat familiar---when have you seen this equation before and what does it describe?)
+\[z = f(x,y) = xy - x^2 - y^2 -2x -2y + 4\]
+where $x$, $y$, and $z$ are measured in feet. You are required to start your NEATO at $(1,-1)$ pointing in the $+y$ direction, and work your way to the top. 
+
+\be[resume]
+\item Work with your partner to decompose this problem. What are the steps involved? Get some feedback about your decomposition from your table-mates and instructors. You should have a decomposition that clearly explains the process of driving the NEATO along a discrete approximation to the path of steepest ascent.
+\item Now develop the code for the NEATO. Get some feedback before you start driving a NEATO.
+\item Now drive your NEATO!
+\ee
+
+\section{Optional Flatland Extension}
+If we want to follow the continuous path of steepest ascent, we should set the velocity of the NEATO proportional to the gradient, $\r'(t) = \alpha \nabla f$, where $\alpha$ is a parameter that we can choose depending on how fast we want the NEATO to drive.
+
+\be[resume]
+\item How does the speed of the NEATO depend on $\alpha$ and $\nabla f$? If $\alpha$ is a constant, how fast is the NEATO moving when it reaches the "top" of the hill? How would we choose $\alpha$ if we wanted the NEATO to move with constant forward velocity $v$?
+\item In terms of coordinates $x$ and $y$ this approach is equivalent to defining the following set of ordinary differential equations, of the type that you encountered in ModSim
+\begin{eqnarray*}
+\frac{dx}{dt} &=& \alpha \frac{\partial f}{\partial x} \\
+\frac{dy}{dt} &=& \alpha \frac{\partial f}{\partial y}
+\end{eqnarray*}
+where $x(0)$ and $y(0)$ represent the initial position of the NEATO. You can either solve these in MATHEMATICA using DSolve, in MATLAB using dsolve, or by hand if you are very familiar with solving differential equations.
+\item Implement this and drive your NEATO in a continuous path uphill!
+\ee
+
+%Here are some suggestions for how to accomplish this task:
+
+%{\bf Paul and Rebecca: I chose this so that it looks good over the domain of (-3,1)x(-3,1). The maximum is at $(-2,2)$, and if you start at (1,0) you generally take a curving path to the top.}
+%\vspace{1em}
+%\textbf{Note:} for your first time working through this problem you should do everything based purely on timing (as we did in the Bridge of Doom).  For instance, if you calculate that you should rotate your robot by an angle $\theta$ you should execute the following steps: choose an angular velocity $\omega$ (it is up to you how fast you want to rotate, but slower rotations will generally be more accurate), calculate the appropriate wheel velocities, send these velocities to the robot, and stop the robot after $\frac{\theta}{\omega}$ seconds (the \emph{pause} command may be useful).
+%
+%\be
+%\item Review the work you did on finding the maximum of this function using the method of Steepest Ascent. Edit the method that you used in order to start at $\r_0=(4,0)$. What is the initial gradient at $\r_0$? What is $\r_1$? What is the distance between $\r_0$ and $\r_1$? What is the gradient at $\r_1$? What is $\r_2$? What is the distance between $\r_1$ and $\r_2$?
+%\item Assuming you place your NEATO on the floor at $(4,0)$ and align it so that it is pointing in the $y$-direction, how do you rotate it so that it points in the direction of the initial gradient?
+%\item Assuming that you are going to drive it at $0.1 m/s$, how long do you drive for in order to reach $\r_1$?
+%\item You will need to think about rotating and moving at every step. Don't forget that you will need to keep track of your NEATO heading!
+%\ee
+%\ee
+
+%\section{Flatland Conclusion and Demos [45 minutes]}
+%
+%Finish getting you NEATO to drive up the flat ``mountain'' and demonstrate to a member of the teaching team when your table is done. Be ready to have each member of your table explain a portion of your approach and implementation. When you have demonstrated your ascent, move on to the continuous implementation.
+%
+%\section{Extension: Continuous Path of Steepest Ascent [1 hour]}
+%Now that you have managed the previous exercise, how about if we determine the continuous path of steepest ascent, and drive your NEATO along this path using the techniques from the bridge of doom? Sounds like fun, right!
+
+
+\end{document}

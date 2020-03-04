@@ -1,0 +1,23 @@
+remote_theme:  qeacourse/minimal-mistakes
+logo: "https://qeacourse.github.io/RoboNinjaWarrior/website_graphics/olinlogo.png"
+title: "Robo Ninja Warrior"
+repository: qeacourse/RoboNinjaWarrior
+highlighter: rouge
+
+plugins:
+  - jekyll-paginate
+  - jekyll-sitemap
+  - jekyll-gist
+  - jekyll-feed
+  - jemoji
+  - jekyll-include-cache
+
+
+defaults:
+  # _pages
+  - scope:
+      path: ""
+      type: pages
+    values:
+      layout: single
+      toc: true
