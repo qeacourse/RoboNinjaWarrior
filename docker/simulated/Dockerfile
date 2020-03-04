@@ -60,4 +60,4 @@ RUN /bin/bash -c "mkdir ~/.vnc && \
 
 COPY default.rviz ~ros/.rviz
 
-CMD /bin/bash -c "(sleep 10; xpra start --start=gzclient --bind-tcp=0.0.0.0:14500) & (source ~/catkin_ws/devel/setup.bash && roslaunch neato_simulator neato_playground.launch)"
+CMD /bin/bash -c "((sleep 10; xpra start --start=gzclient --bind-tcp=0.0.0.0:14500) & (source ~/catkin_ws/devel/setup.bash && roslaunch neato_simulator neato_playground.launch))"
