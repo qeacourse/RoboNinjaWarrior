@@ -62,4 +62,4 @@ COPY default.rviz ~ros/.rviz
 
 RUN /bin/bash -c "mkdir -p ~/.gazebo/models; cp -r ~/catkin_ws/src/comprobo18/neato_simulator/model/flatland ~/.gazebo/models"
 
-CMD /bin/bash -c "((sleep 10; xpra start --start=gzclient --bind-tcp=0.0.0.0:14500) & (source ~/catkin_ws/devel/setup.bash && roslaunch neato_simulator neato_playground.launch))"
+CMD /bin/bash -c "((sleep 10; xpra start --start=gzclient --bind-tcp=0.0.0.0:14500) & (source ~/catkin_ws/devel/setup.bash && roslaunch neato_gazebo neato_empty_world.launch))"
