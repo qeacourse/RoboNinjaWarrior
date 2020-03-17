@@ -26,15 +26,35 @@ ROS supports several programming languages out of the box, including C++, Python
 
 ## Docker Setup
 
-TODO: test whether docker installer can enable the required system services on the student laptops
+### Highly Recommended Pre-Install Instructions
 
-The only operating systems officially supported by ROS are Ubuntu and Debian.  However, using a virtual machine you will be able to run ROS in Windows 10.  The tool we will be using to accomplish this is Docker.  To install Docker, create an account and download and run the most recent version of docker from the docker installer page. When you see two checkboxes, leave both as is; do not check the third option. You want to run Docker with Linux containers, not Windows containers, so that we can use Docker to run Linux code. There are some additional instructions on the Docker installation page that walk you through the install process.  Once the install is complete you may be asked to restart your computer.
+For lots of folks, you will be able to skip this step, but we have noticed that some of the student Dell laptops will not be able to complete the Docker install process without doing these steps.  In any case, these steps do not hurt to do even if you could have gone through the installation without performing them.  As a result, we encourage you to do them.  If you are interested in why we have to do this, you can check out the Docker help article [Manually Enable Docker for Windows Prerequisites](https://success.docker.com/article/manually-enable-docker-for-windows-prerequisites).
+
+In this step you'll be manually enable the Hyper-V and Container Features, which are both necessary for Docker.  First, run powershell by typing "powershell" into the windows search bar and then selecting "Run as Administrator" in the menu that appears to the right.  
+
+In the powershell window that pops up, type the following two commands (tip: when asked if you want to restart your computer after entering the first command, answer "no", and then answer "yes" to the same question after entering the second command.  This will save you one reboot).
+
+```powershell
+Enable-WindowsOptionalFeature -Online -FeatureName containers –All
+Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Hyper-V –All
+```
+You will likely need to restart your computer after completing these steps. Once you've completed the restart process, you can runthe Docker installer.
+
+### Running the Docker Installer
+
+The only operating systems officially supported by ROS are Ubuntu and Debian.  However, using a virtual machine you will be able to run ROS in Windows 10.  The tool we will be using to accomplish this is Docker.  To install Docker, download and run the installer from [DockerHub](https://hub.docker.com/editions/community/docker-ce-desktop-windows/) by clicking the "Get Docker" link. When you see two checkboxes, leave both as is; do not check the third option. You want to run Docker with Linux containers, not Windows containers, so that we can use Docker to run Linux code. Your selections will look like this.
+
+<p align="center">
+<img alt="The docker installer with the first two checkboxes selected" src="Pictures/dockerconfig.png" width="80%"/>
+</p>
+
+Once the install is complete you may be asked to restart your computer.
 
 ### Making Sure Docker is Setup Properly and Troubleshooting
 
-Once the Docker installation has completed (and you have possibly restarted your computer), you will see a message pop up that says something like “Docker is Running.  Open PowerShell to start hacking” (it takes a bit of time for this to show up upon reboot, so be patient).  
+Once the Docker installation has completed (and you have possibly restarted your computer), You should run Docker desktop by either clicking on its icon on your Desktop (the icon looks like a smiling whale) or from the Windows 10 start menu.  If everything is working properly, you will see a message pop up that says something like “Docker is Running.  Open PowerShell to start hacking” (it takes a bit of time for this to show up upon reboot, so be patient). Sometimes Docker will say that it will take a few seconds to be up and running, but in our experience it often takes longer. 
 
-You can also check the status of Docker by clicking on the Docker Desktop icon (it will look like a whale) or by cicking on the Docker Desktop icon in the status bar at bottom-right of your screen.
+You can also check the status of Docker by cicking on the Docker Desktop icon in the status bar at bottom-right of your screen.
 
 As a final check, type the following command into PowerShelll (which you can open via the Windows search box).
 
@@ -49,24 +69,13 @@ Hello from Docker!
 This message shows that your installation appears to be working correctly.
 ```
 
-#### Docker Install Did Not Complete
+#### Docker Installer Got Stuck "Deploying Required Windows Features"
 
-If you got an error during the installation of Docker, first e-mail your error to the QEA teaching team!  Here are some steps to try to fix the issue.
-
-First, manually enable the Hyper-V and Container Features.  You can do this by running Powershell by typing "powershell" into the windows search bar and then selecting "Run as Adminstrator" in the menu that appears to the right.  
-In Powershell, type the following two commands.
-
-```powershell
-Enable-WindowsOptionalFeature -Online -FeatureName containers –All
-Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Hyper-V –All
-```
-You will probablyl need to restart your computer after these steps (potentially after each one individually).
-
-Once you've completed the restart process, you can rerun the Docker installer but make sure to deselect the checkbox that says "Automatically Enable Required System Services".
+First, if you are having any issues with any of this (e.g., installing Docker), e-mail the QEA teaching team with a description of the problem!  If you ran into this particular issue, it is likely because you need to manually enable the requried windows features as described in [this previous section](#highly-recommended-pre-install-instructions).
 
 #### Docker Still Won't Start 
 
-There are some reports that Windows security features are interfering with the Virtual Machine software that Docker uses.  If Docker still won't start properly (i.e., as indicated when you click on the Docker Desktop icon), try the following steps.
+There are some reports that Windows security features are interfering with the Virtual Machine software that Docker uses.  If Docker still won't start properly (i.e., as indicated when you click on the Docker Desktop icon or when you try to run the hello-world image), try the following steps.
 
 
 1. Open "Window Security"
@@ -76,7 +85,7 @@ There are some reports that Windows security features are interfering with the V
 5. Locate "C:\WINDOWS\System32\vmcompute.exe" in the list and expand it
 6. Click "Edit"
 7. Scroll down to "Code flow guard (CFG)" and uncheck "Override system settings"
-8. Start vmcompute from powershell
+8. Start vmcompute from an administrator powershell
 ```powershell
 net start vmcompute
 ```
