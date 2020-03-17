@@ -4,17 +4,17 @@ title: "Meeto your Neato!"
 
 ## Overview
 
-In module 3 we will be programming the Neato BotVac. The Neato is a powerful, low cost robot platform that we have customized for QEA (it’s also technically a vacuum cleaner, but we’ll be ignoring that for this module!). We have engineered the platform to abstract away a lot of the frustrating bits, allowing you to focus on learning the really fun robotics, physics, math, and computing content.
+In module 3 we will be programming the Neato BotVac. The Neato is a powerful, low cost robot platform that we have customized for QEA (it's also technically a vacuum cleaner, but we'll be ignoring that for this module!). We have engineered the platform to abstract away a lot of the frustrating bits, allowing you to focus on learning the really fun robotics, physics, math, and computing content.
 
 <p align="center">
 <img src="Pictures/neato_overview.jpeg" alt="A picture of a Neato robotic vacuum cleaner with a custom remote control interface based on Raspberry Pi" width="60%" height="60%">
 </p>
 
-The robots have each been outfitted with a Raspberry Pi.  The Raspberry Pi is a low cost, Linux computer that will serve as a bridge between your laptop and the robot.  To use the robot you will initiate a connection from your laptop, via the Olin network, to the Raspberry Pi.  Once the connection has been made, the Raspberry Pi will start talking to the robot.  All sensor data will then be streamed from the Raspberry Pi to your laptop over Olin’s wireless network.  Your laptop will process this sensor data and then send motor commands to the robot over the same network.  In this way, all important computation will be done on your laptop.  This architecture simplifies the sharing of robots and makes debugging and editing code as easy as possible.
+The robots have each been outfitted with a Raspberry Pi.  The Raspberry Pi is a low cost, Linux computer that will serve as a bridge between your laptop and the robot.  To use the robot you will initiate a connection from your laptop, via the Olin network, to the Raspberry Pi.  Once the connection has been made, the Raspberry Pi will start talking to the robot.  All sensor data will then be streamed from the Raspberry Pi to your laptop over Olin's wireless network.  Your laptop will process this sensor data and then send motor commands to the robot over the same network.  In this way, all important computation will be done on your laptop.  This architecture simplifies the sharing of robots and makes debugging and editing code as easy as possible.
 
-Since you are not modifying the code running on the Raspberry Pi, each robot will function identically (i.e. there is no software you need to modify on the robot).  While we do have enough robots (18) to give each table their own robot, that wouldn’t be optimal.  For example, sometimes your robot will run out of batteries, and you’ll want to grab another robot while yours charges.
+Since you are not modifying the code running on the Raspberry Pi, each robot will function identically (i.e. there is no software you need to modify on the robot).  While we do have enough robots (18) to give each table their own robot, that wouldn't be optimal.  For example, sometimes your robot will run out of batteries, and you'll want to grab another robot while yours charges.
 
-We’ll be programming the robots using ROS.  ROS is a powerful, open-source framework for robotics that has been widely adopted in both industry and academia.  ROS runs natively on Linux, however, we are supporting Windows and Mac OSX via Docker.  Therefore, you can connect to the robots through Windows, Linux, or Macc OSX.
+We'll be programming the robots using ROS.  ROS is a powerful, open-source framework for robotics that has been widely adopted in both industry and academia.  ROS runs natively on Linux, however, we are supporting Windows and Mac OSX via Docker.  Therefore, you can connect to the robots through Windows, Linux, or Mac OSX.
 
 ## Environment Setup
 
@@ -22,7 +22,7 @@ The purpose of this document is to get you up and running with your Neato robot.
 
 ## Target Environment
 
-ROS supports several programming languages out of the box, including C++, Python, and Java.  Additionally, MATLAB's Robotics System Toolbox includes support for ROS as well.  In this document and in this module, we will walk you through setting up your environment to connect to the robots using Windows, and we will show you how to program the robots using MATLAB.  Some folks, especially those in SoftDes, may want to use Ubuntu instead.  This is totally fine, and we have instructions [on how to setup your environment for Ubuntu](#notes-for-working-in-linux).  If you'd like, you can also use Mac OSX.  You may be tempted to use Python to program the robots, however, we discourage you from doing so.  The reason is that we will have a lot of scaffolding / tutorials written in MATLAB, and the extra effort in mapping things over to Python is a hurdle that we don’t want you to have to contend with.  Additionally, there are some things we will be doing with the robots that will work better in MATLAB (e.g., the operations may be faster, visualization / debugging may be easier).
+ROS supports several programming languages out of the box, including C++, Python, and Java.  Additionally, MATLAB's Robotics System Toolbox includes support for ROS as well.  In this document and in this module, we will walk you through setting up your environment to connect to the robots using Windows, and we will show you how to program the robots using MATLAB.  Some folks, especially those in SoftDes, may want to use Ubuntu instead.  This is totally fine, and we have instructions [on how to setup your environment for Ubuntu](#notes-for-working-in-linux).  If you'd like, you can also use Mac OSX.  You may be tempted to use Python to program the robots, however, we discourage you from doing so.  The reason is that we will have a lot of scaffolding / tutorials written in MATLAB, and the extra effort in mapping things over to Python is a hurdle that we don't want you to have to contend with.  Additionally, there are some things we will be doing with the robots that will work better in MATLAB (e.g., the operations may be faster, visualization / debugging may be easier).
 
 ## Docker Setup
 
@@ -30,15 +30,15 @@ ROS supports several programming languages out of the box, including C++, Python
 
 For lots of folks, you will be able to skip this step, but we have noticed that some of the student Dell laptops will not be able to complete the Docker install process without doing these steps.  In any case, these steps do not hurt to do even if you could have gone through the installation without performing them.  As a result, we encourage you to do them.  If you are interested in why we have to do this, you can check out the Docker help article [Manually Enable Docker for Windows Prerequisites](https://success.docker.com/article/manually-enable-docker-for-windows-prerequisites).
 
-In this step you'll be manually enable the Hyper-V and Container Features, which are both necessary for Docker.  First, run powershell by typing "powershell" into the windows search bar and then selecting "Run as Administrator" in the menu that appears to the right.  
+In this step you'll be manually enable the Hyper-V and Container Features, which are both necessary for Docker.  First, run PowerShell by typing "powershell" into the windows search bar and then selecting "Run as Administrator" in the menu that appears to the right.  
 
-In the powershell window that pops up, type the following two commands (tip: when asked if you want to restart your computer after entering the first command, answer "no", and then answer "yes" to the same question after entering the second command.  This will save you one reboot).
+In the PowerShell window that pops up, type the following two commands (tip: when asked if you want to restart your computer after entering the first command, answer "no", and then answer "yes" to the same question after entering the second command.  This will save you one reboot).
 
 ```powershell
-Enable-WindowsOptionalFeature -Online -FeatureName containers –All
-Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Hyper-V –All
+Enable-WindowsOptionalFeature -Online -FeatureName containers -All
+Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Hyper-V -All
 ```
-You will likely need to restart your computer after completing these steps. Once you've completed the restart process, you can runthe Docker installer.
+You will likely need to restart your computer after completing these steps. Once you've completed the restart process, you can run the Docker installer.
 
 ### Running the Docker Installer
 
@@ -52,11 +52,11 @@ Once the install is complete you may be asked to restart your computer.
 
 ### Making Sure Docker is Setup Properly and Troubleshooting
 
-Once the Docker installation has completed (and you have possibly restarted your computer), you should run Docker desktop by either clicking on its icon on your Desktop (the icon looks like a smiling whale) or from the Windows 10 start menu.  If everything is working properly, you will see a message pop up that says something like “Docker is Running.  Open PowerShell to start hacking” (it takes a bit of time for this to show up upon reboot, so be patient). Sometimes Docker will say that it will take a few seconds to be up and running, but in our experience it often takes longer. 
+Once the Docker installation has completed (and you have possibly restarted your computer), you should run Docker desktop by either clicking on its icon on your Desktop (the icon looks like a smiling whale) or from the Windows 10 start menu.  If everything is working properly, you will see a message pop up that says something like "Docker is Running.  Open PowerShell to start hacking" (it takes a bit of time for this to show up upon reboot, so be patient). Sometimes Docker will say that it will take a few seconds to be up and running, but in our experience it often takes longer. 
 
-You can also check the status of Docker by cicking on the Docker Desktop icon in the status bar at bottom-right of your screen.
+You can also check the status of Docker by clicking on the Docker Desktop icon in the status bar at bottom-right of your screen.
 
-As a final check, type the following command into PowerShelll (which you can open via the Windows search box).
+As a final check, type the following command into PowerShell (which you can open via the Windows search box).
 
 ```powershell
 docker run hello-world
@@ -69,13 +69,13 @@ Hello from Docker!
 This message shows that your installation appears to be working correctly.
 ```
 
-#### Docker Installer Got Stuck "Deploying Required Windows Features"
+#### Issue: Docker Installer Got Stuck "Deploying Required Windows Features"
 
-First, if you are having any issues with any of this (e.g., installing Docker), e-mail the QEA teaching team with a description of the problem!  If you ran into this particular issue, it is likely because you need to manually enable the requried windows features as described in [this previous section](#highly-recommended-pre-install-instructions).
+First, if you are having any issues with any of this (e.g., installing Docker), e-mail the QEA teaching team with a description of the problem!  If you ran into the issue where the installer got stuck, it is likely because you need to manually enable the required windows features as described in [this previous section](#highly-recommended-pre-install-instructions).
 
-#### Docker Still Won't Start 
+#### Issue: Docker Still Won't Start 
 
-There are some reports that Windows security features are interfering with the Virtual Machine software that Docker uses.  If Docker still won't start properly (i.e., as indicated when you click on the Docker Desktop icon or when you try to run the hello-world image), try the following steps.
+There are some reports that Windows security features are interfering with the Virtual Machine software that Docker uses.  If Docker still won't start properly (e.g., as indicated when you click on the Docker Desktop icon or when you try to run the hello-world image), try the following steps.
 
 
 1. Open "Window Security"
@@ -85,16 +85,16 @@ There are some reports that Windows security features are interfering with the V
 5. Locate "C:\WINDOWS\System32\vmcompute.exe" in the list and expand it
 6. Click "Edit"
 7. Scroll down to "Code flow guard (CFG)" and uncheck "Override system settings"
-8. Start vmcompute from an administrator powershell
+8. Start vmcompute from an administrator PowerShell
 ```powershell
 net start vmcompute
 ```
 
-### Downloading the QEA Docker Images
+## Downloading the QEA Docker Images
 
-Note: We recommend doing this on the Olin network. The resulting series of downloads should take less than 10min, if it gets completely stuck for longer than that, just close the window and retry. These downloads are the “container” of code that has what’s called an “image”--a collection of root filesystem changes and execution parameters. These commands allow your computer and the robot to communicate with each other via MATLAB. 
+For a typical broadband Internet connection, the resulting series of downloads should take less than 10min.  If it gets completely stuck for longer than that, just close the window and retry. These downloads are the "container" of code that has what's called an "image"--a collection of root filesystem changes and execution parameters. These commands allow your computer and the robot to communicate with each other via MATLAB. 
 
-Assuming Docker is working properly, open the windows “Run” dialog box by hitting the Windows key and ‘r’ simultaneously.  Type (or cut and paste) the following command into the textbox that pops up and then hit enter (note: you can also use powershell for theses commands if you commit the "cmd /c" and type them directly into powershell).
+Assuming Docker is working properly, open the windows "Run" dialog box by hitting the Windows key and 'r' simultaneously.  Type (or cut and paste) the following command into the textbox that pops up and then hit enter (note: you can also use PowerShell for these commands if you commit the "cmd /c" and type them directly into Powershell).
 
 
 ```
@@ -128,7 +128,7 @@ da5d3d671a39: Pull complete
 330cdcf8eb64: Pull complete 
 52764e418589: Pull complete
 ```
-Repeat the processs above (i.e., run them in them ussing the "Run" dialog box) for each of the following three commands to download the images necessary for each of the robot challenges.
+Repeat the process above (i.e., run them in them using the "Run" dialog box) for each of the following three commands to download the images necessary for each of the robot challenges.
 
 ```
 cmd /c docker pull qeacourse/robodocker:actual
@@ -148,17 +148,17 @@ We will be using Xpra to view the simulated robot.  Follow the [download and ins
 
 ## Checking Your Firewall Settings
 
-In order to allow MATLAB to properly communicate with Docker, you need to make sure you have the right firewall settings.  When you run MATLAB for the first time, you were asked whether or not to allow incoming connections to this application.  If you selected “yes”, you are good.  If you selected “no”, or if you don’t remember what you selected (which is probably most people!), then we need to make sure you have the right settings.
+In order to allow MATLAB to properly communicate with Docker, you need to make sure you have the right firewall settings.  When you run MATLAB for the first time, you were asked whether or not to allow incoming connections to this application.  If you selected "yes", you are good.  If you selected "no", or if you don't remember what you selected (which is probably most people!), then we need to make sure you have the right settings.
 
-1. Type wf.msc into the run dialog (remember, hit the Windows key and “r” simultaneously to bring up the dialog).  This will bring up a dialog that shows your firewall settings.
+1. Type wf.msc into the run dialog (remember, hit the Windows key and "r" simultaneously to bring up the dialog).  This will bring up a dialog that shows your firewall settings.
 2. Click on Inbound Rules
-3. Browse the list for two rules that say “MATLAB R2019a” (assuming you are using this version of MATLAB.  If you are using a different version of MATLAB, you should look for rules labeled with that version.). If you do not see MATLAB, go on and come back to this later once you have connected to the robots.
+3. Browse the list for two rules that say "MATLAB R2019a" (assuming you are using this version of MATLAB.  If you are using a different version of MATLAB, you should look for rules labeled with that version.). If you do not see MATLAB, go on and come back to this later once you have connected to the robots.
 4. Click on one of these two rules (you will repeat this process for both), and click the properties button on the right panel of the window.
 5. Make sure the following settings are chosen:
-* Under the “General” tab, make sure “Enabled” is checked and that “Action” is set to “Allow the connection”.
-* Under the “Advanced” tab, make sure that “Domain”, “Private”, and “Public” are all checked and make sure that “Edge traversal” is set to “Defer to user”.
+* Under the "General" tab, make sure "Enabled" is checked and that "Action" is set to "Allow the connection".
+* Under the "Advanced" tab, make sure that "Domain", "Private", and "Public" are all checked and make sure that "Edge traversal" is set to "Defer to user".
 Repeat step 5 for the second firewall rule.
-6. If you have done this correctly, your “Inbound Rules” list should look like the ones below (note: on this computer the version of MATLAB was R2016a).
+6. If you have done this correctly, your "Inbound Rules" list should look like the ones below (note: on this computer the version of MATLAB was R2016a).
 ![an image showing valid security settings](Pictures/securitysettings.png)
 
 ## Running the Neato Simulator
@@ -200,7 +200,7 @@ Checklist before performing this step:
 
 Checklist before performing this step:
 
-1. Make sure the Neato's batteries are charged.  To test this, pull the Neato away from it's charging station and for the newer Neato’s hit the button near the front bumper of the Neato that has the home icon on it. For the older Neato’s hit the larger orange power button.  The display should illuminate revealing a battery capacity indicator.  Sometimes you will have to click the button below the display to dismiss any errors that show up on the Neato’s screen before the battery level is displayed.
+1. Make sure the Neato's batteries are charged.  To test this, pull the Neato away from it's charging station and for the newer Neato's hit the button near the front bumper of the Neato that has the home icon on it. For the older Neato's hit the larger orange power button.  The display should illuminate revealing a battery capacity indicator.  Sometimes you will have to click the button below the display to dismiss any errors that show up on the Neato’s screen before the battery level is displayed.
 
 ### Step 3: Connect the USB battery pack to the Raspberry Pi's USB cable.
 
@@ -221,11 +221,11 @@ Open the run dialog (by hitting Windows key and “r”).  Paste in the followin
 cmd /c docker run -e HOST=192.168.16.68 --rm --sysctl net.ipv4.ip_local_port_range="32768 33000" -p 11311:11311 -p 14500:14500 -p 32768-33000:32768-33000 -it qeacourse/robodocker:actual
 ```
 
-You can verify this worked because the robot will start making a quiet whirring sound and the laser (visible from the side) will start rotating. You should also see in the command window that you are “connected”.
+You can verify this worked because the robot will start making a quiet whirring sound and the laser (visible from the side) will start rotating. You should also see in the command window that you are "connected".
 
 ### Step 5: Shutting Down the Raspberry Pi
 
-When you are done working with the robot it is important to properly shutdown the raspberry pi. DO NOT just unplug the battery. To shutdown the pi, push the “down” button until you see the message “Press select to Shutdown”. Press select and wait for the green “ACT” LED on the left side of the Pi to flash steadily ten times then stay off. It is then safe to unplug the battery.
+When you are done working with the robot it is important to properly shutdown the raspberry pi. DO NOT just unplug the battery. To shutdown the pi, push the "down" button until you see the message "Press select to Shutdown". Press select and wait for the green "ACT" LED on the left side of the Pi to flash steadily ten times then stay off. It is then safe to unplug the battery.
 
 <p style="text-align: center;">
 <img alt="Visual instructions for turning off the Raspberry Pi" src="Pictures/s7vHYkMHZEmtoXhtdLxNdig.png"/>
@@ -274,7 +274,7 @@ As always, you can use Ctrl-C to terminate the execution of any Matlab script so
 
 ### Your First MATLAB Robotics Program
 
-Let’s go ahead and create a program to drive the robot forward until it rams into something.  To do this we’ll need to first learn how to control the robot’s wheels.  In order to send a velocity to each of the robot’s wheels we will need to create a publisher for the /raw_vel topic.
+Let's go ahead and create a program to drive the robot forward until it rams into something.  To do this we'll need to first learn how to control the robot's wheels.  In order to send a velocity to each of the robot's wheels we will need to create a publisher for the /raw_vel topic.
 
 ```MATLAB
 pub = rospublisher('/raw_vel');
@@ -291,7 +291,7 @@ send(pub, msg);
 This message corresponds to telling the robot’s wheels to each move forward at a velocity of 0.1 m/s.
 
 
-If your robot is not moving, return to your firewall settings and make sure ALL MATLAB inbound rules are as described above. (There could be new inbound rules now that you’ve connected to the robot.)
+If your robot is not moving, return to your firewall settings and make sure ALL MATLAB inbound rules are as described above. (There could be new inbound rules now that you've connected to the robot.)
 
 
 We can create subscribers to topics using the rossubscriber command.
@@ -332,7 +332,7 @@ Warning: we haven't tested the MATLAB installation for Linux lately.  Please dir
 First, make sure you are running Matlab r2016b or later. The installer can be found on Public, as described here on the [IT Wiki Page](http://wikis.olin.edu/linux/doku.php?id=matlab) (warning: need to be on VPN to access this page). Two tips:
 
 1. Copy the .deb file from Public to your computer before installing to make the process go much faster.
-2. If the version doesn’t get updated properly, try using the command line sudo dpkg -i Matlab_R2016b_9.1.0.441655-1.deb instead of the GUI
+2. If the version doesn't get updated properly, try using the command line sudo dpkg -i Matlab_R2016b_9.1.0.441655-1.deb instead of the GUI
 
 Follow the [Linux Docker install instructions](https://docs.docker.com/engine/installation/linux/ubuntu/#install-docker)
 
@@ -371,7 +371,7 @@ Everything else should work as with Windows.
 <img src="Pictures/raspberry_pi_b_6_0_0.jpg" width="50%"/>
 </p>
 </li>
-<li>Solution 2: if the card is fully inserted, the SD card may have become corrupted (possibly because some people didn't properly shutdown the Raspberry Pi!).  Please send me (Paul.Ruvolo@olin.edu) an e-mail and tell me which robot is having the problem.  I’ll fix it ASAP, but in the meantime just use another robot.</li>
+<li>Solution 2: if the card is fully inserted, the SD card may have become corrupted (possibly because some people didn't properly shutdown the Raspberry Pi!).  Please send me (Paul.Ruvolo@olin.edu) an e-mail and tell me which robot is having the problem.  I'll fix it ASAP, but in the meantime just use another robot.</li>
 </ul>
 
 ### *Symptom:* the raspberry Pi display's backlight is flashing on and off.
