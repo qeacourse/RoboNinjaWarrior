@@ -160,7 +160,7 @@ Open the run dialog (by hitting Windows key and “r”).  Paste in the followin
 cmd /c docker run --rm --sysctl net.ipv4.ip_local_port_range="32768 33000" -p 11311:11311 -p 14500:14500 -p 32768-33000:32768-33000 -it qeacourse/robodocker:simulated
 ```
 
-After waiting about 30 seconds for the simulator to be up and running, you can connect to visualization of the simulator using Xpra.
+After waiting about 30 seconds for the simulator to be up and running, you can connect to the visualization of the simulator using Xpra.
 
 <ol>
 <li>Open Xpra</li>
