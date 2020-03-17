@@ -325,6 +325,26 @@ while 1
 end
 ```
 
+## Tips and Tricks
+
+None of the stuff in this section is required, but we'll use it to document some
+ useful features of our setup.
+
+### Turning Off (and On) the Simulator Visualization to Reduce CPU Usage
+
+When you first fire up the Robot simulator, you'll notice that your fans may start whirring quite a bit due to increased CPU usage.  Some portion of this usage is necessary just to simulate the robot, but a the bulk of it is actually used by the graphical visualizer of the simulation (the one you connect to through xpra).  If you want to be able to toggle the visualizer on and off (and thereby reduce the CPU usage when the visualizer is off), you can use the following commands.
+
+To turn off the simulator visualizer, run the following command in a PowerShell.
+```powershell
+docker exec neato /bin/bash -c "pkill gzclient; pkill xpra"
+```
+
+To turn the simulator visualizer back on (note: it's on by default), run the following command in a PowerShell.
+```powershell
+docker exec neato /bin/bash -c "xpra start --start=gzclient --bind-tcp=0.0.0.0:14500"
+```
+*Note:* to actually see the visualization, you will have to connect to it using Xpra as described in the [Running the Neato Simulator](#running-the-neato-simulator) section.
+
 ## Notes for working in Linux
 
 Warning: we haven't tested the MATLAB installation for Linux lately.  Please direct issues to the IT helpdesk.
