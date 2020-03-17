@@ -133,7 +133,7 @@ cmd /c docker pull qeacourse/robodocker:flatland
 cmd /c docker pull qeacourse/robodocker:gauntlet
 ```
 
-## Install Xpra (only needed for simualator)
+## Install Xpra (only needed for simulator)
 
 We will be using Xpra to view the simulated robot.  Follow the [download and install instructions on the Xpra website](https://xpra.org/trac/wiki/Download)
 
