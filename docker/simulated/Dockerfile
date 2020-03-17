@@ -4,16 +4,7 @@ FROM osrf/ros:melodic-desktop-full-bionic
 MAINTAINER Paul Ruvolo Paul.Ruvolo@olin.edu
 
 ENV DEBIAN_FRONTEND=noninteractive
-ENV ROS_HOSTNAME=10.0.75.2
-
-
-#generic xforwarding instructions (can embed in dockerfile probably)
-#docker run -ti --rm \
-#       -e DISPLAY=$DISPLAY \
-#       -v /tmp/.X11-unix:/tmp/.X11-unix \
-#       firefox
-#RUN useradd -ms /bin/bash ros
-#USER ros
+ENV ROS_HOSTNAME=0.0.0.0
 
 # install ros packages
 RUN apt-get update && apt-get install -y \
@@ -51,6 +42,7 @@ RUN /bin/bash -c "source /opt/ros/melodic/setup.bash && \
 
 COPY xsession /root/.xsession
 
+# NOTE: the x11vnc stuff no longer seems to work.  For now, we are using xpra.
 # setup files required for x11vnc
 # To start the x11vnc server use: docker exec container_name x11vnc -forever -usepw -create
 RUN /bin/bash -c "mkdir ~/.vnc && \
