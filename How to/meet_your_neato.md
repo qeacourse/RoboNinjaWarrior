@@ -52,7 +52,7 @@ Once the install is complete you may be asked to restart your computer.
 
 ### Making Sure Docker is Setup Properly and Troubleshooting
 
-Once the Docker installation has completed (and you have possibly restarted your computer), You should run Docker desktop by either clicking on its icon on your Desktop (the icon looks like a smiling whale) or from the Windows 10 start menu.  If everything is working properly, you will see a message pop up that says something like “Docker is Running.  Open PowerShell to start hacking” (it takes a bit of time for this to show up upon reboot, so be patient). Sometimes Docker will say that it will take a few seconds to be up and running, but in our experience it often takes longer. 
+Once the Docker installation has completed (and you have possibly restarted your computer), you should run Docker desktop by either clicking on its icon on your Desktop (the icon looks like a smiling whale) or from the Windows 10 start menu.  If everything is working properly, you will see a message pop up that says something like “Docker is Running.  Open PowerShell to start hacking” (it takes a bit of time for this to show up upon reboot, so be patient). Sometimes Docker will say that it will take a few seconds to be up and running, but in our experience it often takes longer. 
 
 You can also check the status of Docker by cicking on the Docker Desktop icon in the status bar at bottom-right of your screen.
 
