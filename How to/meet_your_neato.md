@@ -166,7 +166,7 @@ Repeat step 5 for the second firewall rule.
 Open the run dialog (by hitting Windows key and “r”).  Paste in the following command, and hit enter (unfortunately, the command is super long, but all parts are necessary).
 
 ```
-cmd /c docker run --rm --sysctl net.ipv4.ip_local_port_range="32768 33000" -p 11311:11311 -p 14500:14500 -p 32768-33000:32768-33000 -it qeacourse/robodocker:simulated
+cmd /c docker run --name=neato --rm --sysctl net.ipv4.ip_local_port_range="32768 33000" -p 11311:11311 -p 14500:14500 -p 32768-33000:32768-33000 -it qeacourse/robodocker:simulated
 ```
 
 After waiting about 30 seconds for the simulator to be up and running, you can connect to the visualization of the simulator using Xpra.
@@ -218,7 +218,7 @@ Checklist before performing this step:
 Open the run dialog (by hitting Windows key and “r”).  Paste in the following command, and hit enter (unfortunately, the command is super long, but all parts are necessary).  Replace the part that says HOST=192.168.16.74 with the IP address of your robot (the IP address can be found from looking at the display of the Raspberry Pi on your Neato).
 
 ```
-cmd /c docker run -e HOST=192.168.16.68 --rm --sysctl net.ipv4.ip_local_port_range="32768 33000" -p 11311:11311 -p 14500:14500 -p 32768-33000:32768-33000 -it qeacourse/robodocker:actual
+cmd /c docker run --name=neato -e HOST=192.168.16.68 --rm --sysctl net.ipv4.ip_local_port_range="32768 33000" -p 11311:11311 -p 14500:14500 -p 32768-33000:32768-33000 -it qeacourse/robodocker:actual
 ```
 
 You can verify this worked because the robot will start making a quiet whirring sound and the laser (visible from the side) will start rotating. You should also see in the command window that you are "connected".
