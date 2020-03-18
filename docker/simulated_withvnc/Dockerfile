@@ -1,0 +1,5 @@
+FROM qeacourse/robodocker:simulated
+MAINTAINER Paul Ruvolo Paul.Ruvolo@olin.edu
+
+CMD /bin/bash -c "((x11vnc -forever -create) & (source ~/catkin_ws/devel/setup.bash && roslaunch neato_gazebo neato_gauntlet_world.launch))"
+
