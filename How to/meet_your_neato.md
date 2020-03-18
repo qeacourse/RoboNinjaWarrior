@@ -368,6 +368,14 @@ Follow the instructions for Windows for getting the QEA Docker images, but use t
 
 Everything else should work as with Windows.
 
+TODO: might need to shift the range of ephemeral ports used by Docker since most Linux machines use ephemeral ports in the range we have for the Windows instructions.  Ideally we will go to one range of ports for all platforms, but I have yet to test the setup on Windows (it worked on Mac and Linux).  Will try soon.
+
+To run the simuator, for example, use the following command.
+
+```bash
+docker run --name=neato --rm --sysctl net.ipv4.ip_local_port_range="32401 32767" -p 11311:11311 -p 14500:14500 -p 32401-32767:32401-32767 -it qeacourse/robodocker:simulated
+```
+
 ## Notes for Working in MacOSX
 
 Download [Docker Desktop for Mac](https://hub.docker.com/editions/community/docker-ce-desktop-mac)
