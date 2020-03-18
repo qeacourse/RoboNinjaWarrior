@@ -41,10 +41,8 @@ RUN /bin/bash -c "source /opt/ros/melodic/setup.bash && \
     
 
 COPY xsession /root/.xsession
+COPY config /usr/share/fvwm/default-config
 
-# NOTE: the x11vnc stuff no longer seems to work.  For now, we are using xpra.
-# setup files required for x11vnc
-# To start the x11vnc server use: docker exec container_name x11vnc -forever -usepw -create
 RUN /bin/bash -c "mkdir ~/.vnc && \
 		  mkdir ~/.rviz && \
 		  x11vnc -storepasswd 1234 ~/.vnc/passwd && \
@@ -54,4 +52,4 @@ COPY default.rviz ~ros/.rviz
 
 RUN /bin/bash -c "mkdir -p ~/.gazebo/models; cp -r ~/catkin_ws/src/comprobo18/neato_simulator/model/flatland ~/.gazebo/models"
 
-CMD /bin/bash -c "((sleep 10; xpra start --start=gzclient --bind-tcp=0.0.0.0:14500) & (source ~/catkin_ws/devel/setup.bash && roslaunch neato_gazebo neato_empty_world.launch))"
+CMD /bin/bash -c "((x11vnc -forever -create -autoport 5901) & (source ~/catkin_ws/devel/setup.bash && roslaunch neato_gazebo neato_empty_world.launch))"
