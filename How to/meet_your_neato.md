@@ -188,6 +188,23 @@ You can program the simulated robot using the same procedure as the physical rob
 * the /encoders topic doesn't work in the same way as on the actual Neato
 * the /accel topic doesn't work in the same way as on the actual Neato
 
+### Alternate Instructions for Linda
+
+Hi Linda, these are some instructions for testing a new version of the simulator visualization.
+
+1. In Powershell fetch the new docker image.
+```powershell
+docker pull qeacourse/robodocker:simulatedvnc
+```
+2. [Download and Install VNC Connect](https://www.realvnc.com/download/file/viewer.files/VNC-Viewer-6.20.113-Windows.exe)
+
+3. Run the new QEA docker image in a PowerShell.
+```powershell
+docker run --rm --sysctl net.ipv4.ip_local_port_range="32401 32767" -p 11311:11311 -p 5901:5901 -p 32401-32767:32401-32767 -it qeacourse/robodocker:simulatedvnc
+```
+
+4. Open up the VNC Viewer app that you just installed and type in "localhost:5901" into the the line that says "Enter a VNC Server address or search".  Hit the enter key to connect.
+
 ## Connecting to the Neatos
 
 ### Step 1: Grab a battery for the raspberry Pi
