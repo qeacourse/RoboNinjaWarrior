@@ -166,7 +166,7 @@ Repeat step 5 for the second firewall rule.
 Open the run dialog (by hitting Windows key and “r”).  Paste in the following command, and hit enter (unfortunately, the command is super long, but all parts are necessary).
 
 ```
-cmd /c docker run --name=neato --rm --sysctl net.ipv4.ip_local_port_range="32768 33000" -p 11311:11311 -p 14500:14500 -p 32768-33000:32768-33000 -it qeacourse/robodocker:simulated
+cmd /c docker run --name=neato --rm --sysctl net.ipv4.ip_local_port_range="32401 32767" -p 11311:11311 -p 14500:14500 -p 32401-32767:32401-32767 -it qeacourse/robodocker:simulated
 ```
 
 After waiting about 30 seconds for the simulator to be up and running, you can connect to the visualization of the simulator using Xpra.
@@ -218,7 +218,7 @@ Checklist before performing this step:
 Open the run dialog (by hitting Windows key and “r”).  Paste in the following command, and hit enter (unfortunately, the command is super long, but all parts are necessary).  Replace the part that says HOST=192.168.16.74 with the IP address of your robot (the IP address can be found from looking at the display of the Raspberry Pi on your Neato).
 
 ```
-cmd /c docker run --name=neato -e HOST=192.168.16.68 --rm --sysctl net.ipv4.ip_local_port_range="32768 33000" -p 11311:11311 -p 14500:14500 -p 32768-33000:32768-33000 -it qeacourse/robodocker:actual
+cmd /c docker run --name=neato -e HOST=192.168.16.68 --rm --sysctl net.ipv4.ip_local_port_range="32401 32767" -p 11311:11311 -p 14500:14500 -p 32401-32767:32401-32767 -it qeacourse/robodocker:actual
 ```
 
 You can verify this worked because the robot will start making a quiet whirring sound and the laser (visible from the side) will start rotating. You should also see in the command window that you are "connected".
@@ -367,14 +367,6 @@ Then restart computer.
 Follow the instructions for Windows for getting the QEA Docker images, but use the terminal instead of Powershell.  Any instructions for typing things into the *run* dialog can be modified by removing "cmd /c" and entering the command into the terminal.  The same modification goes for connecting to the robot or simulator (remove "cmd /c" and enter the command into the terminal).
 
 Everything else should work as with Windows.
-
-TODO: might need to shift the range of ephemeral ports used by Docker since most Linux machines use ephemeral ports in the range we have for the Windows instructions.  Ideally we will go to one range of ports for all platforms, but I have yet to test the setup on Windows (it worked on Mac and Linux).  Will try soon.
-
-To run the simuator, for example, use the following command.
-
-```bash
-docker run --name=neato --rm --sysctl net.ipv4.ip_local_port_range="32401 32767" -p 11311:11311 -p 14500:14500 -p 32401-32767:32401-32767 -it qeacourse/robodocker:simulated
-```
 
 ## Notes for Working in MacOSX
 
