@@ -3,3 +3,4 @@
 fvwm &
 sleep 2
 xterm &
+gazebo &
