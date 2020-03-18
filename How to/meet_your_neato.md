@@ -94,7 +94,7 @@ net start vmcompute
 
 For a typical broadband Internet connection, the resulting series of downloads should take less than 10min.  If it gets completely stuck for longer than that, just close the window and retry. These downloads are the "container" of code that has what's called an "image"--a collection of root filesystem changes and execution parameters. These commands allow your computer and the robot to communicate with each other via MATLAB. 
 
-Assuming Docker is working properly, open the windows "Run" dialog box by hitting the Windows key and 'r' simultaneously.  Type (or cut and paste) the following command into the textbox that pops up and then hit enter (note: you can also use PowerShell for these commands if you commit the "cmd /c" and type them directly into Powershell).
+Assuming Docker is working properly, open the windows "Run" dialog box by hitting the Windows key and 'r' simultaneously.  Type (or cut and paste) the following command into the textbox that pops up and then hit enter (note: you can also use PowerShell for these commands if you omit the "cmd /c" and type them directly into Powershell).
 
 
 ```
