@@ -205,6 +205,8 @@ docker run --rm --sysctl net.ipv4.ip_local_port_range="32401 32767" -p 11311:113
 
 4. Open up the VNC Viewer app that you just installed and type in "localhost:5901" into the the line that says "Enter a VNC Server address or search".  Hit the enter key to connect.
 
+5. You will probably see a warning about your connection not being encrypted.  You can safely go ahead and click "continue".
+
 ## Connecting to the Neatos
 
 ### Step 1: Grab a battery for the raspberry Pi
