@@ -84,7 +84,7 @@ There are some reports that Windows security features are interfering with the V
 4. Switch to "Program settings" tab
 5. Locate "C:\WINDOWS\System32\vmcompute.exe" in the list and expand it
 6. Click "Edit"
-7. Scroll down to "Code flow guard (CFG)" and uncheck "Override system settings"
+7. Scroll down to "Code flow guard (CFG)" and make sure it is set to "Override system settings" and the toggle immediately below is set to "Off".
 8. Start vmcompute from an administrator PowerShell
 ```powershell
 net start vmcompute
