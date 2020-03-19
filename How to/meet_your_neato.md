@@ -90,15 +90,15 @@ There are some reports that Windows security features are interfering with the V
 net start vmcompute
 ```
 
-## Downloading the QEA Docker Images
+## Downloading the QEA Robot Software
 
 For a typical broadband Internet connection, the resulting series of downloads should take less than 10min.  If it gets completely stuck for longer than that, just close the window and retry. These downloads are the "container" of code that has what's called an "image"--a collection of root filesystem changes and execution parameters. These commands allow your computer and the robot to communicate with each other via MATLAB. 
 
-Assuming Docker is working properly, open the windows "Run" dialog box by hitting the Windows key and 'r' simultaneously.  Type (or cut and paste) the following command into the textbox that pops up and then hit enter (note: you can also use PowerShell for these commands if you omit the "cmd /c" and type them directly into Powershell).
+Assuming Docker is working properly, open PowerShell and enter the following command and then hit enter (we recommend copy / pasting the commands in this document as they get quite long).
 
 
-```
-cmd /c docker pull qeacourse/robodocker:simulated
+```powershell
+docker pull qeacourse/robodocker:simulated
 ```
 
 You will likely see output resembling the following.
@@ -128,23 +128,19 @@ da5d3d671a39: Pull complete
 330cdcf8eb64: Pull complete 
 52764e418589: Pull complete
 ```
-Repeat the process above (i.e., run them in them using the "Run" dialog box) for each of the following three commands to download the images necessary for each of the robot challenges.
+To download the software necessary for each of the robot challenges, execute the following three commands in PowerShell.
 
-```
-cmd /c docker pull qeacourse/robodocker:actual
-```
-
-```
-cmd /c docker pull qeacourse/robodocker:flatland
+```powershell
+docker pull qeacourse/robodocker:actual
 ```
 
-```
-cmd /c docker pull qeacourse/robodocker:gauntlet
+```powershell
+docker pull qeacourse/robodocker:flatland
 ```
 
-## Install Xpra (only needed for simulator)
-
-We will be using Xpra to view the simulated robot.  Follow the [download and install instructions on the Xpra website](https://xpra.org/trac/wiki/Download)
+```powershell
+docker pull qeacourse/robodocker:gauntlet
+```
 
 ## Checking Your Firewall Settings
 
@@ -161,51 +157,33 @@ Repeat step 5 for the second firewall rule.
 6. If you have done this correctly, your "Inbound Rules" list should look like the ones below (note: on this computer the version of MATLAB was R2016a).
 ![an image showing valid security settings](Pictures/securitysettings.png)
 
-## Running the Neato Simulator
+## Using the Neato Simulator
 
-Open the run dialog (by hitting Windows key and “r”).  Paste in the following command, and hit enter (unfortunately, the command is super long, but all parts are necessary).
+### Install VNC Connect
 
+In order to view the robot simulator, you will need to download a VNC Viewer -- a special program that allows you to connect to the graphical interface of another computer.  In this case we will be using it to connect to the graphical program running inside of Docker.
+
+There are quite a few VNC Viewers.  We recommend VNC Connect from Real VNC.  Here is a [direct link to the Windows installer for VNC Connect](https://www.realvnc.com/download/file/viewer.files/VNC-Viewer-6.20.113-Windows.exe).
+
+### Running the Simulator
+
+
+1. Copy / paste the following command into a PowerShell window and hit enter (unfortunately, the command is super long, but all parts are necessary).
+```powershell
+docker run --rm --sysctl net.ipv4.ip_local_port_range="32401 32767" -p 11311:11311 -p 5901:5901 -p 32401-32767:32401-32767 -it qeacourse/robodocker:simulated
 ```
-cmd /c docker run --name=neato --rm --sysctl net.ipv4.ip_local_port_range="32401 32767" -p 11311:11311 -p 14500:14500 -p 32401-32767:32401-32767 -it qeacourse/robodocker:simulated
-```
 
-After waiting about 30 seconds for the simulator to be up and running, you can connect to the visualization of the simulator using Xpra.
+2. To view the simulated robot, first open the VNC Connect app and click through the welcome screen (if this is your first time using it).  Once you are at the main screen of the program, type *localhost:5901* into the the box that says "Enter a VNC Server address or search".  Hit the enter key to connect.
 
-<ol>
-<li>Open Xpra</li>
-<li>Cick "connect"</li>
-<li>Make sure "Mode" is set to "TCP", server should be "yourname" @ localhost : 14500 (note: It doesn't actually matter what you put for yourname, just put something).  Leave "Server Password" blank.  Your window should look like this.
-<p align="center">
-<img alt="the Xpra window if you configured it properly" src="Pictures/xpra.png"/>
-</p>
-</li>
-<li>Click "Connect"</li>
-</ol>
+3. VNC Connect may show you a  warning about your connection not being encrypted.  You can safely go ahead and click "continue".
+
+### Programming the Simulated Robot
 
 You can program the simulated robot using the same procedure as the physical robot with the following differences (we are actively working to eliminate these discrepancies so that the simulator will be as close to the physical robot as possible).
 
 * the /bump topic doesn't work in the same way as on the actual Neato
 * the /encoders topic doesn't work in the same way as on the actual Neato
 * the /accel topic doesn't work in the same way as on the actual Neato
-
-### Alternate Instructions for Linda
-
-Hi Linda, these are some instructions for testing a new version of the simulator visualization.
-
-1. In Powershell fetch the new docker image.
-```powershell
-docker pull qeacourse/robodocker:simulatedvnc
-```
-2. [Download and Install VNC Connect](https://www.realvnc.com/download/file/viewer.files/VNC-Viewer-6.20.113-Windows.exe)
-
-3. Run the new QEA docker image in a PowerShell.
-```powershell
-docker run --rm --sysctl net.ipv4.ip_local_port_range="32401 32767" -p 11311:11311 -p 5901:5901 -p 32401-32767:32401-32767 -it qeacourse/robodocker:simulatedvnc
-```
-
-4. Open up the VNC Viewer app that you just installed and type in "localhost:5901" into the the line that says "Enter a VNC Server address or search".  Hit the enter key to connect.
-
-5. You will probably see a warning about your connection not being encrypted.  You can safely go ahead and click "continue".
 
 ## Connecting to the Neatos
 
@@ -234,10 +212,10 @@ Checklist before performing this step:
 3. Raspberry pi display shows that the signal strength of the Neato's connection is at least 70 (the max is 99) for the wifi dongles with antennas, and at least 50 (max is 65) for the dongles without antennas.  Note: If the signal strength is too low see troubleshooting section for more information.
 4. Your laptop is either connected to the ethernet or the OLIN wifi network (Note: this will not work if you are on OLIN-GUEST).
 
-Open the run dialog (by hitting Windows key and “r”).  Paste in the following command, and hit enter (unfortunately, the command is super long, but all parts are necessary).  Replace the part that says HOST=192.168.16.74 with the IP address of your robot (the IP address can be found from looking at the display of the Raspberry Pi on your Neato).
+Open PowerShell, enter the following command, and hit enter (unfortunately, the command is super long, but all parts are necessary).  Replace the part that says HOST=192.168.16.68 with the IP address of your robot (the IP address can be found from looking at the display of the Raspberry Pi on your Neato).
 
-```
-cmd /c docker run --name=neato -e HOST=192.168.16.68 --rm --sysctl net.ipv4.ip_local_port_range="32401 32767" -p 11311:11311 -p 14500:14500 -p 32401-32767:32401-32767 -it qeacourse/robodocker:actual
+```powershell
+docker run -e HOST=192.168.16.68 --rm --sysctl net.ipv4.ip_local_port_range="32401 32767" -p 11311:11311 -p 32401-32767:32401-32767 -it qeacourse/robodocker:actual
 ```
 
 You can verify this worked because the robot will start making a quiet whirring sound and the laser (visible from the side) will start rotating. You should also see in the command window that you are "connected".
@@ -254,7 +232,7 @@ When you are done working with the robot it is important to properly shutdown th
 
 Next, fire up MATLAB.  In order to connect MATLAB to the robot, type the following into the MATLAB command window.
 
-```MATLAB
+```
 rosinit('localhost',11311, 'NodeHost','host.docker.internal')
 ```
 
@@ -266,14 +244,14 @@ Initializing global node /matlab_global_node_38893 with NodeURI http://host.dock
 
 Now that you are connected, you can see the list of topics by typing the following command into the command window.
 
-```MATLAB
+```
 rostopic list
 ```
 
-Each of these topics is either a sensor channel (e.g., laser scanner, bump sensor, wheel encoder) or a motor control channel (e.g., cmd_vel, raw_vel, etc.).  Go ahead and display the data flowing across the /bump topic by typing the following command in the command window.
+Each of these topics is either a sensor channel (e.g., laser scanner, bump sensor, wheel encoder) or a motor control channel (e.g., ``cmd_vel``, ``raw_vel``, etc.).  Go ahead and display the data flowing across the ``/bump`` topic by typing the following command in the command window.
 
 
-```MATLAB
+```
 rostopic echo /bump
 ```
 
@@ -295,13 +273,13 @@ As always, you can use Ctrl-C to terminate the execution of any Matlab script so
 
 Let's go ahead and create a program to drive the robot forward until it rams into something.  To do this we'll need to first learn how to control the robot's wheels.  In order to send a velocity to each of the robot's wheels we will need to create a publisher for the /raw_vel topic.
 
-```MATLAB
+```
 pub = rospublisher('/raw_vel');
 ```
 
 Once we have a publisher, we can create a message suitable for sending on that topic.
 
-```MATLAB
+```
 msg = rosmessage(pub);
 msg.Data = [.1, .1];
 send(pub, msg);
@@ -315,14 +293,14 @@ If your robot is not moving, return to your firewall settings and make sure ALL 
 
 We can create subscribers to topics using the rossubscriber command.
 
-```MATLAB
+```
 sub_bump = rossubscriber('/bump');
 ```
 
 We can put these two together to create a simple program where the robot will move forward with a constant velocity (in this case 0.1 m/s) until one of the bump sensors is triggered.  You can put this code in a MATLAB script (e.g., driveUntilBump.m).
 
 
-```MATLAB
+```
 pub = rospublisher('/raw_vel');
 sub_bump = rossubscriber('/bump');
 msg = rosmessage(pub);
@@ -344,26 +322,6 @@ while 1
 end
 ```
 
-## Tips and Tricks
-
-None of the stuff in this section is required, but we'll use it to document some
- useful features of our setup.
-
-### Turning Off (and On) the Simulator Visualization to Reduce CPU Usage
-
-When you first fire up the Robot simulator, you'll notice that your fans may start whirring quite a bit due to increased CPU usage.  Some portion of this usage is necessary just to simulate the robot, but a the bulk of it is actually used by the graphical visualizer of the simulation (the one you connect to through xpra).  If you want to be able to toggle the visualizer on and off (and thereby reduce the CPU usage when the visualizer is off), you can use the following commands.
-
-To turn off the simulator visualizer, run the following command in a PowerShell.
-```powershell
-docker exec neato /bin/bash -c "pkill gzclient; pkill xpra"
-```
-
-To turn the simulator visualizer back on (note: it's on by default), run the following command in a PowerShell.
-```powershell
-docker exec neato /bin/bash -c "xpra start --start=gzclient --bind-tcp=0.0.0.0:14500"
-```
-*Note:* to actually see the visualization, you will have to connect to it using Xpra as described in the [Running the Neato Simulator](#running-the-neato-simulator) section.
-
 ## Notes for working in Linux
 
 Warning: we haven't tested the MATLAB installation for Linux lately.  Please direct issues to the IT helpdesk.
@@ -379,19 +337,17 @@ You want Docker CE, not Docker EE
 
 ### Post installation steps
 
-Perform the steps to [manage Docker as a non root user](https://docs.docker.com/engine/installation/linux/linux-postinstall/#manage-docker-as-a-non-root-user)
+Perform the steps to [manage Docker as a non root user](https://docs.docker.com/engine/installation/linux/linux-postinstall/#manage-docker-as-a-non-root-user). Then restart your computer.
 
-Then restart computer.
+Follow the instructions earlier in this document, but use terminal instead of PowerShell to run the relevant commands.  If you want to connect to the simulator, you'll also want to get the [Linux version of VNC Connect](https://www.realvnc.com/download/file/viewer.files/VNC-Viewer-6.20.113-Linux-x86.deb).
 
-Follow the instructions for Windows for getting the QEA Docker images, but use the terminal instead of Powershell.  Any instructions for typing things into the *run* dialog can be modified by removing "cmd /c" and entering the command into the terminal.  The same modification goes for connecting to the robot or simulator (remove "cmd /c" and enter the command into the terminal).
-
-Everything else should work as with Windows.
+Everything else should work the same as in Windows.
 
 ## Notes for Working in MacOSX
 
 Download [Docker Desktop for Mac](https://hub.docker.com/editions/community/docker-ce-desktop-mac)
 
-Follow the instructions for Windows for getting the QEA Docker images, but use the terminal instead of Powershell.  Any instructions for typing things into the *run* dialog can be modified by removing "cmd /c" and entering the command into the terminal.  The same modification goes for connecting to the robot or simulator (remove "cmd /c" and enter the command into the terminal).
+Follow the instructions earlier in this document, but use terminal instead of PowerShell to run the relevant commands.  If you want to connect to the simulator, you'll also want to get the [Mac OSX version of VNC Connect](https://www.realvnc.com/download/file/viewer.files/VNC-Viewer-6.20.113-MacOSX-x86_64.dmg).
 
 Everything else should work as with Windows.
 
