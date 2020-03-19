@@ -181,9 +181,10 @@ docker run --rm --sysctl net.ipv4.ip_local_port_range="32401 32767" -p 11311:113
 
 You can program the simulated robot using the same procedure as the physical robot with the following differences (we are actively working to eliminate these discrepancies so that the simulator will be as close to the physical robot as possible).
 
-* the /bump topic doesn't work in the same way as on the actual Neato
-* the /encoders topic doesn't work in the same way as on the actual Neato
-* the /accel topic doesn't work in the same way as on the actual Neato
+* the ``/raw_vel`` topic doesn't work in the same way as on the actual Neato
+* the ``/bump`` topic doesn't work in the same way as on the actual Neato
+* the ``/encoders`` topic doesn't work in the same way as on the actual Neato
+* the ``/accel`` topic doesn't work in the same way as on the actual Neato
 
 ## Connecting to the Neatos
 
@@ -244,16 +245,15 @@ Initializing global node /matlab_global_node_38893 with NodeURI http://host.dock
 
 Now that you are connected, you can see the list of topics by typing the following command into the command window.
 
-```
+{% highlight matlab %}
 rostopic list
-```
+{% endhighlight %}
 
 Each of these topics is either a sensor channel (e.g., laser scanner, bump sensor, wheel encoder) or a motor control channel (e.g., ``cmd_vel``, ``raw_vel``, etc.).  Go ahead and display the data flowing across the ``/bump`` topic by typing the following command in the command window.
 
-
-```
+{% highlight matlab %}
 rostopic echo /bump
-```
+{% endhighlight %}
 
 You should see output like this.
 
@@ -271,19 +271,19 @@ As always, you can use Ctrl-C to terminate the execution of any Matlab script so
 
 ### Your First MATLAB Robotics Program
 
-Let's go ahead and create a program to drive the robot forward until it rams into something.  To do this we'll need to first learn how to control the robot's wheels.  In order to send a velocity to each of the robot's wheels we will need to create a publisher for the /raw_vel topic.
+Let's go ahead and create a program to drive the robot forward until it rams into something.  To do this we'll need to first learn how to control the robot's wheels.  In order to send a velocity to each of the robot's wheels we will need to create a publisher for the ``/raw_vel`` topic.
 
-```
+{% highlight matlab %}
 pub = rospublisher('/raw_vel');
-```
+{% endhighlight %}
 
 Once we have a publisher, we can create a message suitable for sending on that topic.
 
-```
+{% highlight matlab %}
 msg = rosmessage(pub);
 msg.Data = [.1, .1];
 send(pub, msg);
-```
+{% endhighlight %}
 
 This message corresponds to telling the robot’s wheels to each move forward at a velocity of 0.1 m/s.
 
@@ -293,14 +293,14 @@ If your robot is not moving, return to your firewall settings and make sure ALL 
 
 We can create subscribers to topics using the rossubscriber command.
 
-```
+{% highlight matlab %}
 sub_bump = rossubscriber('/bump');
-```
+{% endhighlight %}
 
 We can put these two together to create a simple program where the robot will move forward with a constant velocity (in this case 0.1 m/s) until one of the bump sensors is triggered.  You can put this code in a MATLAB script (e.g., driveUntilBump.m).
 
 
-```
+{% highlight matlab %}
 pub = rospublisher('/raw_vel');
 sub_bump = rossubscriber('/bump');
 msg = rosmessage(pub);
@@ -320,7 +320,7 @@ while 1
         break;
     end
 end
-```
+{% endhighlight %}
 
 ## Notes for working in Linux
 
@@ -363,7 +363,7 @@ Everything else should work as with Windows.
 <li>Solution 1: the first thing to check is that the Raspberry Pi's SD card is fully inserted into the Raspberry Pi.  See the image below for the location of the SD card.  You will know it is fully inserted if you push on the card and it clicks into place.
 
 <p align="center">
-<img src="Pictures/raspberry_pi_b_6_0_0.jpg" width="50%"/>
+<img src="Pictures/raspberry_pi_b_6_0_0.jpg" width="70%"/>
 </p>
 </li>
 <li>Solution 2: if the card is fully inserted, the SD card may have become corrupted (possibly because some people didn't properly shutdown the Raspberry Pi!).  Please send me (Paul.Ruvolo@olin.edu) an e-mail and tell me which robot is having the problem.  I'll fix it ASAP, but in the meantime just use another robot.</li>
