@@ -179,9 +179,9 @@ docker run --rm --sysctl net.ipv4.ip_local_port_range="32401 32767" -p 11311:113
 
 ### Programming the Simulated Robot
 
-You can program the simulated robot using the same procedure as the physical robot with the following differences (we are actively working to eliminate these discrepancies so that the simulator will be as close to the physical robot as possible).
+You can program the simulated robot using the same procedure as the physical robot with the following difference.
 
-* the ``/bump`` topic doesn't work in the same way as on the actual Neato
+* In the simulator, the bump sensors published on the ``/bump`` topic are either all on or all off. In other words, there are not separate bump sensors in the simulator for left side, left front, right front, and right side as there are on the physical robot.
 
 ## Connecting to the Neatos
 
