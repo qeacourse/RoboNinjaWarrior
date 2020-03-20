@@ -1,5 +1,7 @@
 #!/bin/sh
 
+cd "$(dirname "$(realpath "$0")")";
+
 # Download all model archive files
 wget -l 2 -nc -r "http://models.gazebosim.org/" --accept gz
 
@@ -14,5 +16,7 @@ done
 
 # Copy extracted files to the local model folder
 cp -vfR * "/root/.gazebo/models/"
+
+cd "$(dirname "$(realpath "$0")")";
 
 rm -rf "models.gazebosim.org"
