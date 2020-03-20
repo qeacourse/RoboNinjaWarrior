@@ -181,10 +181,7 @@ docker run --rm --sysctl net.ipv4.ip_local_port_range="32401 32767" -p 11311:113
 
 You can program the simulated robot using the same procedure as the physical robot with the following differences (we are actively working to eliminate these discrepancies so that the simulator will be as close to the physical robot as possible).
 
-* the ``/raw_vel`` topic doesn't work in the same way as on the actual Neato
 * the ``/bump`` topic doesn't work in the same way as on the actual Neato
-* the ``/encoders`` topic doesn't work in the same way as on the actual Neato
-* the ``/accel`` topic doesn't work in the same way as on the actual Neato
 
 ## Connecting to the Neatos
 
