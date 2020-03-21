@@ -56,4 +56,5 @@ RUN /bin/bash -c "mkdir -p ~/.gazebo/models; cp -r ~/catkin_ws/src/comprobo18/ne
 COPY dl_models.sh /tmp
 RUN /bin/bash -c "/tmp/dl_models.sh"
 
-CMD /bin/bash -c "((x11vnc -forever -create -autoport 5901) & (source ~/catkin_ws/devel/setup.bash && roslaunch neato_gazebo neato_empty_world.launch))"
+ENV DISPLAY=:0
+CMD /bin/bash -c "((x11vnc -forever -create -autoport 5901) & (Xvfb -shmem -screen 0 1280x1024x24) & (source ~/catkin_ws/devel/setup.bash && sleep 2 && roslaunch neato_gazebo neato_empty_world.launch))"
