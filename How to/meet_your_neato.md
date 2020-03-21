@@ -1,6 +1,11 @@
 ---
 title: "Meeto your Neato!"
+toc_sticky: true
 ---
+
+## Purpose of this How-to
+
+This document will help you to get you up and running with your Neato robot.  After following these instructions you will be able to connect to your robot, examine its sensor data, and drive it around.
 
 ## Overview
 
@@ -12,17 +17,11 @@ In module 3 we will be programming the Neato BotVac. The Neato is a powerful, lo
 
 The robots have each been outfitted with a Raspberry Pi.  The Raspberry Pi is a low cost, Linux computer that will serve as a bridge between your laptop and the robot.  To use the robot you will initiate a connection from your laptop, via the Olin network, to the Raspberry Pi.  Once the connection has been made, the Raspberry Pi will start talking to the robot.  All sensor data will then be streamed from the Raspberry Pi to your laptop over Olin's wireless network.  Your laptop will process this sensor data and then send motor commands to the robot over the same network.  In this way, all important computation will be done on your laptop.  This architecture simplifies the sharing of robots and makes debugging and editing code as easy as possible.
 
-Since you are not modifying the code running on the Raspberry Pi, each robot will function identically (i.e. there is no software you need to modify on the robot).  While we do have enough robots (18) to give each table their own robot, that wouldn't be optimal.  For example, sometimes your robot will run out of batteries, and you'll want to grab another robot while yours charges.
+Since you are not modifying the code running on the Raspberry Pi, each robot will function identically (i.e. there is no software you need to modify on the robot).  While we do have enough robots (31) to give each table their own robot, that wouldn't be optimal.  For example, sometimes your robot will run out of batteries, and you'll want to grab another robot while yours charges.
 
 We'll be programming the robots using ROS.  ROS is a powerful, open-source framework for robotics that has been widely adopted in both industry and academia.  ROS runs natively on Linux, however, we are supporting Windows and Mac OSX via Docker.  Therefore, you can connect to the robots through Windows, Linux, or Mac OSX.
 
-## Environment Setup
-
-The purpose of this document is to get you up and running with your Neato robot.  After following these instructions you will be able to connect to your robot, examine its sensor data, and drive it around.
-
-## Target Environment
-
-ROS supports several programming languages out of the box, including C++, Python, and Java.  Additionally, MATLAB's Robotics System Toolbox includes support for ROS as well.  In this document and in this module, we will walk you through setting up your environment to connect to the robots using Windows, and we will show you how to program the robots using MATLAB.  Some folks, especially those in SoftDes, may want to use Ubuntu instead.  This is totally fine, and we have instructions [on how to setup your environment for Ubuntu](#notes-for-working-in-linux).  If you'd like, you can also use Mac OSX.  You may be tempted to use Python to program the robots, however, we discourage you from doing so.  The reason is that we will have a lot of scaffolding / tutorials written in MATLAB, and the extra effort in mapping things over to Python is a hurdle that we don't want you to have to contend with.  Additionally, there are some things we will be doing with the robots that will work better in MATLAB (e.g., the operations may be faster, visualization / debugging may be easier).
+ROS supports several programming languages out of the box, including C++, Python, and Java.  Additionally, MATLAB's Robotics System Toolbox includes support for ROS as well.  In this document and in this module, we will walk you through setting up your environment to connect to the robots using Windows, and we will show you how to program the robots using MATLAB.  Some folks, especially those in SoftDes, may want to use Ubuntu instead.  This is totally fine, and we have instructions [on how to setup your environment for Ubuntu](#notes-for-working-in-linux).  If you'd like, we also have [instructions for using the robots in Mac OSX](notes-for-working-in-macosx).
 
 ## Docker Setup
 
@@ -50,7 +49,7 @@ The only operating systems officially supported by ROS are Ubuntu and Debian.  H
 
 Once the install is complete you may be asked to restart your computer.
 
-### Making Sure Docker is Setup Properly and Troubleshooting
+### Making Sure Docker is Setup Properly
 
 Once the Docker installation has completed (and you have possibly restarted your computer), you should run Docker desktop by either clicking on its icon on your Desktop (the icon looks like a smiling whale) or from the Windows 10 start menu.  If everything is working properly, you will see a message pop up that says something like "Docker is Running.  Open PowerShell to start hacking" (it takes a bit of time for this to show up upon reboot, so be patient). Sometimes Docker will say that it will take a few seconds to be up and running, but in our experience it often takes longer. 
 
@@ -69,11 +68,13 @@ Hello from Docker!
 This message shows that your installation appears to be working correctly.
 ```
 
-#### Issue: Docker Installer Got Stuck "Deploying Required Windows Features"
+### Troubleshooting Docker
+
+*Issue:* Docker Installer Got Stuck "Deploying Required Windows Features"
 
 First, if you are having any issues with any of this (e.g., installing Docker), e-mail the QEA teaching team with a description of the problem!  If you ran into the issue where the installer got stuck, it is likely because you need to manually enable the required windows features as described in [this previous section](#highly-recommended-pre-install-instructions).
 
-#### Issue: Docker Still Won't Start 
+*Issue:* Docker Installed, but Won't Start 
 
 There are some reports that Windows security features are interfering with the Virtual Machine software that Docker uses.  If Docker still won't start properly (e.g., as indicated when you click on the Docker Desktop icon or when you try to run the hello-world image), try the following steps.
 
@@ -142,21 +143,6 @@ docker pull qeacourse/robodocker:flatland
 docker pull qeacourse/robodocker:gauntlet
 ```
 
-## Checking Your Firewall Settings
-
-In order to allow MATLAB to properly communicate with Docker, you need to make sure you have the right firewall settings.  When you run MATLAB for the first time, you were asked whether or not to allow incoming connections to this application.  If you selected "yes", you are good.  If you selected "no", or if you don't remember what you selected (which is probably most people!), then we need to make sure you have the right settings.
-
-1. Type wf.msc into the run dialog (remember, hit the Windows key and "r" simultaneously to bring up the dialog).  This will bring up a dialog that shows your firewall settings.
-2. Click on Inbound Rules
-3. Browse the list for two rules that say "MATLAB R2019a" (assuming you are using this version of MATLAB.  If you are using a different version of MATLAB, you should look for rules labeled with that version.). If you do not see MATLAB, go on and come back to this later once you have connected to the robots.
-4. Click on one of these two rules (you will repeat this process for both), and click the properties button on the right panel of the window.
-5. Make sure the following settings are chosen:
-* Under the "General" tab, make sure "Enabled" is checked and that "Action" is set to "Allow the connection".
-* Under the "Advanced" tab, make sure that "Domain", "Private", and "Public" are all checked and make sure that "Edge traversal" is set to "Defer to user".
-Repeat step 5 for the second firewall rule.
-6. If you have done this correctly, your "Inbound Rules" list should look like the ones below (note: on this computer the version of MATLAB was R2016a).
-![an image showing valid security settings](Pictures/securitysettings.png)
-
 ## Using the Neato Simulator
 
 ### Install VNC Connect
@@ -179,7 +165,7 @@ docker run --rm --sysctl net.ipv4.ip_local_port_range="32401 32767" -p 11311:113
 
 ### Programming the Simulated Robot
 
-You can program the simulated robot using the same procedure as the physical robot with the following difference.
+You can program the simulated robot using [the same procedure as the physical robot](#programming-the-robot-in-matlab) with the following difference.
 
 * In the simulator, the bump sensors published on the ``/bump`` topic are either all on or all off. In other words, there are not separate bump sensors in the simulator for left side, left front, right front, and right side as there are on the physical robot.
 
@@ -225,6 +211,36 @@ When you are done working with the robot it is important to properly shutdown th
 <p style="text-align: center;">
 <img alt="Visual instructions for turning off the Raspberry Pi" src="Pictures/s7vHYkMHZEmtoXhtdLxNdig.png"/>
 </p>
+
+### Troubleshooting Your Neato
+
+*Symptom:* Both the red and green LEDs on the raspberry pi are illuminated and not flashing.
+
+*Potential Cause:* the Pi was unable to boot from its SD card.
+
+<ul>
+
+<li>Solution 1: the first thing to check is that the Raspberry Pi's SD card is fully inserted into the Raspberry Pi.  See the image below for the location of the SD card.  You will know it is fully inserted if you push on the card and it clicks into place.
+
+<p align="center">
+<img src="Pictures/raspberry_pi_b_6_0_0.jpg" width="70%"/>
+</p>
+</li>
+<li>Solution 2: if the card is fully inserted, the SD card may have become corrupted (possibly because some people didn't properly shutdown the Raspberry Pi!).  Please send me (Paul.Ruvolo@olin.edu) an e-mail and tell me which robot is having the problem.  I'll fix it ASAP, but in the meantime just use another robot.</li>
+</ul>
+
+*Symptom:* the raspberry Pi display's backlight is flashing on and off.
+
+*Potential Cause:* the Pi cannot connect to the robot via the USB cable.
+
+* Solution: sometimes the Neato will turn off due to inactivity.  Press button near the front of the Neato’s bumper labeled with the home icon to wake your Neato up.  If that doesn't work, shutdown and then reboot the Pi.  If none of this works, the robot battery might be dead.  Try recharging the robot.  While the robot is recharging, switch to another robot.
+
+
+### *Symptom:* the Wifi signal strength indicator on the Raspberry Pi is below 60 even though you are right near an access point.
+
+*Problem:* The Pi has connected to an access point that is not the closest one (this will sometimes happen).
+
+* Solution: Assuming the Pi display is at the screen showing the IP address, press right to enter the network setup menu.  OLIN-ROBOTICS should be highlighted with an asterisk.  Press right again to reconnect the Pi to the Wifi.  If it doesn't work the first time, try one more time.  If it doesn't work then, switch to a new robot.
 
 ## Programming the Robot in MATLAB
 
@@ -319,6 +335,26 @@ while 1
 end
 {% endhighlight %}
 
+### Troubleshooting Your MATLAB Setup
+
+*Problem:* you are able to receive sensor data by subscribing to topics, but the robot will not respond to motor commands.
+
+*Potential Cause:* your security settings are preventing MATLAB from properly establishing a link between your code and the robot's motor controller.
+
+*Solution:* in order to allow MATLAB to properly communicate with Docker, you need to make sure you have the right firewall settings.  When you run MATLAB for the first time, you were asked whether or not to allow incoming connections to this application.  If you selected "yes", you are good.  If you selected "no", or if you don't remember what you selected (which is probably most people!), then we need to make sure you have the right settings.
+
+1. Type wf.msc into the run dialog (remember, hit the Windows key and "r" simultaneously to bring up the dialog).  This will bring up a dialog that shows your firewall settings.
+2. Click on Inbound Rules
+3. Browse the list for two rules that say "MATLAB R2019a" (assuming you are using this version of MATLAB.  If you are using a different version of MATLAB, you should look for rules labeled with that version.). If you do not see MATLAB, go on and come back to this later once you have connected to the robots.
+4. Click on one of these two rules (you will repeat this process for both), and click the properties button on the right panel of the window.
+5. Make sure the following settings are chosen:
+* Under the "General" tab, make sure "Enabled" is checked and that "Action" is set to "Allow the connection".
+* Under the "Advanced" tab, make sure that "Domain", "Private", and "Public" are all checked and make sure that "Edge traversal" is set to "Defer to user".
+Repeat step 5 for the second firewall rule.
+6. If you have done this correctly, your "Inbound Rules" list should look like the ones below (note: on this computer the version of MATLAB was R2016a).
+![an image showing valid security settings](Pictures/securitysettings.png)
+
+
 ## Notes for working in Linux
 
 Warning: we haven't tested the MATLAB installation for Linux lately.  Please direct issues to the IT helpdesk.
@@ -349,32 +385,3 @@ Follow the instructions earlier in this document, but use terminal instead of Po
 Everything else should work as with Windows.
 
 
-## Troubleshooting
-
-### *Symptom:* Both the red and green LEDs on the raspberry pi are illuminated and not flashing.
-
-*Problem:* the Pi was unable to boot from its SD card.
-
-<ul>
-
-<li>Solution 1: the first thing to check is that the Raspberry Pi's SD card is fully inserted into the Raspberry Pi.  See the image below for the location of the SD card.  You will know it is fully inserted if you push on the card and it clicks into place.
-
-<p align="center">
-<img src="Pictures/raspberry_pi_b_6_0_0.jpg" width="70%"/>
-</p>
-</li>
-<li>Solution 2: if the card is fully inserted, the SD card may have become corrupted (possibly because some people didn't properly shutdown the Raspberry Pi!).  Please send me (Paul.Ruvolo@olin.edu) an e-mail and tell me which robot is having the problem.  I'll fix it ASAP, but in the meantime just use another robot.</li>
-</ul>
-
-### *Symptom:* the raspberry Pi display's backlight is flashing on and off.
-
-*Problem:* the Pi cannot connect to the robot via the USB cable.
-
-* Solution: sometimes the Neato will turn off due to inactivity.  Press button near the front of the Neato’s bumper labeled with the home icon to wake your Neato up.  If that doesn't work, shutdown and then reboot the Pi.  If none of this works, the robot battery might be dead.  Try recharging the robot.  While the robot is recharging, switch to another robot.
-
-
-### *Symptom:* the Wifi signal strength indicator on the Raspberry Pi is below 60 even though you are right near an access point.
-
-*Problem:* The Pi has connected to an access point that is not the closest one (this will sometimes happen).
-
-* Solution: Assuming the Pi display is at the screen showing the IP address, press right to enter the network setup menu.  OLIN-ROBOTICS should be highlighted with an asterisk.  Press right again to reconnect the Pi to the Wifi.  If it doesn't work the first time, try one more time.  If it doesn't work then, switch to a new robot.
