@@ -1,13 +1,14 @@
-function teleopAndVisualizer()
+function teleopAndVisualizerWithImages()
 % This script provides a visualization and teleop interface to the Neato
 % robots.  In order to use it, you first must connect to the Neatos
 % using the procedure on the webpage.  To launch the application run:
 %
-%    teleopAndVisualizer()
+%    teleopAndVisualizerWithImages()
 %
-% Running this script will startup a figure window that will show the 
-% heading of the robot along with the laser scan data in the odometry
-% coordinate system of the robot.
+% Running this script will startup two figure windows.  The first will show
+% the heading of the robot along with the laser scan data in the odometry
+% coordinate system of the robot. The second figure window will show images
+% captured from a virtual camera that hovers over the simulated Neato.
 %
 % To control the robot with the keyboard, you must have the focus on the
 % visualizer window (i.e. click on the window).  The key mappings are:
@@ -38,9 +39,30 @@ function teleopAndVisualizer()
         delete(gcf)
     end
 
+    function myCloseRequestImage(src,callbackdata)
+        % Close request function 
+        % to display a question dialog box
+        % get rid of subscriptions to avoid race conditions
+        clear sub_image;
+        delete(gcf)
+    end
+
     function setAngularVelocity(hObject, eventdata, handles)
         % callback function for the angular velocity slider
         w = get(hObject, 'Value');
+    end
+
+    function processImage(sub, msg)
+        if ~isvalid(fImage)
+            return
+        end
+        prev = gcf;
+        set(0,'CurrentFigure',fImage);
+        image = readImage(msg);
+        imshow(image);
+        if isvalid(prev)
+            set(0, 'CurrentFigure', prev);
+        end
     end
 
     function processProjectedScan(sub, msg)
@@ -49,6 +71,9 @@ function teleopAndVisualizer()
         % This function computes the robot's pose and plots it as a red
         % arrow in the figure.  It also has a visualization of the laser
         % scan projected into the odom coordinate frame.
+        if ~isvalid(f)
+            return
+        end
         odom_pose = getTransform(tftree, 'odom', 'base_link');
         trans = odom_pose.Transform.Translation;
         quat = odom_pose.Transform.Rotation;
@@ -61,6 +86,7 @@ function teleopAndVisualizer()
         hold on;
         cloud = readXYZ(msg);
         plot(cloud(:,1), cloud(:,2),'b.');
+
         hold off;
         if isvalid(prev)
             set(0, 'CurrentFigure', prev);
@@ -107,12 +133,14 @@ function teleopAndVisualizer()
     tftree = rostf;
     pub = rospublisher('/cmd_vel', 'geometry_msgs/Twist');
     sub_scan = rossubscriber('/projected_stable_scan', 'sensor_msgs/PointCloud2', @processProjectedScan);
+    sub_image = rossubscriber('/camera/image_raw', 'sensor_msgs/Image', @processImage);
 
 	f = figure('CloseRequestFcn',@myCloseRequest);
     xlim([-10 10]);
     ylim([-10 10]);
+    axis equal;
     set(gca,'position',[.05,.20,.9,.7]);
-
+    
     sld = uicontrol('Style', 'slider',...
         'Min',0,'Max',0.3,'Value',0.3,...
         'Position', [200 20 120 20],...
@@ -131,4 +159,6 @@ function teleopAndVisualizer()
         'String','Angular Velocity Scale');
 
     set(f,'WindowKeyPressFcn', @keyPressedFunction);
+    fImage = figure('CloseRequestFcn',@myCloseRequestImage);
+    set(fImage,'WindowKeyPressFcn', @keyPressedFunction);
 end

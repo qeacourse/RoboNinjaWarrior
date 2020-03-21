@@ -6,7 +6,7 @@ title: "Sample MATLAB Code for Robo Ninja Warrior"
 
 ![A screenshot showing a visualization of the Neato and its LIDAR readings](../How to/Pictures/sample_screenshot.png)
 
-The first code you should run is the [teleoperation and LIDAR visualization script](teleopAndVisualizer.m).  The documentation for how to run it is included in the .m file.
+The first code you should run is the [teleoperation and LIDAR visualization script](teleopAndVisualizer.md).  The documentation for how to run it is included in the .m file.  If you are using the simulator, and would like to see images from a virtual camera that hovers over the Neato, you can use [teleopAndVisualizerWithImages.m](teleopAndVisualizerWithImages.md).
 
 ## Challenge Solutions
 
