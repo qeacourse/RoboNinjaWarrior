@@ -3,9 +3,11 @@
 FROM osrf/ros:melodic-desktop-full-bionic
 MAINTAINER Paul Ruvolo Paul.Ruvolo@olin.edu
 
+ENV DISPLAY=:0
+ENV LOAD_CAMERA=false
+
 ENV DEBIAN_FRONTEND=noninteractive
 ENV ROS_HOSTNAME=0.0.0.0
-
 # install ros packages
 RUN apt-get update && apt-get install -y \
     software-properties-common \
@@ -56,4 +58,5 @@ RUN /bin/bash -c "mkdir -p ~/.gazebo/models; cp -r ~/catkin_ws/src/comprobo18/ne
 COPY dl_models.sh /tmp
 RUN /bin/bash -c "/tmp/dl_models.sh"
 
-CMD /bin/bash -c "((x11vnc -forever -create -autoport 5901) & (source ~/catkin_ws/devel/setup.bash && roslaunch neato_gazebo neato_empty_world.launch gui:=false))"
+
+CMD /bin/bash -c "((x11vnc -display :0 -forever -create -autoport 5901) & (source ~/catkin_ws/devel/setup.bash && roslaunch neato_gazebo neato_empty_world.launch gui:=false load_camera:=$LOAD_CAMERA))"
