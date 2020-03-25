@@ -58,4 +58,4 @@ RUN /bin/bash -c "mkdir -p ~/.gazebo/models; cp -r ~/catkin_ws/src/comprobo18/ne
 COPY dl_models.sh /tmp
 RUN /bin/bash -c "/tmp/dl_models.sh"
 
-CMD /bin/bash -c "((Xvfb -shmem -screen 0 1280x1024x24) & (x11vnc -create -forever -autoport 5901 -geometry 1024x768) & (sleep 2 && source ~/catkin_ws/devel/setup.bash && roslaunch neato_gazebo neato_empty_world.launch gui:=false load_camera:=$LOAD_CAMERA))"
+CMD /bin/bash -c "((Xvfb -shmem -screen 0 1280x1024x24) & (x11vnc -create -forever -autoport 5901 -geometry 800x600) & (sleep 2 && source ~/catkin_ws/devel/setup.bash && roslaunch neato_gazebo neato_empty_world.launch gui:=false load_camera:=$LOAD_CAMERA))"
