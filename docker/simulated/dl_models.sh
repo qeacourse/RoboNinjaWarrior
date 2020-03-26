@@ -2,21 +2,13 @@
 
 cd "$(dirname "$(realpath "$0")")";
 
-# Download all model archive files
-wget -l 2 -nc -r "http://models.gazebosim.org/" --accept gz
+hg clone https://bitbucket.org/osrf/gazebo_models -b default
 
-# This is the folder into which wget downloads the model archives
-cd "models.gazebosim.org"
-
-# Extract all model archives
-for i in *
-do
-  tar -zvxf "$i/model.tar.gz"
-done
+cd gazebo_models
 
 # Copy extracted files to the local model folder
 cp -vfR * "/root/.gazebo/models/"
 
 cd "$(dirname "$(realpath "$0")")";
 
-rm -rf "models.gazebosim.org"
+rm -rf "gazebo_models"
