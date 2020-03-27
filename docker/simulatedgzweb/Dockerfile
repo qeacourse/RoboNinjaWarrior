@@ -3,9 +3,6 @@
 FROM osrf/ros:melodic-desktop-full-bionic
 MAINTAINER Paul Ruvolo Paul.Ruvolo@olin.edu
 
-ENV DISPLAY=:0
-ENV LOAD_CAMERA=false
-
 ENV DEBIAN_FRONTEND=noninteractive
 ENV ROS_HOSTNAME=0.0.0.0
 # install ros packages
@@ -76,4 +73,4 @@ RUN /bin/bash -c "cd ~ && \
 		  source /usr/share/gazebo/setup.sh && \
 		  npm run deploy --- -m local"
 
-CMD /bin/bash -c "((Xvfb -shmem -screen 0 1280x1024x24) & (sleep 10; cd ~/gzweb && npm start) & (x11vnc -create -forever -autoport 5901 -geometry 800x600) & (sleep 2 && source ~/catkin_ws/devel/setup.bash && roslaunch neato_gazebo neato_no_spawn.launch gui:=false load_camera:=$LOAD_CAMERA))"
+CMD /bin/bash -c "((sleep 10; cd ~/gzweb && npm start) & (source ~/catkin_ws/devel/setup.bash && roslaunch neato_gazebo neato_no_spawn.launch gui:=false load_camera:=false))"
