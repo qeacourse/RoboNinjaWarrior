@@ -52,7 +52,7 @@ RUN /bin/bash -c "mkdir ~/.vnc && \
 
 COPY default.rviz ~ros/.rviz
 
-RUN /bin/bash -c "mkdir -p ~/.gazebo/models; cp -r ~/catkin_ws/src/comprobo18/neato_simulator/model/* ~/.gazebo/models"
+RUN /bin/bash -c "mkdir -p ~/.gazebo/models; cp -r ~/catkin_ws/src/comprobo18/neato_gazebo/model/* ~/.gazebo/models"
 
 # get the rest of the Gazebo models
 COPY dl_models.sh /tmp
