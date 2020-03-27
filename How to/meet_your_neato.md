@@ -99,12 +99,12 @@ Assuming Docker is working properly, open PowerShell and enter the following com
 
 
 ```powershell
-docker pull qeacourse/robodocker:simulated
+docker pull qeacourse/robodocker:simulatedgzweb
 ```
 
 You will likely see output resembling the following.
 ```
-simulated: Pulling from qeacourse/robodocker
+simulatedgzweb: Pulling from qeacourse/robodocker
 5c939e3a4d10: Pull complete 
 c63719cdbe7a: Pull complete 
 19a861ea6baf: Pull complete 
@@ -129,41 +129,42 @@ da5d3d671a39: Pull complete
 330cdcf8eb64: Pull complete 
 52764e418589: Pull complete
 ```
-To download the software necessary for each of the robot challenges, execute the following three commands in PowerShell.
+To download the software to run the actual Neato, execute the following three commands in PowerShell.
 
 ```powershell
 docker pull qeacourse/robodocker:actual
 ```
 
-```powershell
-docker pull qeacourse/robodocker:flatland
-```
-
-```powershell
-docker pull qeacourse/robodocker:gauntlet
-```
-
 ## Using the Neato Simulator
-
-### Install VNC Connect
-
-In order to view the robot simulator, you will need to download a VNC Viewer -- a special program that allows you to connect to the graphical interface of another computer.  In this case we will be using it to connect to the graphical program running inside of Docker.
-
-There are quite a few VNC Viewers.  We recommend VNC Connect from Real VNC.  Here is a [direct link to the Windows installer for VNC Connect](https://www.realvnc.com/download/file/viewer.files/VNC-Viewer-6.20.113-Windows.exe).
-
-### Running the Simulator
 
 
 1. Copy / paste the following command into a PowerShell window and hit enter (unfortunately, the command is super long, but all parts are necessary).
 ```powershell
-docker run --rm --sysctl net.ipv4.ip_local_port_range="32401 32767" -p 11311:11311 -p 5901:5901 -p 32401-32767:32401-32767 -it qeacourse/robodocker:simulated
+docker run --rm --sysctl net.ipv4.ip_local_port_range="32401 32767" -p 11311:11311 -p 8080:8080 -p 32401-32767:32401-32767 -e NEATO_WORLD=empty_no_spawn -it qeacourse/robodocker:simulatedgzweb
 ```
+You will know the simulator is ready when you see the following output from the command above.
 
-2. To view the simulated robot, first open the VNC Connect app and click through the welcome screen (if this is your first time using it).  Once you are at the main screen of the program, type *localhost:5901* into the the box that says "Enter a VNC Server address or search".  Hit the enter key to connect.
+```
+process[robot_state_publisher-4]: started with pid [146]
+process[pc2publisher-5]: started with pid [203]
+process[scan_relayer-6]: started with pid [212]
+process[neato_standalone_nodelet_manager-7]: started with pid [219]
 
-3. VNC Connect may show you a  warning about your connection not being encrypted.  You can safely go ahead and click "continue".
+gzweb@1.3.0 start /root/gzweb
+if [ $npm_config_port ]; then port=$npm_config_port; fi; cd gzbridge && ./server.js $port
 
-### Programming the Simulated Robot
+Fri Mar 27 2020 20:21:18 GMT+0000 (Coordinated Universal Time) Static server listening on port: 8080
+--------------------------------------------------------------
+Gazebo transport node connected to gzserver.
+Pose message filter parameters between successive messages: 
+  minimum seconds: 0.02
+  minimum XYZ distance squared: 0.00001
+  minimum Quartenion distance squared: 0.00001
+--------------------------------------------------------------
+```
+2\. To view the simulated robot, go to <a href="http://localhost:8080" target="_blank">http://localhost:8080</a>
+
+### Differences When Programming the Simulated Robot
 
 You can program the simulated robot using [the same procedure as the physical robot](#programming-the-robot-in-matlab) with the following difference.
 
@@ -372,7 +373,7 @@ You want Docker CE, not Docker EE
 
 Perform the steps to [manage Docker as a non root user](https://docs.docker.com/engine/installation/linux/linux-postinstall/#manage-docker-as-a-non-root-user). Then restart your computer.
 
-Follow the instructions earlier in this document, but use terminal instead of PowerShell to run the relevant commands.  If you want to connect to the simulator, you'll also want to get the [Linux version of VNC Connect](https://www.realvnc.com/download/file/viewer.files/VNC-Viewer-6.20.113-Linux-x86.deb).
+Follow the instructions earlier in this document, but use terminal instead of PowerShell to run the relevant commands.
 
 Everything else should work the same as in Windows.
 
@@ -380,7 +381,7 @@ Everything else should work the same as in Windows.
 
 Download [Docker Desktop for Mac](https://hub.docker.com/editions/community/docker-ce-desktop-mac)
 
-Follow the instructions earlier in this document, but use terminal instead of PowerShell to run the relevant commands.  If you want to connect to the simulator, you'll also want to get the [Mac OSX version of VNC Connect](https://www.realvnc.com/download/file/viewer.files/VNC-Viewer-6.20.113-MacOSX-x86_64.dmg).
+Follow the instructions earlier in this document, but use terminal instead of PowerShell to run the relevant commands.
 
 Everything else should work as with Windows.
 
