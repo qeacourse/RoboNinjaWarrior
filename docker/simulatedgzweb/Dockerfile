@@ -3,13 +3,20 @@
 FROM osrf/ros:melodic-desktop-full-bionic
 MAINTAINER Paul Ruvolo Paul.Ruvolo@olin.edu
 
-ENV NEATO_WORLD=bod_no_spawn
+ENV NEATO_WORLD=empty_no_spawn
 ENV DEBIAN_FRONTEND=noninteractive
 ENV ROS_HOSTNAME=0.0.0.0
-# install ros packages
+
+# Install Node.js 10.x repository
+RUN curl -sL https://deb.nodesource.com/setup_10.x | bash -
+
+# install ROS and other packages
 RUN apt-get update && apt-get install -y \
     software-properties-common \
     ros-melodic-pointcloud-to-laserscan \
+    nodejs \
+    libjansson-dev \
+    imagemagick \
     wget \
     unzip \ 
     hping3 \
@@ -26,7 +33,6 @@ RUN apt-get update && apt-get install -y \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-
 # Setup catkin workspace and ROS environment.
 RUN /bin/bash -c "source /opt/ros/melodic/setup.bash && \
                   mkdir -p ~/catkin_ws/src && \
@@ -38,7 +44,6 @@ RUN /bin/bash -c "source /opt/ros/melodic/setup.bash && \
                   cd ~/catkin_ws/ && \
 		  catkin_make && \
                   echo 'source ~/catkin_ws/devel/setup.bash' >> ~/.bashrc"
-    
 
 COPY xsession /root/.xsession
 COPY config /usr/share/fvwm/default-config
@@ -56,9 +61,6 @@ RUN /bin/bash -c "mkdir -p ~/.gazebo/models; cp -r ~/catkin_ws/src/comprobo18/ne
 COPY dl_models.sh /tmp
 RUN /bin/bash -c "/tmp/dl_models.sh"
 
-# Install Node.js 6.x repository
-RUN /bin/bash -c "curl -sL https://deb.nodesource.com/setup_10.x | bash - && \
-		  apt install -y nodejs libjansson-dev imagemagick"
 ENV GAZEBO_MODEL_PATH=/root/.gazebo/models
 
 RUN /bin/bash -c "mkdir ~/.gazebo/models/mobile_base && \
