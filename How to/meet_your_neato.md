@@ -99,12 +99,12 @@ Assuming Docker is working properly, open PowerShell and enter the following com
 
 
 ```powershell
-docker pull qeacourse/robodocker:simulatedgzweb
+docker pull qeacourse/robodocker:spring2020
 ```
 
 You will likely see output resembling the following.
 ```
-simulatedgzweb: Pulling from qeacourse/robodocker
+spring2020: Pulling from qeacourse/robodocker
 5c939e3a4d10: Pull complete 
 c63719cdbe7a: Pull complete 
 19a861ea6baf: Pull complete 
@@ -129,7 +129,7 @@ da5d3d671a39: Pull complete
 330cdcf8eb64: Pull complete 
 52764e418589: Pull complete
 ```
-To download the software to run the actual Neato, execute the following three commands in PowerShell.
+If you are going to use an actual Neato (instead of or in addition to the simulator), execute the following command in PowerShell.
 
 ```powershell
 docker pull qeacourse/robodocker:actual
@@ -140,7 +140,7 @@ docker pull qeacourse/robodocker:actual
 
 1. Copy / paste the following command into a PowerShell window and hit enter (unfortunately, the command is super long, but all parts are necessary).
 ```powershell
-docker run --rm --sysctl net.ipv4.ip_local_port_range="32401 32767" -p 11311:11311 -p 8080:8080 -p 32401-32767:32401-32767 -e NEATO_WORLD=empty_no_spawn -it qeacourse/robodocker:simulatedgzweb
+docker run --rm --sysctl net.ipv4.ip_local_port_range="32401 32767" -p 11311:11311 -p 8080:8080 -p 32401-32767:32401-32767 -e NEATO_WORLD=gauntlet_no_spawn -it qeacourse/robodocker:spring2020
 ```
 You will know the simulator is ready when you see the following output from the command above.
 
