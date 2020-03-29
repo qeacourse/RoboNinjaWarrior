@@ -74,6 +74,6 @@ RUN /bin/bash -c "cd ~ && \
 		  cd gzweb && \
 		  hg up gzweb_1.4.0 && \
 		  source /usr/share/gazebo/setup.sh && \
-		  npm run deploy --- -m local"
+		  xvfb-run -s \"-screen 0 1280x1024x24\" npm run deploy --- -m local -t"
 
 CMD /bin/bash -c "((sleep 10; cd ~/gzweb && npm start) & (source ~/catkin_ws/devel/setup.bash && roslaunch neato_gazebo neato_no_spawn.launch gui:=false load_camera:=false neato_world:=$NEATO_WORLD))"
