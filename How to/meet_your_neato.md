@@ -5,7 +5,9 @@ toc_sticky: true
 
 ## Purpose of this How-to
 
-This document will help you to get you up and running with your Neato robot.  After following these instructions you will be able to connect to your robot, examine its sensor data, and drive it around.
+This document will help you to get you up and running with your Neato robot.  After following these instructions you will be able to connect to your robot (or a simulated robot), examine its sensor data, and drive it around.
+
+> ***Note for Spring 2020 QEA Students:*** Please excuse the references to the physical robot in this document.  As you probably guessed we won't be able to use them this year, but we did create a really cool simulator just for you!
 
 ## Overview
 
@@ -29,7 +31,13 @@ ROS supports several programming languages out of the box, including C++, Python
 
 For lots of folks, you will be able to skip this step, but we have noticed that some of the student Dell laptops will not be able to complete the Docker install process without doing these steps.  In any case, these steps do not hurt to do even if you could have gone through the installation without performing them.  As a result, we encourage you to do them.  If you are interested in why we have to do this, you can check out the Docker help article [Manually Enable Docker for Windows Prerequisites](https://success.docker.com/article/manually-enable-docker-for-windows-prerequisites).
 
-In this step you'll be manually enable the Hyper-V and Container Features, which are both necessary for Docker.  First, run PowerShell by typing "powershell" into the windows search bar and then selecting "Run as Administrator" in the menu that appears to the right.  
+In this step you'll be manually enable the Hyper-V and Container Features, which are both necessary for Docker.  First, run PowerShell by typing "powershell" into the windows search bar, right clicking on Windows PowerShell (not the ISE version), and then selecting "Run as Administrator" in the menu that appears. 
+
+![an image showing powershell being opened with admin privileges](Pictures/run-powershell-from-cortana.png)
+
+> If you are unfamiliar with how to run PowerShell, here are some links to help you.
+> * [5 Ways to Open Windows PowerShell](https://www.isunshare.com/windows-10/5-ways-to-open-windows-powershell-in-windows-10.html)
+> * [5 Ways to Run PowerShell as Administrator in Windows 10](https://www.top-password.com/blog/5-ways-to-run-powershell-as-administrator-in-windows-10/)
 
 In the PowerShell window that pops up, type the following two commands (tip: when asked if you want to restart your computer after entering the first command, answer "no", and then answer "yes" to the same question after entering the second command.  This will save you one reboot).
 
@@ -41,7 +49,9 @@ You will likely need to restart your computer after completing these steps. Once
 
 ### Running the Docker Installer
 
-The only operating systems officially supported by ROS are Ubuntu and Debian.  However, using a virtual machine you will be able to run ROS in Windows 10.  The tool we will be using to accomplish this is Docker.  To install Docker, download and run the installer from [DockerHub](https://hub.docker.com/editions/community/docker-ce-desktop-windows/) by clicking the "Get Docker" link. When you see two checkboxes, leave both as is; do not check the third option. You want to run Docker with Linux containers, not Windows containers, so that we can use Docker to run Linux code. Your selections will look like this.
+The only operating systems officially supported by ROS are Ubuntu and Debian (although recently Windows support has been created, but it is not straightforward to use).  By using a virtual machine we can run an Ubuntu machine on top of your Windows setup, which will allow us to run ROS.  The tool we will be using to accomplish this is Docker.  Docker will allow us to get the QEA robot software installed on your machine in a relatively painless manner (avoiding the need to install and configure a bunch of software packages yourself).
+
+To install Docker, download and run the installer from [DockerHub](https://hub.docker.com/editions/community/docker-ce-desktop-windows/) by clicking the "Get Docker" link. When you see two checkboxes, leave both as is; do not check the third option. You want to run Docker with Linux containers, not Windows containers, so that we can use Docker to run Linux code. Your selections will look like this.
 
 <p align="center">
 <img alt="The docker installer with the first two checkboxes selected" src="Pictures/dockerconfig.png" width="80%"/>
@@ -76,7 +86,7 @@ First, if you are having any issues with any of this (e.g., installing Docker), 
 
 *Issue:* Docker Installed, but Won't Start 
 
-There are some reports that Windows security features are interfering with the Virtual Machine software that Docker uses.  If Docker still won't start properly (e.g., as indicated when you click on the Docker Desktop icon or when you try to run the hello-world image), try the following steps.
+There are some reports that Windows security features are interfering with the Virtual Machine software that Docker uses.  If Docker still won't start properly (e.g., as indicated when you click on the Docker Desktop icon or when you try to run the hello-world example), try the following steps.
 
 
 1. Open "Window Security"
@@ -93,7 +103,7 @@ net start vmcompute
 
 ## Downloading the QEA Robot Software
 
-For a typical broadband Internet connection, the resulting series of downloads should take less than 10min.  If it gets completely stuck for longer than that, just close the window and retry. These downloads are the "container" of code that has what's called an "image"--a collection of root filesystem changes and execution parameters. These commands allow your computer and the robot to communicate with each other via MATLAB. 
+For a typical broadband Internet connection, the resulting series of downloads should take less than 10 minutes.  If it gets completely stuck for longer than that, just close the window and retry. These downloads are the "container" of code that has what's called an "image"--a collection of root filesystem changes and execution parameters. These commands allow your computer and the robot to communicate with each other via MATLAB. 
 
 Assuming Docker is working properly, open PowerShell and enter the following command and then hit enter (we recommend copy / pasting the commands in this document as they get quite long).
 
@@ -294,6 +304,10 @@ The interpretation of each of these numbers is dependent on the particular topic
 
 
 As always, you can use Ctrl-C to terminate the execution of any Matlab script so you can keep programming.
+
+### Trying the Teleop Script
+
+As a final test of your environment, we're going to drive the robot around a little bit.  Please visit the [teleopAndVisualizer page](/Sample_code/teleopAndVisualizer) to download that script.  Assuming you are connected to the robot or the simulator, you can start that script and drive the robot around with your keyboard. Mappings between individual keys and robot motions are documented in the script itself.
 
 ### Your First MATLAB Robotics Program
 
