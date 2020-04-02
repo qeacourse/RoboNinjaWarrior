@@ -135,6 +135,18 @@ If you are going to use an actual Neato (instead of or in addition to the simula
 docker pull qeacourse/robodocker:actual
 ```
 
+### Troubleshooting Download of QEA Robot Software
+
+If the ``docker pull`` command won't finish or gives an error about authentication being required, you can use this alternate method to get the Docker image.
+
+Download the QEA robot software [directly from Google Drive](https://drive.google.com/uc?id=1o5LlYy4cI6oIF5Ptih_pQJUSxHOtJGqy&export=download) (the file is about 2.4 Gigabytes).
+
+Once the data is downloaded, open a PowerShell, ``cd`` to the folder where you downloaded the file and run the following command.
+
+```powershell
+docker load -i robo_qea_spring_2020.tar.gz
+```
+
 ## Using the Neato Simulator
 
 
