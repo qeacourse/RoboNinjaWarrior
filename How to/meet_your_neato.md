@@ -101,6 +101,8 @@ There are some reports that Windows security features are interfering with the V
 net start vmcompute
 ```
 
+> ***If you still get an error after doing this, revisit the steps above but in step 7 use "Override system settings and put the toggle to "On" instead of "Off" (we know this is bizarre, but this is a weird error and the are reports of this working on the Docker forum.  It also worked for one of the Spring 2020 QEA students).***
+
 ## Downloading the QEA Robot Software
 
 For a typical broadband Internet connection, the resulting series of downloads should take less than 10 minutes.  If it gets completely stuck for longer than that, just close the window and retry. These downloads are the "container" of code that has what's called an "image"--a collection of root filesystem changes and execution parameters. These commands allow your computer and the robot to communicate with each other via MATLAB. 
