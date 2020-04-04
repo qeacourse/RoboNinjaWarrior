@@ -10,7 +10,7 @@ The first code you should run is the [teleoperation and LIDAR visualization scri
 
 ## Characterizing the Motion of the Neato
 * [Make a plot of the Neato's position over time (simulator only)](makeNeatoPositionPlot)
-* [Run a Simple Wheel Velocity Experiment](runBasicWheelVelocityExperiment)
+* [Run a Simple Wheel Velocity Experiment (simulator only)](runBasicWheelVelocityExperiment)
 
 
 ## Challenge Solutions
