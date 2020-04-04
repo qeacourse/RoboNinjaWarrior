@@ -194,6 +194,14 @@ You can program the simulated robot using [the same procedure as the physical ro
 
 * In the simulator, the bump sensors published on the ``/bump`` topic are either all on or all off. In other words, there are not separate bump sensors in the simulator for left side, left front, right front, and right side as there are on the physical robot.
 
+### Troubleshooting the Simulator
+
+If you get the following error message, it's likely due to the fact that you ran ``rosinit`` in MATLAB before you started the simulator (accessing the simulator in MATLAB is described in a later section of this document).
+
+![A screenshot of an error message that states that docker can't bind to port 11311](Pictures/used_socket.png)
+
+To fix this error, go to where you are running MATLAB and type ``rosshutdown`` into the MATALB command window.  You should now be able to start the simulator using the procedure earlier in this section.
+
 ## Connecting to the Neatos
 
 ### Step 1: Grab a battery for the raspberry Pi
