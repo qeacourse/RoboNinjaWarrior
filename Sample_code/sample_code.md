@@ -24,7 +24,7 @@ The first code you should run is the [teleoperation and LIDAR visualization scri
 
 * [Drive Forward](driveforward)
 * [Drive until bump](driveUntilBump)
-* [Drive until bump, then run away](driveUntilBumpThenRunAway.m)
+* [Drive until bump, then run away](driveUntilBumpThenRunAway)
 * [Test twist](testTwist.m)
 * [Test stop](testStop.m)
 * [Symbolic function sample](symbolicFunExample.m) (supports the Bridge of Doom challenge)
