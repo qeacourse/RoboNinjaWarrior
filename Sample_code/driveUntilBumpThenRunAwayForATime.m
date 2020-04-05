@@ -18,6 +18,9 @@ while 1
 end
 
 
+% Note that we could leverage driveforward by replacing the rest of this program with
+% driveforward(-1.5, -0.3)
+
 % send robot backwards
 message.Data = [-0.3, -0.3];
 reverseStart = rostime('now');
