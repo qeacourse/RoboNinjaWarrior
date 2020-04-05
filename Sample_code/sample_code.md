@@ -23,7 +23,7 @@ The first code you should run is the [teleoperation and LIDAR visualization scri
 ## Miscellaneous Robot Code
 
 * [Drive Forward](driveforward)
-* [Drive until bump](driveUntilBump.m)
+* [Drive until bump](driveUntilBump)
 * [Drive until bump, then run away](driveUntilBumpThenRunAway.m)
 * [Test twist](testTwist.m)
 * [Test stop](testStop.m)
