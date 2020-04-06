@@ -164,7 +164,7 @@ docker load -i robo_qea_spring_2020.tar.gz
 
 1. Copy / paste the following command into a PowerShell window and hit enter (unfortunately, the command is super long, but all parts are necessary).
 ```powershell
-docker run --rm --sysctl net.ipv4.ip_local_port_range="32401 32767" -p 11311:11311 -p 8080:8080 -p 32401-32767:32401-32767 -e NEATO_WORLD=gauntlet_no_spawn -it qeacourse/robodocker:spring2020
+docker run --rm --name=neato --sysctl net.ipv4.ip_local_port_range="32401 32767" -p 11311:11311 -p 8080:8080 -p 32401-32767:32401-32767 -e NEATO_WORLD=gauntlet_no_spawn -it qeacourse/robodocker:spring2020
 ```
 You will know the simulator is ready when you see the following output from the command above.
 
@@ -219,7 +219,7 @@ If you got the error messsage above, it's likely because you already have the si
 You can get rid of your already running simulator with:	
 
 ```powershell
-docker stop $(docker ps -a -q)
+docker stop neato
 ```
 
 Once you run that command, you should be able to follow the instructions for starting up the simulator.
