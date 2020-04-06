@@ -196,11 +196,33 @@ You can program the simulated robot using [the same procedure as the physical ro
 
 ### Troubleshooting the Simulator
 
-If you get the following error message, it's likely due to the fact that you ran ``rosinit`` in MATLAB before you started the simulator (accessing the simulator in MATLAB is described in a later section of this document).
+#### Rosinit fails in MATLAB
 
 ![A screenshot of an error message that states that docker can't bind to port 11311](Pictures/used_socket.png)
 
+If you got the  error message above, it's likely due to the fact that you ran ``rosinit`` in MATLAB before you started the simulator (accessing the simulator in MATLAB is described in a later section of this document).
+
+
 To fix this error, go to where you are running MATLAB and type ``rosshutdown`` into the MATALB command window.  You should now be able to start the simulator using the procedure earlier in this section.
+
+#### Can't Start QEA Robot Software (even though it ran before)
+
+```powershell
+Error response from daemon: driver failed programming external
+connectivity on endpoint focused_mcclintock
+(4dba8a66cbfa40a46b68406a303f3fd6724d5927d95243d757287607c7e53cd6):
+Bind for 0.0.0.0:32767 failed: port is already allocated.
+```
+
+If you got the error messsage above, it's likely because you already have the simulator running in another window.
+
+You can get rid of your already running simulator with:	
+
+```powershell
+docker stop $(docker ps -a -q)
+```
+
+Once you run that command, you should be able to follow the instructions for starting up the simulator.
 
 ## Connecting to the Neatos
 
