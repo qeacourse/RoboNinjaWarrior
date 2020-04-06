@@ -339,7 +339,7 @@ As always, you can use Ctrl-C to terminate the execution of any Matlab script so
 
 ### Trying the Teleop Script
 
-As a final test of your environment, we're going to drive the robot around a little bit.  Please visit the [teleopAndVisualizer page](/Sample_code/teleopAndVisualizer) to download that script.  Assuming you are connected to the robot or the simulator, you can start that script and drive the robot around with your keyboard. Mappings between individual keys and robot motions are documented in the script itself.
+As a final test of your environment, we're going to drive the robot around a little bit.  Please visit the [teleopAndVisualizer page](../Sample_code/teleopAndVisualizer) to download that script.  Assuming you are connected to the robot or the simulator, you can start that script and drive the robot around with your keyboard. Mappings between individual keys and robot motions are documented in the script itself.
 
 ### Your First MATLAB Robotics Program
 
