@@ -428,26 +428,20 @@ Perform the steps to [manage Docker as a non root user](https://docs.docker.com/
 
 Follow the instructions earlier in this document, but use terminal instead of PowerShell to run the relevant commands.
 
-Everything else should work the same as in Windows.
-
 ### Launching the Simulator
 
-When running the ``docker`` command to start the simulator, modify the Windows instructions by running the following command in terminal.
-```bash
-docker run --net=host --rm --name=neato -e NEATO_WORLD=gauntlet_no_spawn -it qeacourse/robodocker:spring2020
-```
+Run the simulator using the same Docker command given in the main Using the Simulator section.
 
 ### Connecting in MATLAB
 
-When running the ``rosinit`` command, in contrast with the Windows instruxtions, you should run ``rosinit`` with no parameters in the MATLAB command window.
+When running the ``rosinit`` command, in contrast with the Windows instructions, you should run ``rosinit`` with the following parameters.
 ```
-rosinit
+rosinit('localhost', 'NodeHost', 'localhost')
 ```
 
 You will see output that looks like this.
 ```
-The value of the ROS_MASTER_URI environment variable, http://localhost:11311, will be used to connect to the ROS master.
-Initializing global node /matlab_global_node_35454 with NodeURI http://parallels-Parallels-Virtual-Platform:32524/
+Initializing global node /matlab_global_node_17952 with NodeURI http://localhost:36597/
 ```
 
 ## Notes for Working in MacOSX
