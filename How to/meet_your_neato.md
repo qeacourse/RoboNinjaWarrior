@@ -416,12 +416,7 @@ Repeat step 5 for the second firewall rule.
 
 ## Notes for working in Linux
 
-Warning: we haven't tested the MATLAB installation for Linux lately.  Please direct issues to the IT helpdesk.
-
-First, make sure you are running Matlab r2016b or later. The installer can be found on Public, as described here on the [IT Wiki Page](http://wikis.olin.edu/linux/doku.php?id=matlab) (warning: need to be on VPN to access this page). Two tips:
-
-1. Copy the .deb file from Public to your computer before installing to make the process go much faster.
-2. If the version doesn't get updated properly, try using the command line sudo dpkg -i Matlab_R2016b_9.1.0.441655-1.deb instead of the GUI
+You will first need to install MATLAB for Linux.  The [instructions on the IT website](http://wikis.olin.edu/it/doku.php?id=matlab) should work for Linux as well as Windows.  When you are running the installer, make sure to install the ROS Toolbox (if installing R2020a or later) or Robotics System Toolbox (if installing R2019b or earlier).
 
 Follow the [Linux Docker install instructions](https://docs.docker.com/engine/installation/linux/ubuntu/#install-docker)
 
@@ -434,6 +429,26 @@ Perform the steps to [manage Docker as a non root user](https://docs.docker.com/
 Follow the instructions earlier in this document, but use terminal instead of PowerShell to run the relevant commands.
 
 Everything else should work the same as in Windows.
+
+### Launching the Simulator
+
+When running the ``docker`` command to start the simulator, modify the Windows instructions by running the following command in terminal.
+```bash
+docker run --net=host --rm --name=neato -e NEATO_WORLD=gauntlet_no_spawn -it qeacourse/robodocker:spring2020
+```
+
+### Connecting in MATLAB
+
+When running the ``rosinit`` command, in contrast with the Windows instruxtions, you should run ``rosinit`` with no parameters in the MATLAB command window.
+```
+rosinit
+```
+
+You will see output that looks like this.
+```
+The value of the ROS_MASTER_URI environment variable, http://localhost:11311, will be used to connect to the ROS master.
+Initializing global node /matlab_global_node_35454 with NodeURI http://parallels-Parallels-Virtual-Platform:32524/
+```
 
 ## Notes for Working in MacOSX
 
