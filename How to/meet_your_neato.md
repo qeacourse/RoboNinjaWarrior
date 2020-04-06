@@ -208,7 +208,7 @@ You can program the simulated robot using [the same procedure as the physical ro
 If you got the  error message above, it's likely due to the fact that you ran ``rosinit`` in MATLAB before you started the simulator (accessing the simulator in MATLAB is described in a later section of this document).
 
 
-To fix this error, go to where you are running MATLAB and type ``rosshutdown`` into the MATALB command window.  You should now be able to start the simulator using the procedure earlier in this section.
+To fix this error, go to where you are running MATLAB and type ``rosshutdown`` into the MATLAB command window.  You should now be able to start the simulator using the procedure earlier in this section.
 
 #### Can't Start QEA Robot Software (even though it ran before)
 
@@ -304,10 +304,10 @@ When you are done working with the robot it is important to properly shutdown th
 
 ## Programming the Robot in MATLAB
 
-Next, fire up MATLAB.  In order to connect MATLAB to the robot, type the following into the MATLAB command window.
+Next, fire up MATLAB.  In order to connect MATLAB to the robot, type the following into the MATLAB command window (note: the ``rosshutdown`` command is there in case you had ROS running already).
 
 ```
-rosinit('localhost',11311, 'NodeHost','host.docker.internal')
+rosshutdown(); rosinit('localhost',11311, 'NodeHost','host.docker.internal')
 ```
 
 If all goes well you should see output similar to this.
@@ -439,9 +439,9 @@ Run the simulator using the same Docker command given in the main Using the Simu
 
 ### Connecting in MATLAB
 
-When running the ``rosinit`` command, in contrast with the Windows instructions, you should run ``rosinit`` with the following parameters.
+When running the ``rosinit`` command, in contrast with the Windows instructions, you should run ``rosinit`` with the following parameters (note: the ``rosshutdown`` command is there in case you had ROS running already).
 ```
-rosinit('localhost', 'NodeHost', 'localhost')
+rosshutdown(); rosinit('localhost', 'NodeHost', 'localhost')
 ```
 
 You will see output that looks like this.
