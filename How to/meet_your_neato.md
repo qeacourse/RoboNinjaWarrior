@@ -164,9 +164,14 @@ docker load -i robo_qea_spring_2020.tar.gz
 
 1. Copy / paste the following command into a PowerShell window and hit enter (unfortunately, the command is super long, but all parts are necessary).
 ```powershell
-docker run --rm --name=neato --sysctl net.ipv4.ip_local_port_range="32401 32767" -p 11311:11311 -p 8080:8080 -p 32401-32767:32401-32767 -e NEATO_WORLD=gauntlet_no_spawn -it qeacourse/robodocker:spring2020
+docker stop neato; docker run --rm --name=neato --sysctl net.ipv4.ip_local_port_range="32401 32767" -p 11311:11311 -p 8080:8080 -p 32401-32767:32401-32767 -e NEATO_WORLD=gauntlet_no_spawn -it qeacourse/robodocker:spring2020
 ```
-You will know the simulator is ready when you see the following output from the command above.
+If you see the following output, you can safely ignore it (it's not an error to worry about).
+```powershell
+Error response from daemon: No such container: neato
+```
+
+You will know the simulator is ready when you see the following output.
 
 ```
 process[robot_state_publisher-4]: started with pid [146]
