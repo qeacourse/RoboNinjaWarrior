@@ -45,6 +45,7 @@ In the PowerShell window that pops up, type the following two commands (tip: whe
 Enable-WindowsOptionalFeature -Online -FeatureName containers -All
 Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Hyper-V -All
 ```
+
 You will likely need to restart your computer after completing these steps. Once you've completed the restart process, you can run the Docker installer.
 
 ### Running the Docker Installer
@@ -161,19 +162,21 @@ docker load -i robo_qea_spring_2020.tar.gz
 
 ## Using the Neato Simulator
 
-
-1. Copy / paste the following command into a PowerShell window and hit enter (unfortunately, the command is super long, but all parts are necessary).
-```powershell
+<ol>
+<li>Copy / paste the following command into a PowerShell window and hit enter (unfortunately, the command is super long, but all parts are necessary).
+{% highlight console %}
 docker stop neato; docker run --rm --name=neato --sysctl net.ipv4.ip_local_port_range="32401 32767" -p 11311:11311 -p 8080:8080 -p 32401-32767:32401-32767 -e NEATO_WORLD=gauntlet_no_spawn -it qeacourse/robodocker:spring2020
-```
-If you see the following output, you can safely ignore it (it's not an error to worry about).
-```powershell
+{% endhighlight %}
+
+<p>If you see the following output, you can safely ignore it (it's not an error to worry about).</p>
+
+{% highlight console %}
 Error response from daemon: No such container: neato
-```
+{% endhighlight %}
 
-You will know the simulator is ready when you see the following output.
+<p>You will know the simulator is ready when you see the following output.</p>
 
-```
+{% highlight console %}
 process[robot_state_publisher-4]: started with pid [146]
 process[pc2publisher-5]: started with pid [203]
 process[scan_relayer-6]: started with pid [212]
@@ -190,8 +193,12 @@ Pose message filter parameters between successive messages:
   minimum XYZ distance squared: 0.00001
   minimum Quartenion distance squared: 0.00001
 --------------------------------------------------------------
-```
-2\. To view the simulated robot, go to <a href="http://localhost:8080" target="_blank">http://localhost:8080</a>
+{% endhighlight %}
+</li>
+<li>
+<p>To view the simulated robot, go to <a href="http://localhost:8080" target="_blank">http://localhost:8080</a></p>
+</li>
+</ol>
 
 ### Differences When Programming the Simulated Robot
 
@@ -201,38 +208,43 @@ You can program the simulated robot using [the same procedure as the physical ro
 
 ### Troubleshooting the Simulator
 
-```powershell
+<ul>
+<li>
+{% highlight console %}
 Error response from daemon: Ports are not available: listen tcp 0.0.0.0:11311:
 bind: Only one usage of each socket address (protocol/network address/port) is
 normally permitted.
-```
+{% endhighlight %}
 
-If you got the  error message above, it's likely due to the fact that you ran ``rosinit`` in MATLAB before you started the simulator (accessing the simulator in MATLAB is described in a later section of this document).
+<p>If you got the  error message above, it's likely due to the fact that you ran <code>rosinit</code> in MATLAB before you started the simulator (accessing the simulator in MATLAB is described in a later section of this document).</p>
 
+<p>To fix this error, go to where you are running MATLAB and type the following command into the MATLAB window.</p>
 
-To fix this error, go to where you are running MATLAB and type thee following command into the MATLAB window.
-```
+{% highlight matlab %}
 rosshutdown
-```
+{% endhighlight %}
 
 You should now be able to start the simulator using the procedure earlier in this section.
-
-```powershell
+</li>
+<li>
+{% highlight console %}
 Error response from daemon: driver failed programming external
 connectivity on endpoint focused_mcclintock
 (4dba8a66cbfa40a46b68406a303f3fd6724d5927d95243d757287607c7e53cd6):
 Bind for 0.0.0.0:32767 failed: port is already allocated.
-```
+{% endhighlight %}
 
-If you got the error messsage above, it's likely because you already have the simulator running in another window.
+<p>If you got the error messsage above, it's likely because you already have the simulator running in another window.</p>
 
-You can get rid of your already running simulator with:	
+<p>You can get rid of your already running simulator by running the following command in PowerShell.</p>
 
-```powershell
+{% highlight powershell %}
 docker stop neato
-```
+{% endhighlight %}
 
 You should now be able to start the simulator using the procedure earlier in this section.
+</li>
+</ul>
 
 ## Connecting to the Neatos
 
@@ -311,7 +323,7 @@ When you are done working with the robot it is important to properly shutdown th
 
 Next, fire up MATLAB.  In order to connect MATLAB to the robot, type the following into the MATLAB command window (note: the ``rosshutdown`` command is there in case you had ROS running already).
 
-```
+```matlab
 rosshutdown(); rosinit('localhost',11311, 'NodeHost','host.docker.internal')
 ```
 
@@ -323,15 +335,15 @@ Initializing global node /matlab_global_node_38893 with NodeURI http://host.dock
 
 Now that you are connected, you can see the list of topics by typing the following command into the command window.
 
-{% highlight matlab %}
+```matlab
 rostopic list
-{% endhighlight %}
+```
 
 Each of these topics is either a sensor channel (e.g., laser scanner, bump sensor, wheel encoder) or a motor control channel (e.g., ``cmd_vel``, ``raw_vel``, etc.).  Go ahead and display the data flowing across the ``/bump`` topic by typing the following command in the command window.
 
-{% highlight matlab %}
+```matlab
 rostopic echo /bump
-{% endhighlight %}
+```
 
 You should see output like this.
 
@@ -355,17 +367,17 @@ As a final test of your environment, we're going to drive the robot around a lit
 
 Let's go ahead and create a program to drive the robot forward until it rams into something.  To do this we'll need to first learn how to control the robot's wheels.  In order to send a velocity to each of the robot's wheels we will need to create a publisher for the ``/raw_vel`` topic.
 
-{% highlight matlab %}
+```matlab
 pub = rospublisher('/raw_vel');
-{% endhighlight %}
+```
 
 Once we have a publisher, we can create a message suitable for sending on that topic.
 
-{% highlight matlab %}
+```matlab
 msg = rosmessage(pub);
 msg.Data = [.1, .1];
 send(pub, msg);
-{% endhighlight %}
+```
 
 This message corresponds to telling the robot’s wheels to each move forward at a velocity of 0.1 m/s.
 
@@ -375,14 +387,14 @@ If your robot is not moving, return to your firewall settings and make sure ALL 
 
 We can create subscribers to topics using the rossubscriber command.
 
-{% highlight matlab %}
+```matlab
 sub_bump = rossubscriber('/bump');
-{% endhighlight %}
+```
 
 We can put these two together to create a simple program where the robot will move forward with a constant velocity (in this case 0.1 m/s) until one of the bump sensors is triggered.  You can put this code in a MATLAB script (e.g., driveUntilBump.m).
 
 
-{% highlight matlab %}
+```matlab
 pub = rospublisher('/raw_vel');
 sub_bump = rossubscriber('/bump');
 msg = rosmessage(pub);
@@ -402,7 +414,7 @@ while 1
         break;
     end
 end
-{% endhighlight %}
+```
 
 ### Troubleshooting Your MATLAB Setup
 
@@ -445,7 +457,7 @@ Run the simulator using the same Docker command given in the main Using the Simu
 ### Connecting in MATLAB
 
 When running the ``rosinit`` command, in contrast with the Windows instructions, you should run ``rosinit`` with the following parameters (note: the ``rosshutdown`` command is there in case you had ROS running already).
-```
+```matlab
 rosshutdown(); rosinit('localhost', 'NodeHost', 'localhost')
 ```
 
