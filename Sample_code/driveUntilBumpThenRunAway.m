@@ -9,10 +9,9 @@ message.Data = [0.3, 0.3];
 send(pub, message);
 
 while 1
-    if (sub.LatestMessage.Data(1) == 1 || ...
-        sub.LatestMessage.Data(2) == 1 || ...
-        sub.LatestMessage.Data(3) == 1 || ...
-        sub.LatestMessage.Data(4) == 1)
+    bumpMessage = receive(sub);
+    % check if any of the bump sensors are set to 1 (meaning triggered)
+    if any(bumpMessage.Data)
         message.Data = [-0.3, -0.3];
         send(pub, message);
         break;
