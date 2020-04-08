@@ -165,7 +165,7 @@ docker load -i robo_qea_spring_2020.tar.gz
 <ol>
 <li>Copy / paste the following command into a PowerShell window and hit enter (unfortunately, the command is super long, but all parts are necessary).
 {% highlight console %}
-docker stop neato; docker run --rm --name=neato --sysctl net.ipv4.ip_local_port_range="32401 32767" -p 11311:11311 -p 8080:8080 -p 32401-32767:32401-32767 -e NEATO_WORLD=gauntlet_no_spawn -it qeacourse/robodocker:spring2020
+docker stop neato; docker rm --force neato; docker run --rm --name=neato --sysctl net.ipv4.ip_local_port_range="32401 32767" -p 11311:11311 -p 8080:8080 -p 32401-32767:32401-32767 -e NEATO_WORLD=gauntlet_no_spawn -it qeacourse/robodocker:spring2020
 {% endhighlight %}
 
 <p>If you see the following output, you can safely ignore it (it's not an error to worry about).</p>
