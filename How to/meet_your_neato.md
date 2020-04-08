@@ -463,7 +463,7 @@ rosshutdown(); rosinit('localhost', 'NodeHost', '172.17.0.1')
 
 You will see output that looks like this.
 ```
-Initializing global node /matlab_global_node_17952 with NodeURI http://localhost:36597/
+Initializing global node /matlab_global_node_17952 with NodeURI http://172.17.0.1:36597/
 ```
 
 ## Notes for Working in MacOSX
