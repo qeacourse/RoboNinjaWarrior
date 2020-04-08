@@ -458,7 +458,7 @@ Run the simulator using the same Docker command given in the main Using the Simu
 
 When running the ``rosinit`` command, in contrast with the Windows instructions, you should run ``rosinit`` with the following parameters (note: the ``rosshutdown`` command is there in case you had ROS running already).
 ```matlab
-rosshutdown(); rosinit('localhost', 'NodeHost', 'localhost')
+rosshutdown(); rosinit('localhost', 'NodeHost', '172.17.0.1')
 ```
 
 You will see output that looks like this.
