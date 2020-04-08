@@ -172,6 +172,7 @@ docker stop neato; docker rm --force neato; docker run --rm --name=neato --sysct
 
 {% highlight console %}
 Error response from daemon: No such container: neato
+Error: No such container: neato
 {% endhighlight %}
 
 <p>You will know the simulator is ready when you see the following output.</p>
