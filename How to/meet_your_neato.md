@@ -320,7 +320,18 @@ When you are done working with the robot it is important to properly shutdown th
 
 * Solution: Assuming the Pi display is at the screen showing the IP address, press right to enter the network setup menu.  OLIN-ROBOTICS should be highlighted with an asterisk.  Press right again to reconnect the Pi to the Wifi.  If it doesn't work the first time, try one more time.  If it doesn't work then, switch to a new robot.
 
+## Downloading Required MATLAB Toolboxes
+
+Before programming the robot in MATLAB, you will need to have the appropriate MATLAB toolbox installed.
+* If you are using MATLAB R2019b or earlier, you want the Robotics System Toolbox.
+* If you are using MATLAB R2020a or later, you want the ROS Toolbox.
+
+To install additional toolboxes into your MATLAB environment, follow the [instructions on the IT Wiki for installing MATLAB](http://wikis.olin.edu/it/doku.php?id=matlab).  When running the MATLAB installer, make sure to select the appropriate toolbox for the robot (depending on your MATLAB version as described above).
+
+
 ## Programming the Robot in MATLAB
+
+> Note: before attempting to program your robot, you need to make sure you are either [connected to a physical robot](#connecting-to-the-neatos) or the [simulator](#using-the-neato-simulator).
 
 Next, fire up MATLAB.  In order to connect MATLAB to the robot, type the following into the MATLAB command window (note: the ``rosshutdown`` command is there in case you had ROS running already).
 
