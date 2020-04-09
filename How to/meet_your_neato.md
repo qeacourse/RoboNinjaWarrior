@@ -104,6 +104,10 @@ net start vmcompute
 
 > ***If you still get an error after doing this, revisit the steps above but in step 7 use "Override system settings and put the toggle to "On" with "Use strict CFG" unchecked (we know that it is bizarre to try it both ways, but this is a weird error and there are reports of this working on the Docker forum.  It also worked for one of the Spring 2020 QEA students).***
 
+### Getting Docker to Play Nice with Virtual Box
+
+If you are already running a virtual machine on your system (e.g., for SoftDes), you will need to temporarily disable the Windows Hyper-V feature and reboot your machine.  When you want to use Docker again, you will have to re-enable Hyper-V.  Yes, this is super lame.  Sorry!  Here are some [instructions for toggling Hyper-V on and off](https://hazaveh.net/2015/11/easily-disable-hyper-v-to-run-vmware-and-virtual-box/) so you can switch back and forth between Virtual Box and Docker.
+
 ## Downloading the QEA Robot Software
 
 For a typical broadband Internet connection, the resulting series of downloads should take less than 10 minutes.  If it gets completely stuck for longer than that, just close the window and retry. These downloads are the "container" of code that has what's called an "image"--a collection of root filesystem changes and execution parameters. These commands allow your computer and the robot to communicate with each other via MATLAB. 
@@ -235,7 +239,7 @@ connectivity on endpoint focused_mcclintock
 Bind for 0.0.0.0:32767 failed: port is already allocated.
 {% endhighlight %}
 
-<p>If you got the error messsage above, it's likely because you already have the simulator running in another window.</p>
+<p>If you got the error message above, it's likely because you already have the simulator running in another window.</p>
 
 <p>You can get rid of your already running simulator by running the following command in PowerShell.</p>
 
