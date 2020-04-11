@@ -76,7 +76,7 @@ RUN /bin/bash -c "cd ~ && \
 		  cd gzweb && \
 		  hg up gzweb_1.4.0 && \
 		  source /usr/share/gazebo/setup.sh && \
-		  xvfb-run -s \"-screen 0 1280x1024x24\" npm run deploy --- -m local"
+		  xvfb-run -s \"-screen 0 1280x1024x24\" npm run deploy --- -m local -t"
 
 ENV PATH="/usr/local/MATLAB/R2020a/bin/:${PATH}"
  
