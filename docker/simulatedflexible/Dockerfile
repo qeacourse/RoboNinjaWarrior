@@ -49,7 +49,7 @@ RUN /bin/bash -c "mkdir -p ~/.gazebo/models; cp -r ~/catkin_ws/src/comprobo18/ne
 # get the rest of the Gazebo models
 
 COPY dl_models.sh /tmp
-RUN /bin/bash -c "/tmp/dl_models.sh"
+#RUN /bin/bash -c "/tmp/dl_models.sh"
 
 ENV GAZEBO_MODEL_PATH=/root/.gazebo/models
 
@@ -71,4 +71,4 @@ ENV GZWEB_PORT=8080
 ENV ROS_HOSTNAME=deepthought.olin.edu
 ENV ROS_PORT=11311
 
-CMD /bin/bash -c "ROS_MASTER_URI=http://$ROS_HOSTNAME:$ROS_PORT && GAZEBO_MASTER_URI=http://localhost:$GAZEBO_PORT && ((sleep 10; cd ~/gzweb && npm start -p $GZWEB_PORT) & (source ~/catkin_ws/devel/setup.bash && roslaunch neato_gazebo neato_no_spawn.launch gui:=false load_camera:=false neato_world:=$NEATO_WORLD))"
+CMD /bin/bash -c "export ROS_MASTER_URI=http://$ROS_HOSTNAME:$ROS_PORT && export GAZEBO_MASTER_URI=http://localhost:$GAZEBO_PORT && ((sleep 10; cd ~/gzweb && npm start -p $GZWEB_PORT) & (source ~/catkin_ws/devel/setup.bash && roslaunch neato_gazebo neato_no_spawn.launch gui:=false load_camera:=false neato_world:=$NEATO_WORLD))"
