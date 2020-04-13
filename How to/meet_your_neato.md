@@ -101,6 +101,8 @@ There are some reports that Windows security features are interfering with the V
 ```powershell
 net start vmcompute
 ```
+If this goes well, you should see something indicating that ``vmcompute`` is starting (or has already started).
+9. Reboot your computer to give Docker a chance to start up again.  You can then try running the hello world image to see if everything works.
 
 > ***If you still get an error after doing this, revisit the steps above but in step 7 use "Override system settings and put the toggle to "On" with "Use strict CFG" unchecked (we know that it is bizarre to try it both ways, but this is a weird error and there are reports of this working on the Docker forum.  It also worked for one of the Spring 2020 QEA students).***
 
