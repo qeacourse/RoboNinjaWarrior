@@ -6,8 +6,6 @@ MAINTAINER Paul Ruvolo Paul.Ruvolo@olin.edu
 ENV NEATO_WORLD=empty_no_spawn
 ENV DEBIAN_FRONTEND=noninteractive
 
-RUN useradd -ms /bin/bash pruvolo -G sudo -p $(openssl passwd -1 qea)
-
 # Install Node.js 10.x repository
 RUN curl -sL https://deb.nodesource.com/setup_10.x | bash -
 
@@ -34,16 +32,6 @@ RUN apt-get update && apt-get install -y \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-RUN cd /tmp && \
-    wget http://x11vnc.sourceforge.net/dev/x11vnc-0.9.14-dev.tar.gz && \
-    gzip -dc x11vnc-0.9.14-dev.tar.gz | tar -xvf - && \	
-    cd x11vnc-0.9.14/ && \
-    ./configure --prefix=/usr/ CFLAGS='-g -O2 -fno-stack-protector -Wall' && \
-    make && \
-    make install
-
-USER pruvolo
-
 # Setup catkin workspace and ROS environment.
 RUN /bin/bash -c "source /opt/ros/melodic/setup.bash && \
                   mkdir -p ~/catkin_ws/src && \
@@ -63,7 +51,7 @@ RUN /bin/bash -c "mkdir -p ~/.gazebo/models; cp -r ~/catkin_ws/src/comprobo18/ne
 COPY dl_models.sh /tmp
 RUN /bin/bash -c "/tmp/dl_models.sh"
 
-ENV GAZEBO_MODEL_PATH=/home/pruvolo/.gazebo/models
+ENV GAZEBO_MODEL_PATH=/root/.gazebo/models
 
 RUN /bin/bash -c "mkdir ~/.gazebo/models/mobile_base && \
 		  source ~/catkin_ws/devel/setup.bash && \
@@ -78,18 +66,9 @@ RUN /bin/bash -c "cd ~ && \
 		  source /usr/share/gazebo/setup.sh && \
 		  xvfb-run -s \"-screen 0 1280x1024x24\" npm run deploy --- -m local -t"
 
-ENV PATH="/usr/local/MATLAB/R2020a/bin/:${PATH}"
- 
-COPY xsession /home/pruvolo/.xsession
+ENV GAZEBO_PORT=11345
+ENV GZWEB_PORT=8080
+ENV ROS_HOSTNAME=deepthought.olin.edu
+ENV ROS_PORT=11311
 
-RUN /bin/bash -c "mkdir ~/.vnc && \
-                  x11vnc -storepasswd 1234 ~/.vnc/passwd"
-
-USER root
-COPY config /usr/share/fvwm/default-config
-RUN /bin/bash -c "chown pruvolo:pruvolo /home/pruvolo/.xsession"
-RUN /bin/bash -c "chmod u+x /home/pruvolo/.xsession"
-
-USER pruvolo
-
-CMD /bin/bash -c "((x11vnc -create -rfbauth /home/pruvolo/.vnc/passwd -forever -autoport 5900) & (sleep 10; cd ~/gzweb && npm start) & (source ~/catkin_ws/devel/setup.bash && roslaunch neato_gazebo neato_no_spawn.launch gui:=false load_camera:=false neato_world:=$NEATO_WORLD))"
+CMD /bin/bash -c "ROS_MASTER_URI=http://$ROS_HOSTNAME:$ROS_PORT && GAZEBO_MASTER_URI=http://localhost:$GAZEBO_PORT && ((sleep 10; cd ~/gzweb && npm start -p $GZWEB_PORT) & (source ~/catkin_ws/devel/setup.bash && roslaunch neato_gazebo neato_no_spawn.launch gui:=false load_camera:=false neato_world:=$NEATO_WORLD))"
