@@ -133,7 +133,7 @@ function teleopAndVisualizerWithImages()
     tftree = rostf;
     pub = rospublisher('/cmd_vel', 'geometry_msgs/Twist');
     sub_scan = rossubscriber('/projected_stable_scan', 'sensor_msgs/PointCloud2', @processProjectedScan);
-    sub_image = rossubscriber('/camera/image_raw', 'sensor_msgs/Image', @processImage);
+    sub_image = rossubscriber('/camera/image_raw/compressed', 'sensor_msgs/CompressedImage', @processImage);
 
 	f = figure('CloseRequestFcn',@myCloseRequest);
     xlim([-10 10]);
