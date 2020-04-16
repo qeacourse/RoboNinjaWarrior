@@ -1,0 +1,13 @@
+#!/bin/bash
+
+cd ~
+
+echo "rosinit()" > startup.m
+
+world=$1
+if [ "$#" -ne 1 ]; then
+    world="empty_no_spawn"
+fi
+
+echo "Launching world $world"
+/bin/bash -c "((roslaunch neato_gazebo neato_no_spawn.launch neato_world:=$world) & (sleep 10; matlab))"
