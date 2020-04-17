@@ -10,4 +10,4 @@ if [ "$#" -ne 1 ]; then
 fi
 
 echo "Launching world $world"
-/bin/bash -c "((roslaunch neato_gazebo neato_no_spawn.launch neato_world:=$world) & (sleep 10; matlab))"
+/bin/bash -c "((roslaunch neato_gazebo neato_no_spawn.launch neato_world:=$world) & (sleep 10; matlab -licmode online))"
