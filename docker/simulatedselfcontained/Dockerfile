@@ -138,5 +138,9 @@ RUN /bin/bash -c "cd /tmp && \
                   cp -r /tmp/RoboNinjaWarrior/Sample_code ~ && \
 		  rm -rf /tmp/RoboNinjaWarrior"
 
+
+RUN echo "echo \"type the command \\\"launch neato_world\\\" to launch the simulator\"" >> /home/pruvolo/.bashrc
+RUN echo "echo \"for example, the command \\\"launch bod_volcano\\\" will load the world for the Bridge of Doom\"" >> /home/pruvolo/.bashrc
+
 COPY start_desktop.sh /usr/local/bin/start_desktop.sh
 CMD /usr/local/bin/start_desktop.sh
