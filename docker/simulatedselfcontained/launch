@@ -3,6 +3,11 @@
 cd ~
 
 echo "rosinit()" > startup.m
+echo "disp('Make sure to use MATLAB Drive when working on this machine');" >> startup.m
+echo "disp('https://www.mathworks.com/help/matlabdrive/ug/access-files-on-matlab-drive.html).');" >> startup.m
+echo "disp('Any code or data saved on this machine outside of MATLAB Drive might be lost.');" >> startup.m
+echo "disp('ROS is connected and ready to go.  No need to run rosinit');" >> startup.m
+echo "disp('When you are done, close the terminal you ran the launch command in.');" >> startup.m
 
 world=$1
 if [ "$#" -ne 1 ]; then
