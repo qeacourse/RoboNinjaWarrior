@@ -87,10 +87,6 @@ RUN rm /etc/xdg/autostart/lxpolkit.desktop && \
 # Precede bash on all new terminator shells with vglrun so that 3d graphics apps will use the GPU
 RUN perl -pi -e 's/^Exec=terminator$/Exec=terminator -e "vglrun bash"/g' /usr/share/applications/terminator.desktop	
 
-# make the pruvolo user
-RUN useradd -ms /bin/bash pruvolo -g root -G sudo
-USER pruvolo
-
 # Setup catkin workspace and ROS environment.
 RUN /bin/bash -c "source /opt/ros/melodic/setup.bash && \
                   mkdir -p ~/catkin_ws/src && \
@@ -107,7 +103,7 @@ RUN /bin/bash -c "mkdir -p ~/.gazebo/models; cp -r ~/catkin_ws/src/comprobo18/ne
 COPY dl_models.sh /tmp
 RUN /bin/bash -c "/tmp/dl_models.sh"
 
-ENV GAZEBO_MODEL_PATH=/home/pruvolo/.gazebo/models
+ENV GAZEBO_MODEL_PATH=/root/.gazebo/models
 
 RUN /bin/bash -c "mkdir ~/.gazebo/models/mobile_base && \
                   mkdir ~/.gazebo/models/mobile_base_with_camera && \
@@ -118,20 +114,20 @@ RUN /bin/bash -c "mkdir ~/.gazebo/models/mobile_base && \
                   cp ~/catkin_ws/src/comprobo18/neato_robot/neato_description/model_with_camera.config ~/.gazebo/models/mobile_base_with_camera/model.config && \
                   cp -r ~/catkin_ws/src/comprobo18/neato_robot/neato_description/meshes ~/.gazebo/models/mobile_base"
 
-ENV PATH ${PATH}:/opt/VirtualGL/bin:/opt/TurboVNC/bin:/home/pruvolo:/usr/local/MATLAB/R2020a/bin
+ENV PATH ${PATH}:/opt/VirtualGL/bin:/opt/TurboVNC/bin:/root:/usr/local/MATLAB/R2020a/bin
 
 ENV DISPLAY :1
 
-RUN /bin/bash -c "mkdir -p /home/pruvolo/Desktop"
-COPY --chown=pruvolo:root ./terminator.desktop /home/pruvolo/Desktop
-RUN mkdir -p /home/pruvolo/.config/terminator
-COPY terminator_config /home/pruvolo/.config/terminator/config
+RUN /bin/bash -c "mkdir -p /root/Desktop"
+COPY ./terminator.desktop /root/Desktop
+RUN mkdir -p /root/.config/terminator
+COPY terminator_config /root/.config/terminator/config
 
-RUN /bin/bash -c "mkdir -p /home/pruvolo/.vnc"
-COPY --chown=pruvolo:root ./xstartup.turbovnc /home/pruvolo/.vnc/xstartup.turbovnc
-RUN chmod a+x /home/pruvolo/.vnc/xstartup.turbovnc
-COPY --chown=pruvolo:root self.pem /home/pruvolo/self.pem
-COPY --chown=pruvolo:root launch /home/pruvolo/
+RUN /bin/bash -c "mkdir -p /root/.vnc"
+COPY ./xstartup.turbovnc /root/.vnc/xstartup.turbovnc
+RUN chmod a+x /root/.vnc/xstartup.turbovnc
+COPY self.pem /root/self.pem
+COPY launch /root/
 
 RUN /bin/bash -c "cd /tmp && \
                   git clone https://github.com/qeacourse/RoboNinjaWarrior && \
@@ -139,8 +135,8 @@ RUN /bin/bash -c "cd /tmp && \
 		  rm -rf /tmp/RoboNinjaWarrior"
 
 
-RUN echo "echo \"type the command \\\"launch neato_world\\\" to launch the simulator\"" >> /home/pruvolo/.bashrc
-RUN echo "echo \"for example, the command \\\"launch bod_volcano\\\" will load the world for the Bridge of Doom\"" >> /home/pruvolo/.bashrc
+RUN echo "echo \"type the command \\\"launch neato_world\\\" to launch the simulator\"" >> /root/.bashrc
+RUN echo "echo \"for example, the command \\\"launch bod_volcano\\\" will load the world for the Bridge of Doom\"" >> /root/.bashrc
 
 COPY start_desktop.sh /usr/local/bin/start_desktop.sh
 CMD /usr/local/bin/start_desktop.sh

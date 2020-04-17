@@ -10,5 +10,5 @@ xauth generate :0 . trusted
 
 # Start NoVNC. self.pem is a self-signed cert.
 if [ $? -eq 0 ] ; then
-    /opt/noVNC/utils/launch.sh --vnc localhost:5901 --cert /home/pruvolo/self.pem --listen 40001;
+    /opt/noVNC/utils/launch.sh --vnc localhost:5901 --cert /root/self.pem --listen 40001;
 fi
