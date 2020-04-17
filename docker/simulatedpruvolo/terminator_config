@@ -1,0 +1,16 @@
+[global_config]
+dbus = false
+[keybindings]
+[layouts]
+  [[default]]
+    [[[child1]]]
+      parent = window0
+      type = Terminal
+    [[[window0]]]
+      parent = ""
+      type = Window
+[plugins]
+[profiles]
+  [[default]]
+    custom_command = vglrun bash
+    use_custom_command = True

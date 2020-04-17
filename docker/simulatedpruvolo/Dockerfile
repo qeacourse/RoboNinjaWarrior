@@ -6,18 +6,18 @@ MAINTAINER Paul Ruvolo Paul.Ruvolo@olin.edu
 ENV NEATO_WORLD=empty_no_spawn
 ENV DEBIAN_FRONTEND=noninteractive
 
-RUN apt-get update -y && apt-get install -y lsb-release gnupg2 apt-utils
+RUN apt-get update -y && \
+    apt-get install -y lsb-release gnupg2 apt-utils && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-RUN echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > \
-    /etc/apt/sources.list.d/ros-latest.list && \
+RUN echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list && \
     apt-key adv --keyserver hkp://ha.pool.sks-keyservers.net:80 --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654 && \
     apt-get update -y && \
-    apt-get install -y ros-melodic-desktop-full
+    apt-get install -y ros-melodic-desktop-full && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-# Install Node.js 10.x repository
-RUN curl -sL https://deb.nodesource.com/setup_10.x | bash -
-
-# install ROS and other packages
 RUN apt-get update && apt-get install -y \
     software-properties-common \
     ros-melodic-pointcloud-to-laserscan \
@@ -39,10 +39,13 @@ RUN apt-get update && apt-get install -y \
     libxtst-dev \
     libssl-dev \
     libjpeg-dev \
-    vim && \
+    vim \
+    terminator \
+    lubuntu-desktop && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
+# install some more stuff from sourceforge
 ARG SOURCEFORGE=https://sourceforge.net/projects
 ARG TURBOVNC_VERSION=2.1.2
 ARG VIRTUALGL_VERSION=2.5.2
@@ -71,14 +74,20 @@ RUN curl -fsSL https://github.com/novnc/noVNC/archive/v${NOVNC_VERSION}.tar.gz |
 COPY xorg.conf /etc/X11/xorg.conf
 COPY index.html /opt/noVNC/index.html
 
-RUN apt-get update -y && apt-get install -y lubuntu-desktop terminator
 # Defeat screen locking and power management
 RUN mv /etc/xdg/autostart/light-locker.desktop /etc/xdg/autostart/light-locker.desktop_bak
 RUN mv /etc/xdg/autostart/xfce4-power-manager.desktop /etc/xdg/autostart/xfce4-power-manager.desktop_bak
 
+# fix some other errors that tend to pop up and start a terminal at launch time
+RUN rm /etc/xdg/autostart/lxpolkit.desktop && \
+    rm /etc/xdg/autostart/update-notifier.desktop && \
+    mv /usr/bin/lxpolkit /usr/bin/lxpolkit.ORIG && \
+    cp /usr/share/applications/terminator.desktop /etc/xdg/autostart/
+
 # Precede bash on all new terminator shells with vglrun so that 3d graphics apps will use the GPU
 RUN perl -pi -e 's/^Exec=terminator$/Exec=terminator -e "vglrun bash"/g' /usr/share/applications/terminator.desktop	
 
+# make the pruvolo user
 RUN useradd -ms /bin/bash pruvolo -g root -G sudo
 USER pruvolo
 
@@ -87,10 +96,7 @@ RUN /bin/bash -c "source /opt/ros/melodic/setup.bash && \
                   mkdir -p ~/catkin_ws/src && \
                   cd ~/catkin_ws/src && \
 		  git clone -b qea https://github.com/comprobo18/comprobo18.git && \
-                  catkin_init_workspace"
-
-RUN /bin/bash -c "source /opt/ros/melodic/setup.bash && \
-                  cd ~/catkin_ws/ && \
+                  cd .. && \
 		  catkin_make && \
                   echo 'source ~/catkin_ws/devel/setup.bash' >> ~/.bashrc"
 
@@ -98,8 +104,8 @@ RUN /bin/bash -c "mkdir -p ~/.gazebo/models; cp -r ~/catkin_ws/src/comprobo18/ne
 
 # get the rest of the Gazebo models
 
-#COPY dl_models.sh /tmp
-#RUN /bin/bash -c "/tmp/dl_models.sh"
+COPY dl_models.sh /tmp
+RUN /bin/bash -c "/tmp/dl_models.sh"
 
 ENV GAZEBO_MODEL_PATH=/home/pruvolo/.gazebo/models
 
@@ -112,26 +118,14 @@ RUN /bin/bash -c "mkdir ~/.gazebo/models/mobile_base && \
                   cp ~/catkin_ws/src/comprobo18/neato_robot/neato_description/model_with_camera.config ~/.gazebo/models/mobile_base_with_camera/model.config && \
                   cp -r ~/catkin_ws/src/comprobo18/neato_robot/neato_description/meshes ~/.gazebo/models/mobile_base"
 
-RUN /bin/bash -c "cd ~ && \
-		  hg clone https://bitbucket.org/osrf/gzweb && \
-		  cd gzweb && \
-		  hg up gzweb_1.4.0 && \
-		  source /usr/share/gazebo/setup.sh && \
-		  xvfb-run -s \"-screen 0 1280x1024x24\" npm run deploy --- -m local -t"
-
-ENV GAZEBO_PORT=11345
-ENV GZWEB_PORT=8080
-ENV ROS_HOSTNAME=localhost
-ENV ROS_PORT=11311
-
 ENV PATH ${PATH}:/opt/VirtualGL/bin:/opt/TurboVNC/bin:/home/pruvolo:/usr/local/MATLAB/R2020a/bin
 
-# Expose whatever port NoVNC will serve from. In our case it will be 40001, see ./start_desktop.sh
-EXPOSE 40001
 ENV DISPLAY :1
 
 RUN /bin/bash -c "mkdir -p /home/pruvolo/Desktop"
 COPY --chown=pruvolo:root ./terminator.desktop /home/pruvolo/Desktop
+RUN mkdir -p /home/pruvolo/.config/terminator
+COPY terminator_config /home/pruvolo/.config/terminator/config
 
 RUN /bin/bash -c "mkdir -p /home/pruvolo/.vnc"
 COPY --chown=pruvolo:root ./xstartup.turbovnc /home/pruvolo/.vnc/xstartup.turbovnc
@@ -139,7 +133,10 @@ RUN chmod a+x /home/pruvolo/.vnc/xstartup.turbovnc
 COPY --chown=pruvolo:root self.pem /home/pruvolo/self.pem
 COPY --chown=pruvolo:root launch /home/pruvolo/
 
+RUN /bin/bash -c "cd /tmp && \
+                  git clone https://github.com/qeacourse/RoboNinjaWarrior && \
+                  cp -r /tmp/RoboNinjaWarrior/Sample_code ~ && \
+		  rm -rf /tmp/RoboNinjaWarrior"
+
 COPY start_desktop.sh /usr/local/bin/start_desktop.sh
 CMD /usr/local/bin/start_desktop.sh
-
-#CMD /bin/bash -c "export ROS_MASTER_URI=http://$ROS_HOSTNAME:$ROS_PORT && export GAZEBO_MASTER_URI=http://localhost:$GAZEBO_PORT && ((sleep 12; cd ~/gzweb && npm start -p $GZWEB_PORT)  & (sleep 2; source ~/catkin_ws/devel/setup.bash && roslaunch neato_gazebo neato_no_spawn.launch gui:=false load_camera:=false neato_world:=$NEATO_WORLD))"
