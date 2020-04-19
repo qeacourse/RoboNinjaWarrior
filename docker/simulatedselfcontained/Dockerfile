@@ -114,7 +114,7 @@ RUN /bin/bash -c "mkdir ~/.gazebo/models/mobile_base && \
                   cp ~/catkin_ws/src/comprobo18/neato_robot/neato_description/model_with_camera.config ~/.gazebo/models/mobile_base_with_camera/model.config && \
                   cp -r ~/catkin_ws/src/comprobo18/neato_robot/neato_description/meshes ~/.gazebo/models/mobile_base"
 
-ENV PATH ${PATH}:/opt/VirtualGL/bin:/opt/TurboVNC/bin:/root:/usr/local/MATLAB/R2020a/bin
+ENV PATH /root:${PATH}:/opt/VirtualGL/bin:/opt/TurboVNC/bin:/root:/usr/local/MATLAB/R2020a/bin
 
 ENV DISPLAY :1
 
@@ -128,6 +128,7 @@ COPY ./xstartup.turbovnc /root/.vnc/xstartup.turbovnc
 RUN chmod a+x /root/.vnc/xstartup.turbovnc
 COPY self.pem /root/self.pem
 COPY launch /root/
+COPY matlab /root/
 
 RUN /bin/bash -c "cd /tmp && \
                   git clone https://github.com/qeacourse/RoboNinjaWarrior && \
