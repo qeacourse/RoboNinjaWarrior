@@ -87,6 +87,12 @@ RUN rm /etc/xdg/autostart/lxpolkit.desktop && \
 # Precede bash on all new terminator shells with vglrun so that 3d graphics apps will use the GPU
 RUN perl -pi -e 's/^Exec=terminator$/Exec=terminator -e "vglrun bash"/g' /usr/share/applications/terminator.desktop	
 
+# Workaround for running setuid programs under vgl
+RUN /bin/bash -c "chmod u+s /usr/lib/libdlfaker.so && \
+                  chmod u+s /usr/lib/libvglfaker.so && \
+                  chmod u+s /usr/lib32/libdlfaker.so && \
+                  chmod u+s /usr/lib32/libvglfaker.so"
+
 # make the RoboNinjaWarrior user
 RUN useradd -ms /bin/bash rnw -g root -G sudo
 USER rnw
