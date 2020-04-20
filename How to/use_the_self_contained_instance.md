@@ -27,7 +27,13 @@ When you first connect to the remote desktop a terminal window will pop up.  The
 ```bash
 launch empty_no_spawn
 ```
-If you'd like to run a different world, you can replace ``empty_no_spawn`` with the world name you'd like to access (e.g., ``launch bod_volcano``).  Once you enter this command a visualization of the simulator will pop up, MATLAB will also be started.  In order to use MATLAB, you will have to enter your Mathworks account information (this is to make sure you have a valid license to use MATLAB).  Once MATLAB starts, it will automatically execute the appropriate ``rosinit`` command and you will be connected to the robot.
+If you'd like to run a different world, you can replace ``empty_no_spawn`` with the world name you'd like to access (e.g., ``launch bod_volcano``).  Once you enter this command a visualization of the simulator will pop up, MATLAB will also be started.  In order to use MATLAB, you will have to enter your Mathworks account information (this is to make sure you have a valid license to use MATLAB).  You should see this dialog pop up as MATLAB starts.
+
+<p align="center">	
+<img src="Pictures/mathworkssignin_annotated.png" width="80%">
+</p>
+
+Once MATLAB starts, it will automatically execute the appropriate ``rosinit`` command and you will be connected to the robot.
 
 ## Coding in MATLAB
 
