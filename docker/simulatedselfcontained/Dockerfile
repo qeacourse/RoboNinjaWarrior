@@ -87,6 +87,16 @@ RUN rm /etc/xdg/autostart/lxpolkit.desktop && \
 # Precede bash on all new terminator shells with vglrun so that 3d graphics apps will use the GPU
 RUN perl -pi -e 's/^Exec=terminator$/Exec=terminator -e "vglrun bash"/g' /usr/share/applications/terminator.desktop	
 
+# Workaround for running setuid programs under vgl
+RUN /bin/bash -c "chmod u+s /usr/lib/libdlfaker.so && \
+                  chmod u+s /usr/lib/libvglfaker.so && \
+                  chmod u+s /usr/lib32/libdlfaker.so && \
+                  chmod u+s /usr/lib32/libvglfaker.so"
+
+# make the RoboNinjaWarrior user
+RUN useradd -ms /bin/bash rnw -g root -G sudo
+USER rnw
+
 # Setup catkin workspace and ROS environment.
 RUN /bin/bash -c "source /opt/ros/melodic/setup.bash && \
                   mkdir -p ~/catkin_ws/src && \
@@ -103,7 +113,7 @@ RUN /bin/bash -c "mkdir -p ~/.gazebo/models; cp -r ~/catkin_ws/src/comprobo18/ne
 COPY dl_models.sh /tmp
 RUN /bin/bash -c "/tmp/dl_models.sh"
 
-ENV GAZEBO_MODEL_PATH=/root/.gazebo/models
+ENV GAZEBO_MODEL_PATH=/home/rnw/.gazebo/models
 
 RUN /bin/bash -c "mkdir ~/.gazebo/models/mobile_base && \
                   mkdir ~/.gazebo/models/mobile_base_with_camera && \
@@ -114,20 +124,21 @@ RUN /bin/bash -c "mkdir ~/.gazebo/models/mobile_base && \
                   cp ~/catkin_ws/src/comprobo18/neato_robot/neato_description/model_with_camera.config ~/.gazebo/models/mobile_base_with_camera/model.config && \
                   cp -r ~/catkin_ws/src/comprobo18/neato_robot/neato_description/meshes ~/.gazebo/models/mobile_base"
 
-ENV PATH ${PATH}:/opt/VirtualGL/bin:/opt/TurboVNC/bin:/root:/usr/local/MATLAB/R2020a/bin
+ENV PATH /home/rnw:${PATH}:/opt/VirtualGL/bin:/opt/TurboVNC/bin:/usr/local/MATLAB/R2020a/bin
 
 ENV DISPLAY :1
 
-RUN /bin/bash -c "mkdir -p /root/Desktop"
-COPY ./terminator.desktop /root/Desktop
-RUN mkdir -p /root/.config/terminator
-COPY terminator_config /root/.config/terminator/config
+RUN /bin/bash -c "mkdir -p /home/rnw/Desktop"
+COPY --chown=rnw:root  ./terminator.desktop /home/rnw/Desktop
+RUN mkdir -p /home/rnw/.config/terminator
+COPY --chown=rnw:root terminator_config /home/rnw/.config/terminator/config
 
-RUN /bin/bash -c "mkdir -p /root/.vnc"
-COPY ./xstartup.turbovnc /root/.vnc/xstartup.turbovnc
-RUN chmod a+x /root/.vnc/xstartup.turbovnc
-COPY self.pem /root/self.pem
-COPY launch /root/
+RUN /bin/bash -c "mkdir -p /home/rnw/.vnc"
+COPY --chown=rnw:root  ./xstartup.turbovnc /home/rnw/.vnc/xstartup.turbovnc
+RUN chmod a+x /home/rnw/.vnc/xstartup.turbovnc
+COPY --chown=rnw:root self.pem /home/rnw/self.pem
+COPY --chown=rnw:root launch /home/rnw/
+COPY --chown=rnw:root  matlab /home/rnw/
 
 RUN /bin/bash -c "cd /tmp && \
                   git clone https://github.com/qeacourse/RoboNinjaWarrior && \
@@ -135,8 +146,8 @@ RUN /bin/bash -c "cd /tmp && \
 		  rm -rf /tmp/RoboNinjaWarrior"
 
 
-RUN echo "echo \"type the command \\\"launch neato_world\\\" to launch the simulator\"" >> /root/.bashrc
-RUN echo "echo \"for example, the command \\\"launch bod_volcano\\\" will load the world for the Bridge of Doom\"" >> /root/.bashrc
+RUN echo "echo \"type the command \\\"launch neato_world\\\" to launch the simulator\"" >> /home/rnw/.bashrc
+RUN echo "echo \"for example, the command \\\"launch bod_volcano\\\" will load the world for the Bridge of Doom\"" >> /home/rnw/.bashrc
 
 COPY start_desktop.sh /usr/local/bin/start_desktop.sh
 CMD /usr/local/bin/start_desktop.sh

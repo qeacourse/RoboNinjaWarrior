@@ -7,7 +7,7 @@ hg clone https://bitbucket.org/osrf/gazebo_models -b default
 cd gazebo_models
 
 # Copy extracted files to the local model folder
-cp -vfR * "/root/.gazebo/models/"
+cp -vfR * "/home/rnw/.gazebo/models/"
 
 cd "$(dirname "$(realpath "$0")")";
 
