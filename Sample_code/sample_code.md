@@ -16,7 +16,7 @@ The first code you should run is the [teleoperation and LIDAR visualization scri
 ## Challenge Code
 
 * [Collect Scans](collectScans) (starter code for exercise 4 on the Frames of Reference and LIDAR assignment)
-* [Collect Scans Solution](collectScansSolution), [Make Gauntlet Map](makeGauntletMapSolution) (solutions for exercise 4 on the Frames of Reference and LIDAR assignment)
+* [Collect Scans Solution](collectScansSolution), [Make Gauntlet Map Solution](makeGauntletMapSolution) (solutions for exercise 4 on the Frames of Reference and LIDAR assignment)
 * [Place Neato](placeNeato) (a helper function to support many of the challenges)
 * [Bridge of Doom Starter Code QEA 2020](starterCodeForBridgeOfDoomQEA2020)
 * [Bridge of Doom Solution QEA 2020](bridgeOfDoomQEA2020) (this is a sample solution to the Bridge of Doom challenge for QEA 2020)
