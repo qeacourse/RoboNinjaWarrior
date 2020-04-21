@@ -12,8 +12,7 @@ r_1 = scan_message.Ranges(1:end-1);
 theta_1 = deg2rad([0:359]');
 
 % place Neato at the origin pointing in a different direction
-% TODO: you must modify this next line of code!
-placeNeato(0,0,1,0)
+placeNeato(0,0,cos(pi/6),sin(pi/6))
 
 % wait a while for the Neato to fall into place
 pause(2);
@@ -24,8 +23,7 @@ r_2 = scan_message.Ranges(1:end-1);
 theta_2 = deg2rad([0:359]');
 
 % place Neato at a new position (a,b)_G with ihat_N oriented parallel to ihat_G
-% TODO: you must modify this next line of code!
-placeNeato(0,0,1,0)
+placeNeato(1,0,1,0)
 
 % wait a while for the Neato to fall into place
 pause(2);
@@ -35,8 +33,7 @@ r_3 = scan_message.Ranges(1:end-1);
 theta_3 = deg2rad([0:359]');
 
 % place Neato at an arbitrary position and orientation
-% TODO: you must modify this next line of code!
-placeNeato(0,0,1,0)
+placeNeato(0,-2,cos(pi/3),sin(pi/3))
 
 % wait a while for the Neato to fall into place
 pause(2);
@@ -49,3 +46,7 @@ theta_4 = deg2rad([0:359]');
 % individual r_x and theta_x variables
 r_all = [r_1 r_2 r_3 r_4];
 theta_all = [theta_1 theta_2 theta_3 theta_4];
+
+% I decided to store the collected data in a .mat file so I could iterate
+% on my solution without being connected to the simulator.
+save('mydata.mat','r_all','theta_all')
