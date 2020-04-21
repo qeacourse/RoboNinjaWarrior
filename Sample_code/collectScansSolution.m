@@ -11,7 +11,7 @@ scan_message = receive(sub);
 r_1 = scan_message.Ranges(1:end-1);
 theta_1 = deg2rad([0:359]');
 
-% place Neato at the origin pointing in a different direction
+% place Neato at origin of G with ihat_N at a 30-degree angle relative to ihat_G
 placeNeato(0,0,cos(pi/6),sin(pi/6))
 
 % wait a while for the Neato to fall into place
@@ -22,7 +22,7 @@ scan_message = receive(sub);
 r_2 = scan_message.Ranges(1:end-1);
 theta_2 = deg2rad([0:359]');
 
-% place Neato at a new position (a,b)_G with ihat_N oriented parallel to ihat_G
+% place Neato at a new position (1,0)_G with ihat_N oriented parallel to ihat_G
 placeNeato(1,0,1,0)
 
 % wait a while for the Neato to fall into place
@@ -32,7 +32,7 @@ scan_message = receive(sub);
 r_3 = scan_message.Ranges(1:end-1);
 theta_3 = deg2rad([0:359]');
 
-% place Neato at an arbitrary position and orientation
+% place Neato at (0,-2)_G with ihat_N at a 60-degree angle relative to ihat_G
 placeNeato(0,-2,cos(pi/3),sin(pi/3))
 
 % wait a while for the Neato to fall into place
