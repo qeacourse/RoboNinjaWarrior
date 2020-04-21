@@ -1,5 +1,5 @@
 ---
-title: collectScansSolulution
+title: collectScansSolution
 layout: matlab_code
 matlab_source: collectScansSolution.m
 ---
