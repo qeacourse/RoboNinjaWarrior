@@ -6,7 +6,7 @@ if [ "$#" -ne 1 ]; then
 fi
 let "NO_VNC_PORT=40001 + $1"
 
-if [[ ! -f /tmp/.X11-unix/X0 ]]; then
+if [[ ! -S /tmp/.X11-unix/X0 ]]; then
     startx &
     sleep 5
 fi
