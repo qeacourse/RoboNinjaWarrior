@@ -71,7 +71,6 @@ RUN curl -fsSL https://github.com/novnc/noVNC/archive/v${NOVNC_VERSION}.tar.gz |
     cd /opt/noVNC/utils && \
     ln -s /opt/websockify
 
-COPY xorg.conf /etc/X11/xorg.conf
 COPY index.html /opt/noVNC/index.html
 
 # Defeat screen locking and power management
@@ -138,7 +137,7 @@ COPY --chown=rnw:root  ./xstartup.turbovnc /home/rnw/.vnc/xstartup.turbovnc
 RUN chmod a+x /home/rnw/.vnc/xstartup.turbovnc
 COPY --chown=rnw:root self.pem /home/rnw/self.pem
 COPY --chown=rnw:root launch /home/rnw/
-COPY --chown=rnw:root  matlab /home/rnw/
+COPY --chown=rnw:root matlab /home/rnw/
 
 RUN /bin/bash -c "cd /tmp && \
                   git clone https://github.com/qeacourse/RoboNinjaWarrior && \
