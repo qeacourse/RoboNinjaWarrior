@@ -15,4 +15,4 @@ if [ "$#" -ne 1 ]; then
 fi
 
 echo "Launching world $world"
-/bin/bash -c "((roslaunch neato_gazebo neato_world.launch use_gpu_laser:=true neato_world:=$world) & (sleep 10; matlab))"
+/bin/bash -c "((roslaunch neato_gazebo neato_world.launch use_gpu_laser:=false neato_world:=$world) & (sleep 10; matlab))"
