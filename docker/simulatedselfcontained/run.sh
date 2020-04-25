@@ -1,4 +1,4 @@
-#/bin/bash
+#!/bin/bash
 
 if [ "$#" -ne 1 ]; then
     echo "./run.sh instance-id"
