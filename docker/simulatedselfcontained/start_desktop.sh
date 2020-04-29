@@ -1,5 +1,9 @@
 #!/bin/bash -x
 
+# start a virtual X-server (could be replaced by a real one if we ever get hardware acceleration working with virtual GL
+Xvfb -shmem -screen 0 1280x1024x24 &
+
+# When using a virtual X-server, not sure if any of the rest of this is actually needed
 # Start XVnc/X/Lubuntu
 chmod -f 777 /tmp/.X11-unix
 # From: https://superuser.com/questions/806637/xauth-not-creating-xauthority-file (squashes complaints about .Xauthority)
