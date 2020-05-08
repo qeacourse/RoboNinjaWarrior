@@ -112,6 +112,9 @@ if status ~= 0 && status ~= 1
     error(cmd_out);
 end
 
+disp('Closing any open simulator visualizations');
+com.mathworks.mlservices.MatlabDesktopServices.getDesktop.closeGroup('Web Browser');
+
 if op == "stop"
     disp('ROS simulator has been succcessfully shutdown');
     return
