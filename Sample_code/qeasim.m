@@ -8,7 +8,7 @@ function qeasim(op, varargin)
 %   the word simualtor_world with one of the valid options below depending on
 %   what you want to do with the robot.
 %     - dh (dining hall)
-%     - bod_ice_world (bridge of doom with icy bridge)
+%     - bod_ice_bridge (bridge of doom with icy bridge)
 %     - ice_rink (flat world with low friction surface)
 %     - empty_no_spawn (flat world)
 %     - bod_volcano (the bridge of doom)
@@ -26,7 +26,7 @@ usage = 'USAGE: qeasim start simulator_world\nUSAGE: qeasim stop';
 
 % these are the simulator worlds that work with this script
 valid_worlds = {'dh',...
-                'bod_ice_world',...
+                'bod_ice_bridge',...
                 'ice_rink',...
                 'empty_no_spawn',...
                 'bod_volcano',...
@@ -96,7 +96,7 @@ for retryCount = 1 : maxDockerRetryCount
 end
 disp('Docker is ready');
 
-% stop the robot sim in case it is running (this causes all sorts of
+% stop the sim in case it is running (this causes all sorts of problems)
 disp('Shutting down MATLAB ROS Node in case it is running');
 disp('This might take up to 30 seconds');
 rosshutdown;
