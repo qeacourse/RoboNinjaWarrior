@@ -95,10 +95,23 @@ for retryCount = 1 : maxDockerRetryCount
     pause(10);
 end
 disp('Docker is ready');
+
 % stop the robot sim in case it is running (this causes all sorts of
-% problems if it is still running)
-disp('Running shutdown procedure in case the simulator is already running');
-stopRobotSim()
+disp('Shutting down MATLAB ROS Node in case it is running');
+disp('This might take up to 30 seconds');
+rosshutdown;
+disp('Shutting down docker container in case it is running');
+[status, cmd_out] = system([docker_bin, ' stop neato']);
+if status ~= 0 && status ~= 1
+    disp('Got an unexpected exit code from docker stop neato');
+    error(cmd_out);
+end
+[status, cmd_out] = system([docker_bin, ' rm --force neato']);
+if status ~= 0 && status ~= 1
+    disp('Got an unexpected exit code from docker rm --force neato');
+    error(cmd_out);
+end
+
 if op == "stop"
     disp('ROS simulator has been succcessfully shutdown');
     return
