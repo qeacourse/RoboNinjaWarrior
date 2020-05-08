@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+
+<script type="text/javascript" src="http://static.robotwebtools.org/EventEmitter2/current/eventemitter2.min.js"></script>
+<script type="text/javascript" src="http://static.robotwebtools.org/roslibjs/current/roslib.min.js"></script>
+
+<script type="text/javascript" type="text/javascript">
+  // Connecting to ROS
+  // -----------------
+
+  var dataset = [];
+  var now = -1;
+  var collectingData = false;
+
+  var ros = new ROSLIB.Ros({
+    url : 'ws://192.168.1.19:9090'
+  });
+
+  ros.on('connection', function() {
+    console.log('Connected to websocket server.');
+  });
+
+  ros.on('error', function(error) {
+    console.log('Error connecting to websocket server: ', error);
+  });
+
+  ros.on('close', function() {
+    console.log('Connection to websocket server closed.');
+  });
+
+
+  // Subscribing to a Topic
+  // ----------------------
+
+  var listener = new ROSLIB.Topic({
+    ros : ros,
+    name : '/encoders',
+    messageType : 'std_msgs/Float32MultiArray'
+  });
+
+  listener.subscribe(function(message) {
+    if (collectingData) {
+      dataset.push([now, message.data[0], message.data[1]]);
+      document.getElementById("dataset_status").innerHTML = "Datapoints Collected: " + dataset.length;
+    }
+  });
+  var clock_listener = new ROSLIB.Topic({
+    ros : ros,
+    name : '/clock',
+    messageType : 'rosgraph_msgs/Clock'
+  });
+
+  clock_listener.subscribe(function(message) {
+    now = message.clock.secs + message.clock.nsecs / 1e9;
+  });
+
+  function toggleDatasetCollection() {
+    collectingData = !collectingData
+    if (collectingData) {
+	document.getElementById("dataCollectionStatus").value = "Stop Collecting Data";
+    } else {
+	document.getElementById("dataCollectionStatus").value = "Start Collecting Data";
+    }
+  }
+
+  function resetDataset() {
+    if (collectingData) {
+     toggleDatasetCollection()
+    }
+    dataset = []
+    document.getElementById("dataset_status").innerHTML = "Datapoints Collected: " + dataset.length;
+  }
+
+  function packageDataset() {
+    let csvContent = "data:text/csv;charset=utf-8,";
+    csvContent += "time (seconds),encoderLeft (meters),encoderRight (meters)\r\n";
+    dataset.forEach(function(rowArray) {
+       let row = rowArray.join(","); csvContent += row + "\r\n"; });
+    var encodedUri = encodeURI(csvContent);
+    var link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", "my_data.csv");
+    document.body.appendChild(link); // Required for FF
+
+    link.click(); // This will download the data file named "my_data.csv".
+  }
+
+</script>
+</head>
+
+<body>
+  <h1>Encoder Dataset Collector</h1>
+  <p id="dataset_status">Datapoints Collected: 0</p>
+<input id="dataCollectionStatus" type="button" value="Start Data Collection" onclick="toggleDatasetCollection();" />
+<input id="clickMe" type="button" value="Download Dataset" onclick="packageDataset();" />
+<input id="resetDataset" type="button" value="Reset Dataset" onclick="resetDataset();" />
+
+</body>
+</html>
