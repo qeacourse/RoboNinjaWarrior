@@ -2,6 +2,9 @@
 title: "Sample MATLAB Code for Robo Ninja Warrior"
 ---
 
+## Simulator Autostart
+* [A script to autostart the ROS simulator](qeasim)
+
 ## Teleoperation and LIDAR visualization
 
 ![A screenshot showing a visualization of the Neato and its LIDAR readings](../How to/Pictures/sample_screenshot.png)
