@@ -1,9 +1,12 @@
 function qeasim(op, varargin)
-% Start or stop the QEA robot simulator
+% Start or stop the QEA robot simulator.
+% Note that >> is used to indicate that the command should be run in the
+% MATLAB command window (or in a MATLAB script / livescript if you prefer)
 %
-% USAGE: qeasim start simulator_world
-%   Start the simulator with the specified simulator world.
-%   Valid options for the simulator world are
+% USAGE: >> qeasim start simulator_world
+%   Start the simulator with the specified simulator world.  You would replace
+%   the word simualtor_world with one of the valid options below depending on
+%   what you want to do with the robot.
 %     - dh (dining hall)
 %     - bod_ice_world (bridge of doom with icy bridge)
 %     - ice_rink (flat world with low friction surface)
@@ -11,8 +14,10 @@ function qeasim(op, varargin)
 %     - bod_volcano (the bridge of doom)
 %     - flatland_no_spawn (world for the flatland challenge)
 %     - gauntlet_final (world for the gauntlet challenge)
-% USAGE: qeasim stop
+% USAGE: >> qeasim stop
 %   Stop the simulator
+
+% we import these to see if the web-based simulator visualization is running
 import matlab.net.*
 import matlab.net.http.*
 
@@ -54,14 +59,17 @@ else
 end
 
 if op == "stop"
+    % make sure no additional arguments were supplied since stop doesn't take any
     if size(varargin,1) > 0
         error(['USAGE: ',usage]);
     end
 elseif op == "start"
+    % make sure the user specified the simulator world they want to run
     if size(varargin,1) ~= 1
         error(['USAGE: ',usage]);
     end
     robotWorld =  varargin{1};
+    % make sure simulator world is one we know about
     if ~any(strcmp(valid_worlds,robotWorld))
         error(strjoin({'Unknown robot world', 'valid options are', valid_worlds{:}},'\n'));
     end
