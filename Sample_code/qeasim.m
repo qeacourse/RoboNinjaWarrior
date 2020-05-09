@@ -169,7 +169,7 @@ for retryCount = 1 : maxRetries
     break;
 end
 disp('initializing connection from MATLAB to ROS');
-rosinit(ROS_MASTER_HOST,11311, 'NodeHost',NODE_HOST);
+rosinit(ROS_MASTER_HOST,11311, 'NodeHost', NODE_HOST);
 
 disp('Connection made.  Checking to see if connection is good.');
 % as a quick sanity check we can see if the raw_vel topic exists (we could
