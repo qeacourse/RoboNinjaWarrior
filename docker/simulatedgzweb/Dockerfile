@@ -33,6 +33,13 @@ RUN apt-get update && apt-get install -y \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
+# install rosbridge
+RUN apt-get update && apt-get install -y \
+    ros-melodic-rosbridge-suite && \
+    pip install tornado pymongo && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
 # Setup catkin workspace and ROS environment.
 RUN /bin/bash -c "source /opt/ros/melodic/setup.bash && \
                   mkdir -p ~/catkin_ws/src && \
@@ -76,4 +83,4 @@ RUN /bin/bash -c "cd ~ && \
 		  source /usr/share/gazebo/setup.sh && \
 		  xvfb-run -s \"-screen 0 1280x1024x24\" npm run deploy --- -m local -t"
 
-CMD /bin/bash -c "((sleep 10; cd ~/gzweb && npm start) & (source ~/catkin_ws/devel/setup.bash && roslaunch neato_gazebo neato_no_spawn.launch gui:=false load_camera:=false neato_world:=$NEATO_WORLD))"
+CMD /bin/bash -c "((sleep 10; cd ~/gzweb && npm start) & (sleep 5; roslaunch rosbridge_server rosbridge_websocket.launch) & (source ~/catkin_ws/devel/setup.bash && roslaunch neato_gazebo neato_no_spawn.launch gui:=false load_camera:=false neato_world:=$NEATO_WORLD))"
