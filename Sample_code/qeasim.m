@@ -187,5 +187,5 @@ end
 disp('Connection looks good.  Opening robot visualizer');
 disp('If you need to connect from a different browser, use the following link to see the robot.');
 disp('<a href = "http://localhost:8080">http://localhost:8080</a>');
-web('http://localhost:8080');
+web('http://localhost:8080','-browser');
 end
