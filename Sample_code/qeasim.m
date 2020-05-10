@@ -121,7 +121,7 @@ if op == "stop"
 end
 
 % start the Docker container
-docker_cmd = [docker_bin, ' run --rm --name=neato -d --sysctl net.ipv4.ip_local_port_range="32401 32767" -p 11311:11311 -p 8080:8080 -p 32401-32767:32401-32767 -e NEATO_WORLD=',robotWorld,' qeacourse/robodocker:spring2020'];
+docker_cmd = [docker_bin, ' run --rm --name=neato -d --sysctl net.ipv4.ip_local_port_range="32401 32767" -p 11311:11311 -p 8080:8080 -p 9090:9090 -p 32401-32767:32401-32767 -e NEATO_WORLD=',robotWorld,' qeacourse/robodocker:spring2020'];
 disp('Starting robot simulator in 2 seconds');
 
 % warn the user since if they haven't pulled the QEA image it will pull it

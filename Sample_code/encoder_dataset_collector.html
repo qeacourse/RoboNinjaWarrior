@@ -20,14 +20,20 @@
 
   ros.on('connection', function() {
     console.log('Connected to websocket server.');
+    document.getElementById("connection_status").innerHTML = "Connection Status: connected";
+    document.getElementById("connection_status").style.color = "green";
   });
 
   ros.on('error', function(error) {
     console.log('Error connecting to websocket server: ', error);
+    document.getElementById("connection_status").innerHTML = "Connection Status: error";
+    document.getElementById("connection_status").style.color = "red";
   });
 
   ros.on('close', function() {
     console.log('Connection to websocket server closed.');
+    document.getElementById("connection_status").innerHTML = "Connection Status: disconnected";
+    document.getElementById("connection_status").style.color = "black";
   });
 
 
@@ -40,12 +46,6 @@
     messageType : 'std_msgs/Float32MultiArray'
   });
 
-  listener.subscribe(function(message) {
-    if (collectingData) {
-      dataset.push([now, message.data[0], message.data[1]]);
-      document.getElementById("dataset_status").innerHTML = "Datapoints Collected: " + dataset.length;
-    }
-  });
   var clock_listener = new ROSLIB.Topic({
     ros : ros,
     name : '/clock',
@@ -60,8 +60,21 @@
     collectingData = !collectingData
     if (collectingData) {
 	document.getElementById("dataCollectionStatus").value = "Stop Collecting Data";
+        if (!ros.isConnected) {
+           console.log("Attempting to reconnect")
+           ros.connect('ws://localhost:9090');
+	}
+	console.log("subscribe");
+	listener.subscribe(function(message) {
+	    if (collectingData) {
+	       dataset.push([now, message.data[0], message.data[1]]);
+	       document.getElementById("dataset_status").innerHTML = "Datapoints Collected: " + dataset.length;
+	    }
+        });
     } else {
 	document.getElementById("dataCollectionStatus").value = "Start Collecting Data";
+	console.log("unsubscribe");
+        listener.unsubscribe();
     }
   }
 
@@ -96,12 +109,8 @@
 <input id="dataCollectionStatus" type="button" value="Start Data Collection" onclick="toggleDatasetCollection();" />
 <input id="clickMe" type="button" value="Download Dataset" onclick="packageDataset();" />
 <input id="resetDataset" type="button" value="Reset Dataset" onclick="resetDataset();" />
-<p>
-TODO
-<ul>
-<li>Try to connect if not connected yet when the start data collection button is clicked</li>
-<li>Indicate connection status somehow in the UI</li>
-</ul>
+<p id="connection_status">
+Connection Status: disconnected
 </p>
 </body>
 </html>
