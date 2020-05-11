@@ -111,9 +111,7 @@ if status ~= 0 && status ~= 1
     disp('Got an unexpected exit code from docker rm --force neato');
     error(cmd_out);
 end
-
-disp('Closing any open simulator visualizations');
-com.mathworks.mlservices.MatlabDesktopServices.getDesktop.closeGroup('Web Browser');
+disp('You will have to manually close any simulator visualizations in your browser');
 
 if op == "stop"
     disp('ROS simulator has been succcessfully shutdown');
