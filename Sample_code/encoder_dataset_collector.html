@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-<!-- warning might be a bug where the unsubscribe doesn't go through properly and multiple datapoints are added for each timestep -->
 <head>
 <meta charset="utf-8" />
 
@@ -77,7 +76,18 @@
 	console.log("unsubscribe");
         clock_listener.unsubscribe();
         listener.unsubscribe();
-    }
+        // reinitialize topic listeners
+	listener = new ROSLIB.Topic({
+			ros : ros,
+			name : '/encoders',
+			messageType : 'std_msgs/Float32MultiArray'
+	});
+	clock_listener = new ROSLIB.Topic({
+    		ros : ros,
+    		name : '/clock',
+    		messageType : 'rosgraph_msgs/Clock'
+  	});
+}
   }
 
   function resetDataset() {
