@@ -14,6 +14,7 @@ RUN curl -sL https://deb.nodesource.com/setup_10.x | bash -
 RUN apt-get update && apt-get install -y \
     software-properties-common \
     ros-melodic-pointcloud-to-laserscan \
+    ros-melodic-geographic-msgs \
     nodejs \
     libjansson-dev \
     imagemagick \
@@ -45,6 +46,7 @@ RUN /bin/bash -c "source /opt/ros/melodic/setup.bash && \
                   mkdir -p ~/catkin_ws/src && \
                   cd ~/catkin_ws/src && \
 		  git clone -b qea https://github.com/comprobo18/comprobo18.git && \
+		  git clone https://github.com/qeacourse/vrx && \
                   catkin_init_workspace"
 
 RUN /bin/bash -c "source /opt/ros/melodic/setup.bash && \
@@ -77,10 +79,11 @@ RUN /bin/bash -c "mkdir ~/.gazebo/models/mobile_base && \
 		  cp -r ~/catkin_ws/src/comprobo18/neato_robot/neato_description/meshes ~/.gazebo/models/mobile_base"
 
 RUN /bin/bash -c "cd ~ && \
-		  hg clone https://bitbucket.org/osrf/gzweb && \
+		  git clone https://github.com/osrf/gzweb && \
 		  cd gzweb && \
-		  hg up gzweb_1.4.0 && \
+		  git checkout gzweb_1.4.0 && \
 		  source /usr/share/gazebo/setup.sh && \
-		  xvfb-run -s \"-screen 0 1280x1024x24\" npm run deploy --- -m local -t"
+		  xvfb-run -s \"-screen 0 1280x1024x24\" npm run deploy --- -m local -t && \
+		  cp -r /usr/share/gazebo-9/media/* ~/gzweb/http/client/assets"
 
 CMD /bin/bash -c "((sleep 10; cd ~/gzweb && npm start) & (sleep 5; roslaunch rosbridge_server rosbridge_websocket.launch) & (source ~/catkin_ws/devel/setup.bash && roslaunch neato_gazebo neato_no_spawn.launch gui:=false load_camera:=false neato_world:=$NEATO_WORLD))"
