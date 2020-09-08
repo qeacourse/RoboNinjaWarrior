@@ -1,4 +1,6 @@
 {
+  "name": "Robo setup",
   "appPort": 8081,
+  "forwardPorts": [8081],
   "image": "registry.hub.docker.com/qeacourse/robodocker:boatstesting" 
 }
