@@ -1,0 +1,5 @@
+{
+  // Open port 3000 by default
+  "appPort": 8081,
+  "image": "registry.hub.docker.com/qeacourse/robodocker:boatstesting" 
+}
