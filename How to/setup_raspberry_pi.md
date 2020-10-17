@@ -15,7 +15,7 @@ Starting with a MicroSD card 8GB in size, perform the following steps.
 
 <ol>
 <li>
-Flash the SD card with the <a href="https://downloads.raspberrypi.org/raspbian/images/raspbian-2015-05-07/2015-05-05-raspbian-wheezy.zip">Raspbian 2015-05-07 Wheezy image</a>.  For instructions on how to do this, consult the [Raspberry Pi documentation](https://www.raspberrypi.org/documentation/installation/installing-images/).  Please note that we are using an old version of Raspbian due to dependencies on older hardware (this is not optimal as this version of Raspbian is no longer supported).  If you get this working with a newer version of Raspbian, we'd like to hear about it.</li>
+Flash the SD card with the <a href="https://downloads.raspberrypi.org/raspbian/images/raspbian-2015-05-07/2015-05-05-raspbian-wheezy.zip">Raspbian 2015-05-07 Wheezy image</a>.  For instructions on how to do this, consult the <a href="https://www.raspberrypi.org/documentation/installation/installing-images/">Raspberry Pi documentation</a>.  Please note that we are using an old version of Raspbian due to dependencies on older hardware (this is not optimal as this version of Raspbian is no longer supported).  If you get this working with a newer version of Raspbian, we'd like to hear about it.</li>
 
 <li>Startup the Pi and login (e.g., by attaching a keyboard, monitor, and a power supply).  If you haven't used a Pi before, the default user name is "pi" and password is "raspberry".</li>
 
