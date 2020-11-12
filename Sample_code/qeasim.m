@@ -31,7 +31,19 @@ valid_worlds = {'dh',...
                 'empty_no_spawn',...
                 'bod_volcano',...
                 'flatland_no_spawn',...
-                'gauntlet_final'};
+                'gauntlet_final',...
+                'CoM',...
+                'boats'};
+
+dockerImage = ["spring2020",...
+               "spring2020",...
+               "spring2020",...
+               "spring2020",...
+               "spring2020",...
+               "spring2020",...
+               "spring2020",...
+               "empty",...
+               "boatstesting"];
 
 % the host running the master (this runs inside of the Docker conatiner but
 % is addressable as localhost since we publish port 11311)
@@ -68,11 +80,14 @@ elseif op == "start"
     if size(varargin,1) ~= 1
         error(['USAGE: ',usage]);
     end
-    robotWorld =  varargin{1};
+    robotWorld = varargin{1};
     % make sure simulator world is one we know about
     if ~any(strcmp(valid_worlds,robotWorld))
-        error(strjoin({'Unknown robot world', 'valid options are', valid_worlds{:}},'\n'));
+        error(strjoin({'Unknown world', 'valid options are', valid_worlds{:}},'\n'));
     end
+    selectedImage = dockerImage(find(strcmp(valid_worlds,robotWorld)));
+    isRobots = selectedImage == "spring2020";
+
 else
     error('unknown:operation',['Invalid operation\n',usage]);
 end
@@ -119,12 +134,10 @@ if op == "stop"
 end
 
 % start the Docker container
-docker_cmd = [docker_bin, ' run --rm --name=neato -d --sysctl net.ipv4.ip_local_port_range="32401 32767" -p 11311:11311 -p 8080:8080 -p 9090:9090 -p 32401-32767:32401-32767 -e NEATO_WORLD=',robotWorld,' qeacourse/robodocker:spring2020'];
-disp('Starting robot simulator in 2 seconds');
-
+docker_cmd = [docker_bin, ' run --rm --name=neato -d --sysctl net.ipv4.ip_local_port_range="32401 32767" -p 11311:11311 -p 8080:8080 -p 9090:9090 -p 32401-32767:32401-32767 -e NEATO_WORLD=',robotWorld,' qeacourse/robodocker:', char(selectedImage)];
 % warn the user since if they haven't pulled the QEA image it will pull it
 % now and print tons of output
-disp('If you have yet to download the robot software, you will see a ton of output');
+disp('If you have yet to download the software, you will see a ton of output');
 pause(2);
 
 % we will run the container in background mode.  We can interact with it
@@ -174,7 +187,7 @@ disp('Connection made.  Checking to see if connection is good.');
 % do more, e.g., try to move the robot and make sure the encoders change,
 % but let's keep it simple)
 topics = rostopic('list');
-if ~any(strcmp(topics,'/raw_vel'))
+if isRobots && ~any(strcmp(topics,'/raw_vel'))
     disp('Something is wrong with the list of topics.  Showing the topics in 5 seconds');
     pause(5);
     error(strjoin(string(topics),'\n'));
@@ -182,8 +195,8 @@ end
 
 % print out a link to the visualizer and open the web-based visualizer in
 % MATLAB's built-in browser.
-disp('Connection looks good.  Opening robot visualizer');
-disp('If you need to connect from a different browser, use the following link to see the robot.');
+disp('Connection looks good.  Opening visualizer');
+disp('If you need to connect from a different browser, use the following link to see the simulator.');
 disp('<a href = "http://localhost:8080">http://localhost:8080</a>');
 web('http://localhost:8080','-browser');
 end
