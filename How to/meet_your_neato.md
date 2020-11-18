@@ -7,7 +7,7 @@ toc_sticky: true
 
 This document will help you to get you up and running with your Neato robot.  After following these instructions you will be able to connect to your robot (or a simulated robot), examine its sensor data, and drive it around.
 
-> ***Note for Spring 2020 QEA Students:*** Please excuse the references to the physical robot in this document.  As you probably guessed we won't be able to use them this year, but we did create a really cool simulator just for you!
+> ***Note for Spring 2021 QEA Students:*** Please excuse the references to the physical robot in this document.  As you probably guessed we won't be able to use them this year, but we did create a really cool simulator for you to use!
 
 ## Overview
 
@@ -50,9 +50,9 @@ You will likely need to restart your computer after completing these steps. Once
 
 ### Running the Docker Installer
 
-The only operating systems officially supported by ROS are Ubuntu and Debian (although recently Windows support has been created, but it is not straightforward to use).  By using a virtual machine we can run an Ubuntu machine on top of your Windows setup, which will allow us to run ROS.  The tool we will be using to accomplish this is Docker.  Docker will allow us to get the QEA robot software installed on your machine in a relatively painless manner (avoiding the need to install and configure a bunch of software packages yourself).
+The only operating systems officially supported by ROS are Ubuntu and Debian (although recently Windows support has been introduced, but it is not straightforward to use).  By using a virtual machine we can run an Ubuntu machine from within your Windows setup, which will allow us to run ROS.  The tool we will be using to accomplish this is called Docker.  Docker will allow us to get the QEA robot software installed on your machine in a relatively painless manner (avoiding the need to install and configure a bunch of software packages yourself).
 
-To install Docker, download and run the installer from [DockerHub](https://hub.docker.com/editions/community/docker-ce-desktop-windows/) by clicking the "Get Docker" link. When you see two checkboxes, leave both as is; do not check the third option. You want to run Docker with Linux containers, not Windows containers, so that we can use Docker to run Linux code. Your selections will look like this.
+To install Docker, download and run the installer from [DockerHub](https://hub.docker.com/editions/community/docker-ce-desktop-windows/) by clicking the "Get Docker" link. When you see two checkboxes, leave both as is; do not check the third option. You want to run Docker with Linux containers, not Windows containers, so that we can use Docker to run Linux code. Your selections will look like this (depending on how your machine is configured, you may not see the option regarding WSL2).
 
 <p align="center">
 <img alt="The docker installer with the first two checkboxes selected" src="Pictures/dockerconfig.png" width="80%"/>
@@ -108,152 +108,17 @@ If this goes well, you should see something indicating that ``vmcompute`` is sta
 
 ### Getting Docker to Play Nice with Virtual Box
 
-If you are already running a virtual machine on your system (e.g., for SoftDes), you will need to temporarily disable the Windows Hyper-V feature and reboot your machine.  When you want to use Docker again, you will have to re-enable Hyper-V.  Yes, this is super lame.  Sorry!  Here are some [instructions for toggling Hyper-V on and off](https://hazaveh.net/2015/11/easily-disable-hyper-v-to-run-vmware-and-virtual-box/) so you can switch back and forth between Virtual Box and Docker.
+If you are already running a virtual machine on your system (e.g., for SoftDes), you will need to temporarily disable the Windows Hyper-V feature and reboot your machine.  When you want to use Docker again, you will have to re-enable Hyper-V.  Yes, this is super annoying.  Sorry!  Here are some [instructions for toggling Hyper-V on and off](https://hazaveh.net/2015/11/easily-disable-hyper-v-to-run-vmware-and-virtual-box/) so you can switch back and forth between Virtual Box and Docker.
 
-## Downloading the QEA Robot Software
+## Downloading Required MATLAB Toolboxes
 
-For a typical broadband Internet connection, the resulting series of downloads should take less than 10 minutes.  If it gets completely stuck for longer than that, just close the window and retry. These downloads are the "container" of code that has what's called an "image"--a collection of root filesystem changes and execution parameters. These commands allow your computer and the robot to communicate with each other via MATLAB. 
+Before programming the robot in MATLAB, you will need to have the appropriate MATLAB toolbox installed.
+* If you are using MATLAB R2019b or earlier, you want the Robotics System Toolbox.
+* If you are using MATLAB R2020a or later, you want the ROS Toolbox.
 
-Assuming Docker is working properly, open PowerShell and enter the following command and then hit enter (we recommend copy / pasting the commands in this document as they get quite long).
+To install additional toolboxes into your MATLAB environment, follow the [instructions on the IT Wiki for installing MATLAB](http://wikis.olin.edu/it/doku.php?id=matlab).  When running the MATLAB installer, make sure to select the appropriate toolbox for the robot (depending on your MATLAB version as described above).
 
-
-```powershell
-docker pull qeacourse/robodocker:spring2020
-```
-
-You will likely see output resembling the following.
-```
-spring2020: Pulling from qeacourse/robodocker
-5c939e3a4d10: Pull complete 
-c63719cdbe7a: Pull complete 
-19a861ea6baf: Pull complete 
-651c9d2d6c4f: Pull complete 
-da5d3d671a39: Pull complete 
-62812d1f6ed8: Pull complete 
-290e7247cb8c: Pull complete 
-147359e88db8: Pull complete 
-89f68f113cd1: Pull complete 
-660b40b12364: Pull complete 
-4e2f6c475740: Pull complete 
-209f2dab1772: Pull complete 
-6bc1d12dae4d: Pull complete 
-0842ca541816: Pull complete 
-3c2447942622: Pull complete 
-4d794dd896bd: Pull complete 
-5b83bc858ada: Pull complete 
-36d3fd4ed035: Pull complete 
-1be3b1332f4a: Pull complete 
-52fe9b69a49e: Pull complete 
-4caf43594103: Pull complete 
-330cdcf8eb64: Pull complete 
-52764e418589: Pull complete
-```
-If you are going to use an actual Neato (instead of or in addition to the simulator), execute the following command in PowerShell.
-
-```powershell
-docker pull qeacourse/robodocker:actual
-```
-
-### Troubleshooting Download of QEA Robot Software
-
-If the ``docker pull`` command won't finish or gives an error about authentication being required, you can use this alternate method to get the Docker image.
-
-Download the QEA robot software [directly from Google Drive](https://drive.google.com/uc?id=1o5LlYy4cI6oIF5Ptih_pQJUSxHOtJGqy&export=download) (the file is about 2.4 Gigabytes).
-
-Once the data is downloaded, open a PowerShell, ``cd`` to the folder where you downloaded the file (usually typing ``cd ~\Downloads`` into PowerShell will do the trick to get to the appropriate folder) and run the following command.
-
-```powershell
-docker load -i robo_qea_spring_2020.tar.gz
-```
-
-## Using the Neato Simulator
-
-<ol>
-<li>Copy / paste the following command into a PowerShell window and hit enter (unfortunately, the command is super long, but all parts are necessary).
-{% highlight console %}
-docker stop neato; docker rm --force neato; docker run --rm --name=neato --sysctl net.ipv4.ip_local_port_range="32401 32767" -p 11311:11311 -p 8080:8080 -p 32401-32767:32401-32767 -e NEATO_WORLD=gauntlet_no_spawn -it qeacourse/robodocker:spring2020
-{% endhighlight %}
-
-<p>If you see the following output, you can safely ignore it (it's not an error to worry about).</p>
-
-{% highlight console %}
-Error response from daemon: No such container: neato
-Error: No such container: neato
-{% endhighlight %}
-
-<p>You will know the simulator is ready when you see the following output.</p>
-
-{% highlight console %}
-process[robot_state_publisher-4]: started with pid [146]
-process[pc2publisher-5]: started with pid [203]
-process[scan_relayer-6]: started with pid [212]
-process[neato_standalone_nodelet_manager-7]: started with pid [219]
-
-gzweb@1.3.0 start /root/gzweb
-if [ $npm_config_port ]; then port=$npm_config_port; fi; cd gzbridge && ./server.js $port
-
-Fri Mar 27 2020 20:21:18 GMT+0000 (Coordinated Universal Time) Static server listening on port: 8080
---------------------------------------------------------------
-Gazebo transport node connected to gzserver.
-Pose message filter parameters between successive messages: 
-  minimum seconds: 0.02
-  minimum XYZ distance squared: 0.00001
-  minimum Quartenion distance squared: 0.00001
---------------------------------------------------------------
-{% endhighlight %}
-</li>
-<li>
-<p>To view the simulated robot, go to <a href="http://localhost:8080" target="_blank">http://localhost:8080</a></p>
-</li>
-</ol>
-
-### Differences When Programming the Simulated Robot
-
-You can program the simulated robot using [the same procedure as the physical robot](#programming-the-robot-in-matlab) with the following difference.
-
-* In the simulator, the bump sensors published on the ``/bump`` topic are either all on or all off. In other words, there are not separate bump sensors in the simulator for left side, left front, right front, and right side as there are on the physical robot.
-
-### Troubleshooting the Simulator
-
-<ul>
-<li>
-{% highlight console %}
-Error response from daemon: Ports are not available: listen tcp 0.0.0.0:11311:
-bind: Only one usage of each socket address (protocol/network address/port) is
-normally permitted.
-{% endhighlight %}
-
-<p>If you got the  error message above, it's likely due to the fact that you ran <code>rosinit</code> in MATLAB before you started the simulator (accessing the simulator in MATLAB is described in a later section of this document).</p>
-
-<p>To fix this error, go to where you are running MATLAB and type the following command into the MATLAB window.</p>
-
-{% highlight matlab %}
-rosshutdown
-{% endhighlight %}
-
-You should now be able to start the simulator using the procedure earlier in this section.
-</li>
-<li>
-{% highlight console %}
-Error response from daemon: driver failed programming external
-connectivity on endpoint focused_mcclintock
-(4dba8a66cbfa40a46b68406a303f3fd6724d5927d95243d757287607c7e53cd6):
-Bind for 0.0.0.0:32767 failed: port is already allocated.
-{% endhighlight %}
-
-<p>If you got the error message above, it's likely because you already have the simulator running in another window.</p>
-
-<p>You can get rid of your already running simulator by running the following command in PowerShell.</p>
-
-{% highlight powershell %}
-docker stop neato
-{% endhighlight %}
-
-You should now be able to start the simulator using the procedure earlier in this section.
-</li>
-</ul>
-
-## Connecting to the Neatos
+## Connecting to the Physical Neatos
 
 ### Step 1: Grab a battery for the raspberry Pi
 
@@ -296,6 +161,11 @@ When you are done working with the robot it is important to properly shutdown th
 <img alt="Visual instructions for turning off the Raspberry Pi" src="Pictures/s7vHYkMHZEmtoXhtdLxNdig.png"/>
 </p>
 
+### Step 6: Connect through MATLAB
+
+TBD (will update with instructions next time we run QEA with physical robots)
+
+
 ### Troubleshooting Your Neato
 
 *Symptom:* Both the red and green LEDs on the raspberry pi are illuminated and not flashing.
@@ -326,30 +196,48 @@ When you are done working with the robot it is important to properly shutdown th
 
 * Solution: Assuming the Pi display is at the screen showing the IP address, press right to enter the network setup menu.  OLIN-ROBOTICS should be highlighted with an asterisk.  Press right again to reconnect the Pi to the Wifi.  If it doesn't work the first time, try one more time.  If it doesn't work then, switch to a new robot.
 
-## Downloading Required MATLAB Toolboxes
 
-Before programming the robot in MATLAB, you will need to have the appropriate MATLAB toolbox installed.
-* If you are using MATLAB R2019b or earlier, you want the Robotics System Toolbox.
-* If you are using MATLAB R2020a or later, you want the ROS Toolbox.
+## Connecting to the Simulated Robot
 
-To install additional toolboxes into your MATLAB environment, follow the [instructions on the IT Wiki for installing MATLAB](http://wikis.olin.edu/it/doku.php?id=matlab).  When running the MATLAB installer, make sure to select the appropriate toolbox for the robot (depending on your MATLAB version as described above).
+We will be using MATLAB as a means to connect to the your robot (both simulated and physical) and to program it to execute various behaviors.  Note that you need to have the correct MATLAB toolboxes installed in order for this to work (see previous ection).
 
+Start up MATLAB.
 
-## Programming the Robot in MATLAB
+Use this [MATLAB drive link](https://drive.matlab.com/sharing/e74dfe9c-44ed-4695-bb93-281bf955050a) to connect to the code for this module.  Once you accept this invitation, navigate to the ``QEASimulators`` directory.  Run the following command in MATLAB.
 
-> Note: before attempting to program your robot, you need to make sure you are either [connected to a physical robot](#connecting-to-the-neatos) or the [simulator](#using-the-neato-simulator).
-
-Next, fire up MATLAB.  In order to connect MATLAB to the robot, type the following into the MATLAB command window (note: the ``rosshutdown`` command is there in case you had ROS running already).
-
-```matlab
-rosshutdown(); rosinit('localhost',11311, 'NodeHost','host.docker.internal')
+```MATLAB
+>> qeasim start empty_no_spawn
 ```
 
-If all goes well you should see output similar to this.
+If all went well, you will see output that looks like the following.
 
+```MATLAB
+Making sure docker is running
+Docker is ready
+Shutting down MATLAB ROS Node in case it is running
+This might take up to 30 seconds
+Shutting down docker container in case it is running
+
+You will have to manually close any simulator visualizations in your browser
+If you have yet to download the software, you will see a ton of output
+60d3dffd10deb3942e8468631945a8c0538517d6e8b278b41d8133080aab64b5
+ROS launched.  Waiting for ROS to be ready.
+ROS not yet ready
+ROS not yet ready
+ROS not yet ready
+initializing connection from MATLAB to ROS
+Initializing global node /matlab_global_node_22997 with NodeURI http://host.docker.internal:64461/
+Connection made.  Checking to see if connection is good.
+Connection looks good.  Opening visualizer
+If you need to connect from a different browser, use the following link to see the simulator.
+http://localhost:8080
 ```
-Initializing global node /matlab_global_node_38893 with NodeURI http://host.docker.internal:57999/
-```
+
+A browser window should open and display the following visualization of your robot.
+
+![A visualization of a Neato in an empty simulated world](Pictures/empty_sim_visualization.png)
+
+## Programming Your Robot
 
 Now that you are connected, you can see the list of topics by typing the following command into the command window.
 
