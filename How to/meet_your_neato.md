@@ -322,25 +322,6 @@ while 1
 end
 ```
 
-### Troubleshooting Your MATLAB Setup
-
-*Problem:* you are able to receive sensor data by subscribing to topics, but the robot will not respond to motor commands.
-
-*Potential Cause:* your security settings are preventing MATLAB from properly establishing a link between your code and the robot's motor controller.
-
-*Solution:* in order to allow MATLAB to properly communicate with Docker, you need to make sure you have the right firewall settings.  When you run MATLAB for the first time, you were asked whether or not to allow incoming connections to this application.  If you selected "yes", you are good.  If you selected "no", or if you don't remember what you selected (which is probably most people!), then we need to make sure you have the right settings.
-
-1. Type wf.msc into the run dialog (remember, hit the Windows key and "r" simultaneously to bring up the dialog).  This will bring up a dialog that shows your firewall settings.
-2. Click on Inbound Rules
-3. Browse the list for two rules that say "MATLAB R2019a" (assuming you are using this version of MATLAB.  If you are using a different version of MATLAB, you should look for rules labeled with that version.). If you do not see MATLAB, go on and come back to this later once you have connected to the robots.
-4. Click on one of these two rules (you will repeat this process for both), and click the properties button on the right panel of the window.
-5. Make sure the following settings are chosen:
-* Under the "General" tab, make sure "Enabled" is checked and that "Action" is set to "Allow the connection".
-* Under the "Advanced" tab, make sure that "Domain", "Private", and "Public" are all checked and make sure that "Edge traversal" is set to "Defer to user".
-Repeat step 5 for the second firewall rule.
-6. If you have done this correctly, your "Inbound Rules" list should look like the ones below (note: on this computer the version of MATLAB was R2016a).
-![an image showing valid security settings](Pictures/securitysettings.png)
-
 ## Disconnecting from the Simulated Robot
 
 When you are ready to stop the simulator, run the following command in MATLAB (making sure that ``qeasim.m`` is either your current directory or in your MATLAB path).
