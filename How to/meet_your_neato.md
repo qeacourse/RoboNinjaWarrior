@@ -206,7 +206,7 @@ Start up MATLAB.
 Use this [MATLAB drive link](https://drive.matlab.com/sharing/e74dfe9c-44ed-4695-bb93-281bf955050a) to connect to the code for this module.  Once you accept this invitation, navigate to the ``QEASimulators`` directory.  Run the following command in MATLAB.
 
 ```MATLAB
->> qeasim start empty_no_spawn
+>> qeasim start gauntlet_final
 ```
 
 If all went well, you will see output that looks like the following.
@@ -235,7 +235,7 @@ http://localhost:8080
 
 A browser window should open and display the following visualization of your robot.
 
-![A visualization of a Neato in an empty simulated world](Pictures/empty_sim_visualization.png)
+![A visualization of a Neato in the gauntlet world](Pictures/gauntlet_screenshot.png)
 
 ## Programming Your Robot
 
@@ -341,6 +341,27 @@ Repeat step 5 for the second firewall rule.
 6. If you have done this correctly, your "Inbound Rules" list should look like the ones below (note: on this computer the version of MATLAB was R2016a).
 ![an image showing valid security settings](Pictures/securitysettings.png)
 
+## Disconnecting from the Simulated Robot
+
+When you are ready to stop the simulator, run the following command in MATLAB (making sure that ``qeasim.m`` is either your current directory or in your MATLAB path).
+
+```MATLAB
+>> qeasim stop
+```
+
+If all went well, you will see output like the following.
+
+```MATLAB
+Making sure docker is running
+Docker is ready
+Shutting down MATLAB ROS Node in case it is running
+This might take up to 30 seconds
+Shutting down global node /matlab_global_node_80051 with NodeURI http://host.docker.internal:58656/
+Shutting down docker container in case it is running
+You will have to manually close any simulator visualizations in your browser
+ROS simulator has been succcessfully shutdown
+```
+
 
 ## Notes for working in Linux
 
@@ -354,30 +375,10 @@ You want Docker CE, not Docker EE
 
 Perform the steps to [manage Docker as a non root user](https://docs.docker.com/engine/installation/linux/linux-postinstall/#manage-docker-as-a-non-root-user). Then restart your computer.
 
-Follow the instructions earlier in this document, but use terminal instead of PowerShell to run the relevant commands.
-
-### Launching the Simulator
-
-Run the simulator using the same Docker command given in the main Using the Simulator section.
-
-### Connecting in MATLAB
-
-When running the ``rosinit`` command, in contrast with the Windows instructions, you should run ``rosinit`` with the following parameters (note: the ``rosshutdown`` command is there in case you had ROS running already).
-```matlab
-rosshutdown(); rosinit('localhost', 'NodeHost', '172.17.0.1')
-```
-
-You will see output that looks like this.
-```
-Initializing global node /matlab_global_node_17952 with NodeURI http://172.17.0.1:36597/
-```
+Everything else should work as with Windows.
 
 ## Notes for Working in MacOSX
 
 Download [Docker Desktop for Mac](https://hub.docker.com/editions/community/docker-ce-desktop-mac)
 
-Follow the instructions earlier in this document, but use terminal instead of PowerShell to run the relevant commands.
-
 Everything else should work as with Windows.
-
-
