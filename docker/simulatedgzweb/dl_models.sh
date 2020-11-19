@@ -2,7 +2,7 @@
 
 cd "$(dirname "$(realpath "$0")")";
 
-hg clone https://bitbucket.org/osrf/gazebo_models -b default
+git clone https://github.com/osrf/gazebo_models
 
 cd gazebo_models
 
