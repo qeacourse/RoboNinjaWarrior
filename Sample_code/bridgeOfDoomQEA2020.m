@@ -22,7 +22,7 @@ assume(u,'real');
 % dilation is the conversion from the raw parameterization of the curve
 % to time.  Larger dilation means that the robot will traverse the curve
 % more slowly (taking a longer time)
-dilation = 5;
+dilation = 10;
 
 % scale the bridge
 R = 4*[0.396*cos(2.65*(u/dilation+1.4));...
@@ -69,24 +69,25 @@ if visualize
     legend({'Linear velocity', 'Angular velocity'});
 end
 
-pub = rospublisher('raw_vel');
+pub = rospublisher('raw_vel', 'islatching', false);
+pause(1);
 % stop the robot if it's going right now
 stopMsg = rosmessage(pub);
 stopMsg.Data = [0 0];
 send(pub, stopMsg);
+pause(1);
 
 bridgeStart = double(subs(R,u,timeBounds(1)));
 startingThat = double(subs(That,u,timeBounds(1)));
-placeNeato(bridgeStart(1),  bridgeStart(2), startingThat(1), startingThat(2));
+placeNeato(bridgeStart(1),  bridgeStart(2), startingThat(1), startingThat(2), 0.55);
 
 % wait a bit for robot to fall onto the bridge
-pause(2);
+pause(5);
 
-t_start = rostime('now');
+rostic;
 disp('starting trajectory');
 while true
-    elapsed = rostime('now') - t_start;
-    u_val = elapsed.seconds + timeBounds(1);
+    u_val = rostoc() + timeBounds(1);
     if u_val > timeBounds(2)
         break
     end
@@ -104,26 +105,6 @@ end
 msg = rosmessage(pub);
 msg.Data = [0 0];
 send(pub, msg);
+clear pub;
 
-% For simulated Neatos only:
-% Place the Neato in the specified x, y position and specified heading vector.
-function placeNeato(posX, posY, headingX, headingY)
-    svc = rossvcclient('gazebo/set_model_state');
-    msg = rosmessage(svc);
-
-    msg.ModelState.ModelName = 'neato_standalone';
-    startYaw = atan2(headingY, headingX);
-    quat = eul2quat([startYaw 0 0]);
-
-    msg.ModelState.Pose.Position.X = posX;
-    msg.ModelState.Pose.Position.Y = posY;
-    msg.ModelState.Pose.Position.Z = 1.0;
-    msg.ModelState.Pose.Orientation.W = quat(1);
-    msg.ModelState.Pose.Orientation.X = quat(2);
-    msg.ModelState.Pose.Orientation.Y = quat(3);
-    msg.ModelState.Pose.Orientation.Z = quat(4);
-
-    % put the robot in the appropriate place
-    ret = call(svc, msg);
-end
 end

@@ -1,6 +1,9 @@
 % For simulated Neatos only:
 % Place the Neato in the specified x, y position and specified heading vector.
-function placeNeato(posX, posY, headingX, headingY)
+function placeNeato(posX, posY, headingX, headingY, posZ)
+    if nargin < 5
+        posZ = 1.0;
+    end
     svc = rossvcclient('gazebo/set_model_state');
     msg = rosmessage(svc);
 
@@ -10,7 +13,7 @@ function placeNeato(posX, posY, headingX, headingY)
 
     msg.ModelState.Pose.Position.X = posX;
     msg.ModelState.Pose.Position.Y = posY;
-    msg.ModelState.Pose.Position.Z = 1.0;
+    msg.ModelState.Pose.Position.Z = posZ;
     msg.ModelState.Pose.Orientation.W = quat(1);
     msg.ModelState.Pose.Orientation.X = quat(2);
     msg.ModelState.Pose.Orientation.Y = quat(3);
