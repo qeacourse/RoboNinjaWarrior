@@ -27,6 +27,8 @@ ROS supports several programming languages out of the box, including C++, Python
 
 ## Docker Setup
 
+> Note: when installing Docker, you will have the option to use Docker with Windows Subsystem for Linux 2 (WSL2).  We recommend that you use Docker with the Hyper-V backend, rather than with WSL2.  You can easily switch back-and-forth between the two if you'd like, but we've found the WSL2 backend to be unstable in our testing.
+
 ### Highly Recommended Pre-Install Instructions
 
 For lots of folks, you will be able to skip this step, but we have noticed that some of the student Dell laptops will not be able to complete the Docker install process without doing these steps.  In any case, these steps do not hurt to do even if you could have gone through the installation without performing them.  As a result, we encourage you to do them.  If you are interested in why we have to do this, you can check out the Docker help article [Manually Enable Docker for Windows Prerequisites](https://success.docker.com/article/manually-enable-docker-for-windows-prerequisites).
@@ -52,7 +54,7 @@ You will likely need to restart your computer after completing these steps. Once
 
 The only operating systems officially supported by ROS are Ubuntu and Debian (although recently Windows support has been introduced, but it is not straightforward to use).  By using a virtual machine we can run an Ubuntu machine from within your Windows setup, which will allow us to run ROS.  The tool we will be using to accomplish this is called Docker.  Docker will allow us to get the QEA robot software installed on your machine in a relatively painless manner (avoiding the need to install and configure a bunch of software packages yourself).
 
-To install Docker, download and run the installer from [DockerHub](https://hub.docker.com/editions/community/docker-ce-desktop-windows/) by clicking the "Get Docker" link. When you see two checkboxes, leave both as is; do not check the third option. You want to run Docker with Linux containers, not Windows containers, so that we can use Docker to run Linux code. Your selections will look like this (depending on how your machine is configured, you may not see the option regarding WSL2).
+To install Docker, download and run the installer from [DockerHub](https://hub.docker.com/editions/community/docker-ce-desktop-windows/) by clicking the "Get Docker" link. When you see two checkboxes, leave both as is; do not check the third option. You want to run Docker with Linux containers, not Windows containers, so that we can use Docker to run Linux code. Your selections will look like this (note: as mentioned earlier, we recommend not installing the WSL2 components because we found Docker with WSL2 to be unstable in our testing).
 
 <p align="center">
 <img alt="The docker installer with the first two checkboxes selected" src="Pictures/dockerconfig.png" width="80%"/>
@@ -117,6 +119,10 @@ Before programming the robot in MATLAB, you will need to have the appropriate MA
 * If you are using MATLAB R2020a or later, you want the ROS Toolbox.
 
 To install additional toolboxes into your MATLAB environment, follow the [instructions on the IT Wiki for installing MATLAB](http://wikis.olin.edu/it/doku.php?id=matlab).  When running the MATLAB installer, make sure to select the appropriate toolbox for the robot (depending on your MATLAB version as described above).
+
+### Troubleshooting Toolbox Installation
+
+If you need to install the ROS Toolbox, sometimes MATALB will try to install it without running the full MATLAB installer.  If this process fails, we recommend installing the toolbox through the MATLAB installer.  Follow Olin IT's instructions, linked above, to run the installer.
 
 ## Connecting to the Physical Neatos
 
@@ -236,6 +242,46 @@ http://localhost:8080
 A browser window should open and display the following visualization of your robot.
 
 ![A visualization of a Neato in the gauntlet world](Pictures/gauntlet_screenshot.png)
+
+### Testing Your Setup
+
+> Note for Fall 2020 QEA Students: even though we are having you test the robot setup, this test will ensure that your setup will work with everything we are going to do in the boats module.
+
+If the visualiation appeared, the next thing you should do is make sure that you can interact with the robot.  Add the ``Robots`` directory to your path and run the ``teleopAndVisualizer`` script.
+
+```MATLAB
+>> addpath('Robots/')
+>> teleopAndVisualizer
+```
+
+You should see a MATLAB figure come up that looks like this.
+
+<div align="center">
+<img src="Pictures/teleop_and_visualizer.png" width="70%" alt="A visualization of the laser scan data in the Gauntlet world."/>
+</div>
+
+Next, click on the figure window and drive the robot around using your keyboard (``i`` goes forward, ``j`` turns left, ``k`` stops, and ``l`` turns right).  If you are able to move the robot and you see the figure window shown above, then congratulations your setup is working!
+
+If you are doing this as part of the boats module, you can go ahead and shutdown the simulator by running the following command.
+
+```MATLAB
+>> qeasim stop
+```
+
+You should see the following output.
+
+```MATLAB
+Making sure docker is running
+Docker is ready
+Shutting down MATLAB ROS Node in case it is running
+This might take up to 30 seconds
+Shutting down global node /matlab_global_node_07608 with NodeURI http://host.docker.internal:64396/
+Shutting down docker container in case it is running
+You will have to manually close any simulator visualizations in your browser
+ROS simulator has been succcessfully shutdown
+```
+
+> Note for Fall 2020 QEA students: there's no need to go any further in this document at this time.
 
 ## Programming Your Robot
 
