@@ -211,13 +211,13 @@ Start up MATLAB.
 
 Use this [MATLAB drive link](https://drive.matlab.com/sharing/e74dfe9c-44ed-4695-bb93-281bf955050a) to connect to the code for this module.  Once you accept this invitation, navigate to the ``QEASimulators`` directory.  Run the following command in MATLAB.
 
-```MATLAB
+```matlab
 >> qeasim start gauntlet_final
 ```
 
 If all went well, you will see output that looks like the following.
 
-```MATLAB
+```
 Making sure docker is running
 Docker is ready
 Shutting down MATLAB ROS Node in case it is running
@@ -249,7 +249,7 @@ A browser window should open and display the following visualization of your rob
 
 If the visualiation appeared, the next thing you should do is make sure that you can interact with the robot.  Add the ``Robots`` directory to your path and run the ``teleopAndVisualizer`` script.
 
-```MATLAB
+```matlab
 >> addpath('Robots/')
 >> teleopAndVisualizer
 ```
@@ -260,17 +260,17 @@ You should see a MATLAB figure come up that looks like this.
 <img src="Pictures/teleop_and_visualizer.png" width="70%" alt="A visualization of the laser scan data in the Gauntlet world."/>
 </div>
 
-Next, click on the figure window and drive the robot around using your keyboard (``i`` goes forward, ``j`` turns left, ``k`` stops, and ``l`` turns right).  If you are able to move the robot and you see the figure window shown above, then congratulations your setup is working!
+Next, click on the figure window and drive the robot around using your keyboard (``i`` goes forward, ``j`` turns left, ``k`` stops, and ``l`` turns right).  If you are able to move the robot and you see the figure window shown above, then congratulations your setup is working!  ***Note: these key commands will not work unless you click on the figure window to bring it to the front of your stack of MATLAB windows.***
 
 If you are doing this as part of the boats module, you can go ahead and shutdown the simulator by running the following command.
 
-```MATLAB
+```matlab
 >> qeasim stop
 ```
 
 You should see the following output.
 
-```MATLAB
+```
 Making sure docker is running
 Docker is ready
 Shutting down MATLAB ROS Node in case it is running
@@ -288,18 +288,18 @@ ROS simulator has been succcessfully shutdown
 Now that you are connected, you can see the list of topics by typing the following command into the command window.
 
 ```matlab
-rostopic list
+>> rostopic list
 ```
 
 Each of these topics is either a sensor channel (e.g., laser scanner, bump sensor, wheel encoder) or a motor control channel (e.g., ``cmd_vel``, ``raw_vel``, etc.).  Go ahead and display the data flowing across the ``/bump`` topic by typing the following command in the command window.
 
 ```matlab
-rostopic echo /bump
+>> rostopic echo /bump
 ```
 
 You should see output like this.
 
-```
+```matlab
   Data   :  [0, 0, 0, 0]
   Layout    
     DataOffset :  0
@@ -372,13 +372,13 @@ end
 
 When you are ready to stop the simulator, run the following command in MATLAB (making sure that ``qeasim.m`` is either your current directory or in your MATLAB path).
 
-```MATLAB
+```matlab
 >> qeasim stop
 ```
 
 If all went well, you will see output like the following.
 
-```MATLAB
+```
 Making sure docker is running
 Docker is ready
 Shutting down MATLAB ROS Node in case it is running
