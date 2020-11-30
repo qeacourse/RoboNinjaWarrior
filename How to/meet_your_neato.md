@@ -114,7 +114,23 @@ If you are already running a virtual machine on your system (e.g., for SoftDes),
 
 ## Downloading Required MATLAB Toolboxes
 
-Before programming the robot in MATLAB, you will need to have the appropriate MATLAB toolbox installed.
+Before programming the robot in MATLAB, you will need to have the appropriate MATLAB toolbox installed.  If you followed the instructions from either QEA or ModSim to get your MATLAB installed, you likely will already have the necessary toolboxes.  To see if you are all set, open up MATLAB and type the following at the command prompt.
+
+```matlab
+>> rosinit
+```
+
+If you get output like the following, then you are good and can skip the rest of this section.
+
+```
+Launching ROS Core...
+.....Done in 0.4117 seconds.
+Initializing ROS master on http://192.168.50.102:11311.
+Initializing global node /matlab_global_node_38015 with NodeURI http://PaulRuvosMBP373:54880/
+```
+
+If you get an error message about not having the necessary toolbox, you'll need to follow the steps below.
+
 * If you are using MATLAB R2019b or earlier, you want the Robotics System Toolbox.
 * If you are using MATLAB R2020a or later, you want the ROS Toolbox.
 
