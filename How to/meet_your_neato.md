@@ -133,12 +133,28 @@ Initializing ROS master on http://192.168.50.102:11311.
 Initializing global node /matlab_global_node_38015 with NodeURI http://PaulRuvosMBP373:54880/
 ```
 
-If you get an error message about not having the necessary toolbox, you'll need to follow the steps below.
+If you don't get this output, there are likely two possible error messages you're seeing.
 
-* If you are using MATLAB R2019b or earlier, you want the Robotics System Toolbox.
-* If you are using MATLAB R2020a or later, you want the ROS Toolbox.
+<ol>
+<li>You might get an error that the ROS Toolbox is not installed.  If you get an error message about not having the necessary toolbox, you'll need to follow the steps below.
 
-To install additional toolboxes into your MATLAB environment, follow the [instructions on the IT Wiki for installing MATLAB](http://wikis.olin.edu/it/doku.php?id=matlab).  When running the MATLAB installer, make sure to select the appropriate toolbox for the robot (depending on your MATLAB version as described above).
+<ul>
+<li>If you are using MATLAB R2019b or earlier, you want the Robotics System Toolbox.</li>
+<li>If you are using MATLAB R2020a or later, you want the ROS Toolbox.</li>
+</ul>
+
+To install additional toolboxes into your MATLAB environment, follow the <a href="http://wikis.olin.edu/it/doku.php?id=matlab">instructions on the IT Wiki for installing MATLAB</a>.  When running the MATLAB installer, make sure to select the appropriate toolbox for the robot (depending on your MATLAB version as described above).
+</li>
+<li>The second common error you might see is about an <b>"Invalid Python executable"</b>.  If you see this error, then you need to install an appropriate version of Python on your computer.  For the MATLAB ROS Toolbox you'll want Python Version 2.7.  Use the following link to <a href="https://www.python.org/ftp/python/2.7.18/python-2.7.18.amd64.msi">download the installer for Python 2.7</a>.  After you've completed the install of Python 2.7, run the following command in your MATLAB command window (this is assuming you've intalled Python 2.7 in the default location).
+
+{% highlight matlab %}
+>> pyenv('Version', 'C:\Python27\python.exe')
+{% endhighlight %}
+
+Once you've done this, try to run rosinit again.
+
+</li>
+</ol>
 
 ### Troubleshooting Toolbox Installation
 
