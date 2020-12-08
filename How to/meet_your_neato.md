@@ -64,13 +64,27 @@ Once the install is complete you may be asked to restart your computer.
 
 ### Making Sure Docker is Setup Properly
 
-Once the Docker installation has completed (and you have possibly restarted your computer), you should run Docker desktop by either clicking on its icon on your Desktop (the icon looks like a smiling whale) or from the Windows 10 start menu.  If everything is working properly, you will see a message pop up that says something like "Docker is Running.  Open PowerShell to start hacking" (it takes a bit of time for this to show up upon reboot, so be patient). Sometimes Docker will say that it will take a few seconds to be up and running, but in our experience it often takes longer. 
+Once the Docker installation has completed (and you have possibly restarted your computer), you should bring up the Docker Desktop dashboard by right clicking on its icon in your system tray and clicking on ``Dashboard``.  Here is a picture of the Docker icon (a smiling whale) and where it is located on your system.
 
-You can also check the status of Docker by clicking on the Docker Desktop icon in the status bar at bottom-right of your screen.  This will bring up the Docker Desktop application window.  Once you are in this window, click on the gear icon to make sure your Docker settings look good.  They should look like the ones shown below (the send usage statistics and check for updates don't matter, but the others are important).
+<div align="center">
+<img alt="Docker settings showing higher resources given to the Docker VM." src="Pictures/rightclickforsettings.png" width="50%"/>
+</div>
+
+If everything is working properly, you will a green light in the lower left corner with the sub text "running" (see picture below for what this should look like).  If you don't see this yet, or the dashboard doesn't pop up right away, you might just have to be patient.  It takes a bit of time for Docker to get started after a reboot. Sometimes Docker will say that it will take a few seconds to be up and running, but in our experience it often takes longer. 
+
+Another thing you'll want to check is your Docker settings.  You can get to the settings by clicking the gear icon in Docker Dashboad or by right clicking on the Docker icon in your system tray and clicking Settings (see picture above). Your settings should look like the ones shown below (the send usage statistics and check for updates don't matter, but the others are important).
 
 <div align="center">
 <img alt="Docker settings that show WSL2 is not selected." src="Pictures/Docker Settings Installed.png" width="90%"/>
 </div>
+
+You should also increase the resources given to the Docker Virtual Machine.  To do this, on the settings tab click on resources, and then make the following selections.
+
+<div align="center">
+<img alt="Docker settings showing higher resources given to the Docker VM." src="Pictures/higherresources.png" width="90%"/>
+</div>
+
+Once you've made these selections, click ``Apply & Restart``.
 
 As a final check, type the following command into PowerShell (which you can open via the Windows search box).
 
