@@ -243,7 +243,7 @@ TBD (will update with instructions next time we run QEA with physical robots)
 
 We will be using MATLAB as a means to connect to the your robot (both simulated and physical) and to program it to execute various behaviors.  Note that you need to have the correct MATLAB toolboxes installed in order for this to work (see previous ection).
 
-Start up MATLAB.
+Start up MATLAB on your computer.
 
 > ***Note:*** unfortunately, the simulator does not work with MATLAB online, so you will need to do interface to the simulator from your local MATLAB install.
 
