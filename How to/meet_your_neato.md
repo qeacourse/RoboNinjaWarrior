@@ -245,6 +245,8 @@ We will be using MATLAB as a means to connect to the your robot (both simulated 
 
 Start up MATLAB.
 
+> ***Note:*** unfortunately, the simulator does not work with MATLAB online, so you will need to do interface to the simulator from your local MATLAB install.
+
 Use this [MATLAB drive link](https://drive.matlab.com/sharing/e74dfe9c-44ed-4695-bb93-281bf955050a) to connect to the code for this module.  Once you accept this invitation, navigate to the ``QEASimulators`` directory.  Run the following command in MATLAB.
 
 ```matlab
