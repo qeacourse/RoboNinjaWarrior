@@ -335,6 +335,10 @@ ROS simulator has been succcessfully shutdown
 
 > Note for Fall 2020 QEA students: there's no need to go any further in this document at this time.
 
+### Troubleshooting
+
+In Fall of 2020 some people are having an issue where they are not able to connect to the simulator properly (this is despite the simulator visualization coming up on their screen).  The most common way this manifests itself is with an error that says ``Cannot create ROS Service Client`` (e.g., when running one of the center of mass simulations) or the obstacle data doesn't show up when running the telop script (no blue dots appear in the image above).  Currently, we are not sure what the root cause of this is.  If you find that this is happening to you, then you should restart Docker.  To restart Docker, bring up the Docker Dashboard, click on the bug icon, and click "Restart Docker".
+
 ## Programming Your Robot
 
 Now that you are connected, you can see the list of topics by typing the following command into the command window.
