@@ -43,6 +43,18 @@ feature_row_robot:
     * [Raspberry Pi Setup](How to/setup_raspberry_pi)
 "
 
+feature_row_virtual:
+  - image_path: website_graphics/firstperson_bod_volcano.gif
+    alt: "A first person video of the virtual Neato crossing the Bridge of Doom (with volcano for good measure)."
+    excerpt: "We have run this module successfully in a fully online manner.  We were able to adapt the physical robot to a Gazebo simulation.  Details on how to setup the virtual robot are integrated into the [Meeto your Neato](How to/meet_your_neato) page.
+
+### Key Features of the Simulation
+
+* Easy setup for students using Docker\n
+* Integrates with Amazon Web Services if you are interested in deploying the simulator in the cloud\n
+* Easy interface for collecting datasets from the robot (e.g., wheel encoder data) if you want students to analyze the robot's sensor data.\n
+* Integration of lots of fun environments, including the bridge of doom with simulated volcano (see right image), a 3D simulation of Olin's dining hall, and a low-friction ice rink world."
+
 feature_row_bod:
   - image_path: website_graphics/bridge_of_death.jpg
     alt: "A student taking a cell phone picture of a robot traversing a spiral wooden track called The Bridge of Doom"
@@ -96,14 +108,19 @@ Quantitative Engineering Analysis (QEA) is an interdisciplinary, integrated, cou
 
 {% include feature_row id="feature_row_robot" type="left" %}
 
-## <a name="module-details"/> Intro to Mobile Robotics
+## <a name="virtual-neato"/> Support for Virtual Classes
 
+{% include feature_row id="feature_row_virtual" type="right" %}
+
+## <a name="module-details"/> Intro to Mobile Robotics
 
 The opening day of the course includes a number of activities to introduce fundamental concepts in mobile robotics.  The work is largely conceptual and lays the groundwork for the quantitative work to come.
 
 ### Schedule and Supporting Documents
 
 * [Day 1: Introduction to Mobile Robotics Sensory Motor Loops, Motion of Rigid Bodies](Day 1- Intro to Mobile Robotics/M3_Day1.pdf)
+
+
 
 ## Challenge 1: Crossing the Bridge of Doom
 
