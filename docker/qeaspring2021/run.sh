@@ -14,6 +14,7 @@ then
     echo "not launching a world"
 else
     # start MATLAB
+    cd /root
     matlab &
     source ~/catkin_ws/devel/setup.bash
     roslaunch $ROS_PKG $LAUNCH_FILE &
