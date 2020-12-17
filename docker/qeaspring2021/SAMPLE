@@ -1,0 +1,1 @@
+docker run -e ROS_PKG=usv_gazebo_plugins -e LAUNCH_FILE=water.launch  -v $HOME:/root/hosthome -p 8081:8081  -it qeaspring2021
