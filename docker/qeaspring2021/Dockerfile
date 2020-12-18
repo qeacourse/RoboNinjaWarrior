@@ -13,6 +13,7 @@ RUN /bin/bash -c "cd /tmp && \
                   rm -rf /tmp/RoboNinjaWarrior"
 
 RUN pip install future
+RUN echo "/root/matlab" >> /usr/local/MATLAB/R2020a/bin/activate_matlab.sh
 
 COPY matlab /root/matlab
 COPY startup.m /root
