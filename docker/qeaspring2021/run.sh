@@ -17,6 +17,7 @@ else
     cd /root
     matlab &
     source ~/catkin_ws/devel/setup.bash
+    (sleep 10; roslaunch rosbridge_server rosbridge_websocket.launch) &
     roslaunch $ROS_PKG $LAUNCH_FILE &
 fi
 
