@@ -71,7 +71,7 @@ if ismac
     % allow internal ROS nodes to answer to any interface
     ROS_HOSTNAME = '0.0.0.0';
     % Note: host.docker.internal isn't available
-    NODE_HOST = '192.168.64.1';
+    NODE_HOST = 'host.docker.internal';
 elseif isunix
     % docker is installed in /usr/bin, it is always in the PATH
     docker_bin = 'docker';
@@ -158,7 +158,7 @@ if op == "stop"
 end
 
 % start the Docker container
-docker_cmd = [docker_bin, ' run --rm --name=neato -d --sysctl net.ipv4.ip_local_port_range="32401 32767" -p 11311:11311 -p 8080:8080 -p 9090:9090 -p 32401-32767:32401-32767 -e ROS_HOSTNAME=', ROS_HOSTNAME, ' -e BOAT_WORLD=',boatWorld, ' -e NEATO_WORLD=',robotWorld,' ', char(selectedImage)];
+docker_cmd = [docker_bin, ' run --rm --name=neato -d --sysctl net.ipv4.ip_local_port_range="32401 32767" --add-host=host.docker.internal:host-gateway -p 11311:11311 -p 8080:8080 -p 9090:9090 -p 32401-32767:32401-32767 -e ROS_HOSTNAME=', ROS_HOSTNAME, ' -e BOAT_WORLD=',boatWorld, ' -e NEATO_WORLD=',robotWorld,' ', char(selectedImage)];
 
 % warn the user since if they haven't pulled the QEA image it will pull it
 % now and print tons of output
