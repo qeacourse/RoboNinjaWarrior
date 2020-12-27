@@ -28,13 +28,10 @@ RUN apt-get update && apt-get install -y \
     net-tools \
     iputils-ping \
     python-pip \
-    vim && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-
-# install rosbridge
-RUN apt-get update && apt-get install -y \
     ros-melodic-rosbridge-suite \
+    ros-melodic-robot-state-publisher \
+    ros-melodic-gazebo-plugins \
+    vim \
     ros-melodic-xacro && \
     pip install tornado pymongo && \
     apt-get clean && \
@@ -46,9 +43,6 @@ RUN /bin/bash -c "source /opt/ros/melodic/setup.bash && \
                   cd ~/catkin_ws/src && \
 		  git clone https://github.com/qeacourse/vrx.git && \
 		  git clone -b qea https://github.com/comprobo18/comprobo18.git && \
-                  catkin_init_workspace"
-
-RUN /bin/bash -c "source /opt/ros/melodic/setup.bash && \
                   cd ~/catkin_ws/ && \
 		  catkin_make && \
                   echo 'source ~/catkin_ws/devel/setup.bash' >> ~/.bashrc"
@@ -72,14 +66,8 @@ RUN /bin/bash -c "cd ~ && \
 		  cd gzweb && \
 		  git checkout gzweb_1.4.0 && \
 		  source /usr/share/gazebo/setup.sh && \
-		  xvfb-run -s \"-screen 0 1280x1024x24\" npm run deploy --- -m local && \
+		  xvfb-run -s \"-screen 0 1280x1024x24\" npm run deploy --- -m local -t && \
 		  cp -r /usr/share/gazebo-9/media/* ~/gzweb/http/client/assets"
-
-RUN apt-get update && apt-get install -y \
-    ros-melodic-robot-state-publisher \
-    ros-melodic-gazebo-plugins && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 ENV LD_PRELOAD /usr/lib/aarch64-linux-gnu/libgomp.so.1
 
