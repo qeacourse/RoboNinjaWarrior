@@ -79,7 +79,7 @@ RUN /bin/bash -c "mkdir ~/.gazebo/models/mobile_base && \
 		  cp -r ~/catkin_ws/src/comprobo18/neato_robot/neato_description/meshes ~/.gazebo/models/mobile_base"
 
 RUN /bin/bash -c "cd ~ && \
-		  git clone https://github.com/osrf/gzweb && \
+		  git clone https://github.com/qeacourse/gzweb && \
 		  cd gzweb && \
 		  git checkout gzweb_1.4.0 && \
 		  source /usr/share/gazebo/setup.sh && \
