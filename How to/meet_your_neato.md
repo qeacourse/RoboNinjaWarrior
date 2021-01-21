@@ -411,11 +411,9 @@ ROS simulator has been succcessfully shutdown
 
 ## Notes for working in Linux
 
-You will first need to install MATLAB for Linux.  The [instructions on the IT website](http://wikis.olin.edu/it/doku.php?id=matlab) should work for Linux as well as Windows.  When you are running the installer, make sure to install the ROS Toolbox (if installing R2020a or later) or Robotics System Toolbox (if installing R2019b or earlier).
+You will first need to install MATLAB for Linux.  The [instructions on the IT website](http://wikis.olin.edu/it/doku.php?id=matlab) should work for Linux as well as Windows.
 
-Follow the [Linux Docker install instructions](https://docs.docker.com/engine/installation/linux/ubuntu/#install-docker)
-
-You want Docker CE, not Docker EE
+Follow the [Linux Docker install instructions](https://docs.docker.com/engine/installation/linux/ubuntu/#install-docker).  You want Docker CE, not Docker EE
 
 ### Post installation steps
 
