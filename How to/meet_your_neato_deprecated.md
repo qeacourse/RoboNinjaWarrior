@@ -27,7 +27,7 @@ ROS supports several programming languages out of the box, including C++, Python
 
 ## Docker Setup
 
-> Note: when installing Docker, you will have the option to use Docker with Windows Subsystem for Linux 2 (WSL2).  Either option works well with the latest versions of Docker (3.0+).  There are some small advantages to use the WSL2 backend, which include easy access to your MATLAB Drive folder and avoiding the need to manage the computational resources allocated to Docker.
+> Note: when installing Docker, you will have the option to use Docker with Windows Subsystem for Linux 2 (WSL2).  We recommend that you use Docker with the Hyper-V backend, rather than with WSL2.  You can easily switch back-and-forth between the two if you'd like, but we've found the WSL2 backend to be unstable in our testing.
 
 ### Highly Recommended Pre-Install Instructions
 
@@ -54,7 +54,7 @@ You will likely need to restart your computer after completing these steps. Once
 
 The only operating systems officially supported by ROS are Ubuntu and Debian (although recently Windows support has been introduced, but it is not straightforward to use).  By using a virtual machine we can run an Ubuntu machine from within your Windows setup, which will allow us to run ROS.  The tool we will be using to accomplish this is called Docker.  Docker will allow us to get the QEA robot software installed on your machine in a relatively painless manner (avoiding the need to install and configure a bunch of software packages yourself).
 
-To install Docker, download and run the installer from [DockerHub](https://hub.docker.com/editions/community/docker-ce-desktop-windows/) by clicking the "Get Docker" link. When you see two checkboxes, you can decide whether you want to install the WSL2 components or not (again, both should work fine).
+To install Docker, download and run the installer from [DockerHub](https://hub.docker.com/editions/community/docker-ce-desktop-windows/) by clicking the "Get Docker" link. When you see two checkboxes, leave both as is; do not check the third option. You want to run Docker with Linux containers, not Windows containers, so that we can use Docker to run Linux code. Your selections will look like this (note: as mentioned earlier, we recommend not installing the WSL2 components because we found Docker with WSL2 to be unstable in our testing).
 
 <p align="center">
 <img alt="The docker installer with the first two checkboxes selected" src="Pictures/dockerconfig.png" width="80%"/>
@@ -72,14 +72,13 @@ Once the Docker installation has completed (and you have possibly restarted your
 
 If everything is working properly, you will a green light in the lower left corner with the sub text "running" (see picture below for what this should look like).  If you don't see this yet, or the dashboard doesn't pop up right away, you might just have to be patient.  It takes a bit of time for Docker to get started after a reboot. Sometimes Docker will say that it will take a few seconds to be up and running, but in our experience it often takes longer. 
 
+Another thing you'll want to check is your Docker settings.  You can get to the settings by clicking the gear icon in Docker Dashboad or by right clicking on the Docker icon in your system tray and clicking Settings (see picture above). Your settings should look like the ones shown below (the send usage statistics and check for updates don't matter, but the others are important).
+
 <div align="center">
 <img alt="Docker settings that show WSL2 is not selected." src="Pictures/Docker Settings Installed.png" width="90%"/>
 </div>
 
-Another thing you'll want to check is your Docker settings.  You can get to the settings by clicking the gear icon in Docker Dashboad or by right clicking on the Docker icon in your system tray and clicking Settings (see picture above). Make sure you've elected to Start Docker Desktop when you log in.  Also, take note of whether or not you are running with the WSL 2 based engine.  ***If you are using WSL 2, then you are done.  No more configuration is needed.***  If however, you are not using the WSL 2 based engine (e.g., you decided not to use it or you are using Mac OS), read on. 
-
-
-***Only in the event that you are not using WSL 2***, you should also increase the resources given to the Docker Virtual Machine.  To do this, on the settings tab click on resources, and then make the following selections.
+You should also increase the resources given to the Docker Virtual Machine.  To do this, on the settings tab click on resources, and then make the following selections.
 
 <div align="center">
 <img alt="Docker settings showing higher resources given to the Docker VM." src="Pictures/higherresources.png" width="90%"/>
@@ -131,9 +130,51 @@ If this goes well, you should see something indicating that ``vmcompute`` is sta
 
 If you are already running a virtual machine on your system (e.g., for SoftDes), you will need to temporarily disable the Windows Hyper-V feature and reboot your machine.  When you want to use Docker again, you will have to re-enable Hyper-V.  Yes, this is super annoying.  Sorry!  Here are some [instructions for toggling Hyper-V on and off](https://hazaveh.net/2015/11/easily-disable-hyper-v-to-run-vmware-and-virtual-box/) so you can switch back and forth between Virtual Box and Docker.
 
-## Connecting to the Physical Neatos
+## Downloading Required MATLAB Toolboxes
 
-> Note: these instructions are not currently up-to-date.  When we go back to using the physical Neatos, we will update these instructions.
+Before programming the robot in MATLAB, you will need to have the appropriate MATLAB toolbox installed.  If you followed the instructions from either QEA or ModSim to get your MATLAB installed, you likely will already have the necessary toolboxes.  To see if you are all set, open up MATLAB and type the following at the command prompt.
+
+```matlab
+>> rosinit
+```
+
+If you get output like the following, then you are good and can skip the rest of this section.
+
+```
+Launching ROS Core...
+.....Done in 0.4117 seconds.
+Initializing ROS master on http://192.168.50.102:11311.
+Initializing global node /matlab_global_node_38015 with NodeURI http://PaulRuvosMBP373:54880/
+```
+
+If you don't get this output, there are likely two possible error messages you're seeing.
+
+<ol>
+<li>You might get an error that the ROS Toolbox is not installed.  If you get an error message about not having the necessary toolbox, you'll need to follow the steps below.
+
+<ul>
+<li>If you are using MATLAB R2019b or earlier, you want the Robotics System Toolbox.</li>
+<li>If you are using MATLAB R2020a or later, you want the ROS Toolbox.</li>
+</ul>
+
+To install additional toolboxes into your MATLAB environment, follow the <a href="http://wikis.olin.edu/it/doku.php?id=matlab">instructions on the IT Wiki for installing MATLAB</a>.  When running the MATLAB installer, make sure to select the appropriate toolbox for the robot (depending on your MATLAB version as described above).
+</li>
+<li>The second common error you might see is about an <b>"Invalid Python executable"</b>.  If you see this error, then you need to install an appropriate version of Python on your computer.  For the MATLAB ROS Toolbox you'll want Python Version 2.7.  Use the following link to <a href="https://www.python.org/ftp/python/2.7.18/python-2.7.18.amd64.msi">download the installer for Python 2.7</a>.  After you've completed the install of Python 2.7, run the following command in your MATLAB command window (this is assuming you've intalled Python 2.7 in the default location).
+
+{% highlight matlab %}
+>> pyenv('Version', 'C:\Python27\python.exe')
+{% endhighlight %}
+
+Once you've done this, try to run rosinit again.
+
+</li>
+</ol>
+
+### Troubleshooting Toolbox Installation
+
+If you need to install the ROS Toolbox, sometimes MATALB will try to install it without running the full MATLAB installer.  If this process fails, we recommend installing the toolbox through the MATLAB installer.  Follow Olin IT's instructions, linked above, to run the installer.
+
+## Connecting to the Physical Neatos
 
 ### Step 1: Grab a battery for the raspberry Pi
 
@@ -214,18 +255,13 @@ TBD (will update with instructions next time we run QEA with physical robots)
 
 ## Connecting to the Simulated Robot
 
-If you'd like, here is a video walkthrough of using the simulator.  We made this video for students that had used the previous version of the simulator, so some of the comparisons might not be relevant if you are using the simulator for the first time.
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/9KP4om_UOK8" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
-
-<p style="margin-top:1cm;">We will be using MATLAB as a means to connect to the your robot (both simulated and physical) and to program it to execute various behaviors.</p>
+We will be using MATLAB as a means to connect to the your robot (both simulated and physical) and to program it to execute various behaviors.  Note that you need to have the correct MATLAB toolboxes installed in order for this to work (see previous ection).
 
 Start up MATLAB on your computer.
 
 > ***Note:*** unfortunately, the simulator does not work with MATLAB online, so you will need to do interface to the simulator from your local MATLAB install.
 
-Use this [MATLAB drive link](https://drive.matlab.com/sharing/034caf7e-96fd-445f-a11e-a0ca9e9bfcc2) to connect to the code for this module.  Once you accept this invitation, navigate to the ``QEASimulatorsV2`` directory.  Run the following command in MATLAB.
+Use this [MATLAB drive link](https://drive.matlab.com/sharing/e74dfe9c-44ed-4695-bb93-281bf955050a) to connect to the code for this module.  Once you accept this invitation, navigate to the ``QEASimulators`` directory.  Run the following command in MATLAB.
 
 ```matlab
 >> qeasim start gauntlet_final
@@ -236,50 +272,37 @@ If all went well, you will see output that looks like the following.
 ```
 Making sure docker is running
 Docker is ready
+Shutting down MATLAB ROS Node in case it is running
+This might take up to 30 seconds
 Shutting down docker container in case it is running
+
 You will have to manually close any simulator visualizations in your browser
 If you have yet to download the software, you will see a ton of output
-d6297f43972cc4ddb7f4c606b7cb2d7db85fd0439907c08dee2f6342bea382c4
+60d3dffd10deb3942e8468631945a8c0538517d6e8b278b41d8133080aab64b5
 ROS launched.  Waiting for ROS to be ready.
 ROS not yet ready
+ROS not yet ready
+ROS not yet ready
+initializing connection from MATLAB to ROS
+Initializing global node /matlab_global_node_22997 with NodeURI http://host.docker.internal:64461/
+Connection made.  Checking to see if connection is good.
 Connection looks good.  Opening visualizer
 If you need to connect from a different browser, use the following link to see the simulator.
-http://localhost:8081
+http://localhost:8080
 ```
 
-A browser window should open and display a desktop environment, a visualization of your robot, and an instance of the MathWorks Software Activation client.
+A browser window should open and display the following visualization of your robot.
 
-![A visualization of a Neato in the gauntlet world along with MATLAB activation](Pictures/activation_client.png)
-
-It is important to note that you will be interacting with the simulator from here on out in this browser window.  The only time you will need to return to the MATLAB instance running in Windows (i.e., the one you used to run ``qeasim``) is when you want to either start a new simulation environment or shutdown the simulator.
-
-### Activating MATLAB
-
-The first time you run the simulator you will see need to activate MATALB.  ***This is a one-time step***.
-
-In the MathWorks Software Activation window (if it is not on top, you can bring it to the front using the toolbar at the bottom of the simulator window), perform the following steps.
-
-1.  Make sure to select "Activate automatically using the Internet" and click "next"."
-2.  Select "Login with your MathWorks Account", enter your email address and password, and click "next".
-3.  Select MATLAB (Individual) for license type and click "next".
-4.  Under "Login Name" type "root" and click next (***this is super important!***).
-5.  Click the "Confirm" button.
-6.  Click "Finish"
-
-If all went well, MATLAB should launch in the simulator window and your screen will look like this.
-
-![A visualization of a Neato in the gauntlet world along with MATLAB running.](Pictures/running_matlab.png)
-
-
-The next time you run the simulator, you will not have to go through this process.
+![A visualization of a Neato in the gauntlet world](Pictures/gauntlet_screenshot.png)
 
 ### Testing Your Setup
 
 > Note for Fall 2020 QEA Students: even though we are having you test the robot setup, this test will ensure that your setup will work with everything we are going to do in the boats module.
 
-If the visualiation and MATLAB appeared, the next thing you should do is make sure that you can interact with the robot.  ***In the MATLAB instance running in the browser,*** run the ``teleopAndVisualizer`` script.
+If the visualiation appeared, the next thing you should do is make sure that you can interact with the robot.  Add the ``Robots`` directory to your path and run the ``teleopAndVisualizer`` script.
 
 ```matlab
+>> addpath('Robots/')
 >> teleopAndVisualizer
 ```
 
@@ -291,7 +314,7 @@ You should see a MATLAB figure come up that looks like this.
 
 Next, click on the figure window and drive the robot around using your keyboard (``i`` goes forward, ``j`` turns left, ``k`` stops, and ``l`` turns right).  If you are able to move the robot and you see the figure window shown above, then congratulations your setup is working!  ***Note: these key commands will not work unless you click on the figure window to bring it to the front of your stack of MATLAB windows.***
 
-If you are doing this as part of the boats module, you can go ahead and shutdown the simulator by running the following command ***in the MATLAB instance running on your Windows machine (the one you used to launch the simulator in the first place)***.
+If you are doing this as part of the boats module, you can go ahead and shutdown the simulator by running the following command.
 
 ```matlab
 >> qeasim stop
@@ -302,14 +325,19 @@ You should see the following output.
 ```
 Making sure docker is running
 Docker is ready
+Shutting down MATLAB ROS Node in case it is running
+This might take up to 30 seconds
+Shutting down global node /matlab_global_node_07608 with NodeURI http://host.docker.internal:64396/
 Shutting down docker container in case it is running
 You will have to manually close any simulator visualizations in your browser
 ROS simulator has been succcessfully shutdown
 ```
 
-### Managing Your Files
+> Note for Fall 2020 QEA students: there's no need to go any further in this document at this time.
 
-Note that when you work with the simulator in the browser, any files you save will be deleted when you shutdown the simulator unless you put them in the ``/root/hosthome`` directory (or one of its subdirectories).  By default, when MATLAB starts up in the browser, it will switch to the ``/root/hosthome`` directory.  This directory will be the same as your home directory outside of the simulator.  Anything you save there will be safe after you shutdown the simulator.  If you are runnng MacOS, Linux, or the WSL 2 based engine for Windows, you will also see your MATLAB Drive folder.  If you are using the Hyper-V Windows backend, this will not be available in the simulator (sorry, we don't know if there is a solution to this). 
+### Troubleshooting
+
+In Fall of 2020 some people are having an issue where they are not able to connect to the simulator properly (this is despite the simulator visualization coming up on their screen).  The most common way this manifests itself is with an error that says ``Cannot create ROS Service Client`` (e.g., when running one of the center of mass simulations) or the obstacle data doesn't show up when running the telop script (no blue dots appear in the image above).  Currently, we are not sure what the root cause of this is.  If you find that this is happening to you, then you should restart Docker.  To restart Docker, bring up the Docker Dashboard, click on the bug icon, and click "Restart Docker".
 
 ## Programming Your Robot
 
@@ -398,7 +426,7 @@ end
 
 ## Disconnecting from the Simulated Robot
 
-When you are ready to stop the simulator, run the following command in the MATLAB instance you used to start the simulator (***not the MATLAB in your browser!***) (making sure that ``qeasim.m`` is either your current directory or in your MATLAB path).
+When you are ready to stop the simulator, run the following command in MATLAB (making sure that ``qeasim.m`` is either your current directory or in your MATLAB path).
 
 ```matlab
 >> qeasim stop
@@ -409,6 +437,9 @@ If all went well, you will see output like the following.
 ```
 Making sure docker is running
 Docker is ready
+Shutting down MATLAB ROS Node in case it is running
+This might take up to 30 seconds
+Shutting down global node /matlab_global_node_80051 with NodeURI http://host.docker.internal:58656/
 Shutting down docker container in case it is running
 You will have to manually close any simulator visualizations in your browser
 ROS simulator has been succcessfully shutdown
