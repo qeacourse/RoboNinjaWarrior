@@ -6,7 +6,7 @@ RUN /bin/bash -c "cd /tmp && \
                   cp -r /tmp/RoboNinjaWarrior/Sample_code ~ && \
 		  cd ~/catkin_ws/src/vrx && \
                   git pull && \
-                  cp -r ~/catkin_ws/src/vrx/usv_gazebo_plugins/matlab_examples ~/matlab_boats && \
+                  cp ~/catkin_ws/src/vrx/usv_gazebo_plugins/matlab_examples/*.m ~/matlab_boats && \
 		  cd ~/catkin_ws/src/comprobo18 && \
                   git pull && \
                   cp ~/catkin_ws/src/comprobo18/com_workshop/matlab_examples/*.m ~/matlab_boats && \
