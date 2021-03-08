@@ -81,6 +81,13 @@ Another thing you'll want to check is your Docker settings.  You can get to the 
 <img alt="Docker settings showing higher resources given to the Docker VM." src="Pictures/higherresources.png" width="90%"/>
 </div>
 
+***Only in the event that you are not using WSL 2***, you should click on File Sharing and add your home directory to the list of shareable directories (if you don't do this, you will get a pop-up asking you to allow sharing of your home directory when you run the simulator.  When that pop-up is presented, if you click okay, then you don't have to do this step).
+ 
+<div align="center">
+<img alt="Docker settings showing that a home directory has been properly shared." src="Pictures/sharing.png" width="90%"/>
+</div>
+
+
 Once you've made these selections, click ``Apply & Restart``.
 
 As a final check, type the following command into PowerShell (which you can open via the Windows search box).
@@ -223,6 +230,8 @@ Start up MATLAB on your computer.
 
 Use this [MATLAB drive link](https://drive.matlab.com/sharing/034caf7e-96fd-445f-a11e-a0ca9e9bfcc2) to connect to the code for this module.  Once you accept this invitation, navigate to the ``QEASimulatorsV2`` directory.  Run the following command in MATLAB.
 
+***Note: once you run the command if you see a pop-up that says Docker wants to access your home directory, please allow it to do so.***
+
 ```matlab
 >> qeasim start gauntlet_final
 ```
@@ -304,6 +313,17 @@ ROS simulator has been succcessfully shutdown
 ### Managing Your Files
 
 Note that when you work with the simulator in the browser, any files you save will be deleted when you shutdown the simulator unless you put them in the ``/root/hosthome`` directory (or one of its subdirectories).  By default, when MATLAB starts up in the browser, it will switch to the ``/root/hosthome`` directory.  This directory will be the same as your home directory outside of the simulator.  Anything you save there will be safe after you shutdown the simulator.  If you are runnng MacOS, Linux, or the WSL 2 based engine for Windows, you will also see your MATLAB Drive folder.  If you are using the Hyper-V Windows backend, this will not be available in the simulator (sorry, we don't know if there is a solution to this). 
+
+### Troubleshooting the Simulator
+
+*Issue:* The simulator wouldn't start when you tried to run ``qeasim`` through MATLAB.  You may have seen output like the following.
+
+<p align="center">
+<img src="Pictures/error500.png" alt="An error message indicated that status code 500 has occurred." width="100%">
+</p>
+
+If you are having this error, you probably need to allow your home directory to be shared with the Docker container (this facilitates working with your files inside the simulator).  To do this, go back to the [Docker Setup section](#docker-setup) and make sure you pay attention to the instructions for setting up your File Sharing settings.
+
 
 ## Programming Your Robot
 
