@@ -431,13 +431,36 @@ ROS simulator has been succcessfully shutdown
 
 ## Notes for working in Linux
 
-You will first need to install MATLAB for Linux.  The [instructions on the IT website](http://wikis.olin.edu/it/doku.php?id=matlab) should work for Linux as well as Windows.
-
 Follow the [Linux Docker install instructions](https://docs.docker.com/engine/installation/linux/ubuntu/#install-docker).  You want Docker CE, not Docker EE
 
 ### Post installation steps
 
 Perform the steps to [manage Docker as a non root user](https://docs.docker.com/engine/installation/linux/linux-postinstall/#manage-docker-as-a-non-root-user). Then restart your computer.
+
+### Launching the Simulator
+
+On your Linux system, open a terminal and run the following command.
+
+```bash
+$ curl https://raw.githubusercontent.com/qeacourse/RoboNinjaWarrior/master/docker/qeaspring2021/qeasim > /tmp/qeasim; sudo cp /tmp/qeasim /usr/local/bin/qeasim; sudo chmod +x /usr/local/bin/qeasim
+```
+
+To launch the simulator you can open a terminal and run comands like the following.
+
+Start the water simulation.
+```bash
+$ qeasim start water
+```
+
+Start the gauntlet world.
+```bash
+$ qeasim start gauntlet_final
+```
+
+Shutdown the simulator.
+```bash
+$ qeasim stop
+```
 
 Everything else should work as with Windows.
 
