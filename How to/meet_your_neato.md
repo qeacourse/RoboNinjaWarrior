@@ -474,4 +474,29 @@ Everything else should work as with Windows.
 
 Download [Docker Desktop for Mac](https://hub.docker.com/editions/community/docker-ce-desktop-mac)
 
+### Launching the Simulator
+
+Open a terminal and run the following command.
+
+```bash
+$ curl https://raw.githubusercontent.com/qeacourse/RoboNinjaWarrior/master/docker/qeaspring2021/qeasim > /tmp/qeasim; sudo cp /tmp/qeasim /usr/local/bin/qeasim; sudo chmod +x /usr/local/bin/qeasim
+```
+
+To launch the simulator you can open a terminal and run comands like the following.
+
+Start the water simulation.
+```bash
+$ qeasim start water
+```
+
+Start the gauntlet world.
+```bash
+$ qeasim start gauntlet_final
+```
+
+Shutdown the simulator.
+```bash
+$ qeasim stop
+```
+
 Everything else should work as with Windows.
