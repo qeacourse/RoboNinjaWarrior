@@ -151,9 +151,17 @@ else:
 # warn the user since if they haven't pulled the QEA image it will pull it now and print tons of output
 print('If you have yet to download the software, you will see a ton of output');
 time.sleep(2);
+if sys.platform == 'linux':
+    network_args = ['--net=host']
+elif sys.platform == 'darwin':
+    network_args = ['-p','9090:9090','-p','8081:8081']
+else:
+    print("expected to be running on Linux or Mac")
+    sys.exit(1)
+
 # we will run the container in background mode.  We can interact with it
 # through its name "neato"
-docker_args = [docker_bin, 'run','--rm','-d','--name=neato','--net=host','-e','ROS_PKG='+rosPkg,'-e','LAUNCH_FILE='+launchFile,'-v',homeDir+':/root/hosthome','-v',homeDir + '/R2020a_licenses:/root/.matlab/R2020a_licenses','qeacourse/robodocker:spring2021']
+docker_args = [docker_bin, 'run','--rm','--name=neato','-d'] + network_args + ['-e','ROS_PKG='+rosPkg,'-e','LAUNCH_FILE='+launchFile,'-v',homeDir+':/root/hosthome','-v',homeDir + '/R2020a_licenses:/root/.matlab/R2020a_licenses','qeacourse/robodocker:spring2021']
 print(' '.join(docker_args))
 output = subprocess.run(docker_args)
 if output.returncode != 0:
@@ -161,6 +169,7 @@ if output.returncode != 0:
     sys.exit(1)
 
 print('ROS launched.  Waiting for ROS to be ready.');
+time.sleep(5)
 maxRetries = 10;
 # Now we poll the Gazebo Web Visualizer every few seconds to see if it is
 # ready.  Once it is, we move on.
