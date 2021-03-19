@@ -1,0 +1,179 @@
+#!/usr/bin/env python3
+
+"""
+Start or stop the QEA robot simulator.
+ Note that >> is used to indicate that the command should be run in the terminal
+
+ USAGE: qeasim start simulator_world
+   Start the simulator with the specified simulator world.  You would
+   replace the word simulator_world with one of the valid options below
+      depending on what you want to do with the robot.:
+     - dh (dining hall)
+     - bod_ice_bridge (bridge of doom with icy bridge)
+     - ice_rink (flat world with low friction surface)
+     - empty_no_spawn (flat world)
+     - bod_volcano (the bridge of doom)
+     - flatland_no_spawn (world for the flatland challenge)
+     - gauntlet_final (world for the gauntlet challenge)
+     - empty_world (an empty world that we will populate for center of mass
+         activity)
+     - water (a visualization of water at z = 0, suitable for testing
+         dynamically spawned boats)
+     - water_realistic (a visualization of water at z = 0, suitable for
+         testing dynamically spawned boats.  Also has cool waves!)
+     - fourteen_boats (fourteen boats of different shapes used in Boats
+         Week 4 Homework)
+     - fourteen_boats_realistic (same as fourteen boats but with waves!)
+     - comgame (a center of mass guessing game used in Boats Week 4b)
+ USAGE:  qeasim stop
+   Stop the simulator
+"""
+import os
+import sys
+import subprocess
+import time
+import webbrowser
+import socket
+
+usage = 'USAGE: qeasim start simulator_world\nUSAGE: qeasim stop simulator_world'
+
+if len(sys.argv) < 2:
+    print(usage)
+    sys.exit(1)
+
+op = sys.argv[1]
+
+if op not in {'start','stop'}:
+    print('Invalid operation')
+    print(usage)
+    sys.exit(1)
+
+docker_bin = 'docker'
+homeDir = os.getenv('HOME')
+
+# these are the simulator worlds that work with this script
+valid_worlds = ['dh',
+                'bod_ice_bridge',
+                'ice_rink',
+                'empty_no_spawn',
+                'bod_volcano',
+                'bod_volcano_with_camera',
+                'flatland_no_spawn',
+                'gauntlet_final',
+                'empty_world',
+                'water',
+                'water_realistic',
+                'fourteen_boats',
+                'fourteen_boats_realistic',
+                'comgame'];
+
+rosPkgs = ["neato_gazebo",
+           "neato_gazebo",
+           "neato_gazebo",
+           "neato_gazebo",
+           "neato_gazebo",
+           "neato_gazebo",
+           "neato_gazebo",
+           "neato_gazebo",
+           "gazebo_ros",
+           "usv_gazebo_plugins",
+           "usv_gazebo_plugins",
+           "usv_gazebo_plugins",
+           "usv_gazebo_plugins",
+           "usv_gazebo_plugins"];
+
+
+if op == "stop":
+    # make sure no additional arguments were supplied since stop doesn't take any
+    if len(sys.argv) > 2:
+        print("Too many arguments supplied")
+        print(usage)
+        sys.exit(1)
+elif op == "start":
+    # make sure the user specified the simulator world they want to run
+    if len(sys.argv) != 3:
+        print("Must supply the simulator world and no other argument")
+        print(usage)
+        sys.exit(1)
+    launchName = sys.argv[2];
+    # make sure simulator world is one we know about
+    if launchName not in valid_worlds:
+        print('Unknown world. Valid options are:\n' + '\n'.join(valid_worlds))
+        sys.exit(1)
+    rosPkg = rosPkgs[valid_worlds.index(launchName)];
+    isRobots = rosPkg == "neato_gazebo";
+
+print('Making sure docker is running');
+maxDockerRetryCount = 5;
+for retryCount in range(maxDockerRetryCount):
+    # docker ps is a good command to see if docker is running
+    output = subprocess.run(['docker','ps'])
+    # exit_code 0 means that command didn't throw an eror
+    if output.returncode == 0:
+        break
+    print('Waiting for docker to be ready.  This could take a while');
+    if retryCount == maxDockerRetryCount:
+        print('Had trouble connecting to Docker, contact a teaching team member')
+        print(output.stdout)
+        print(output.stderr)
+    time.sleep(10);
+
+print('Docker is ready');
+
+# stop the sim in case it is running (this causes all sorts of problems)
+print('Shutting down docker container in case it is running');
+output = subprocess.run([docker_bin, 'stop','neato']);
+if output.returncode != 0 and output.returncode != 1:
+    print('Got an unexpected exit code from docker stop neato');
+    print(output.stdout)
+    print(output.stderr)
+    system.exit(1)
+
+output = subprocess.run([docker_bin, 'rm','--force','neato']);
+if output.returncode != 0 and output.returncode != 1:
+    print('Got an unexpected exit code from docker rm --force neato');
+    print(output.stdout)
+    print(output.stderr)
+    system.exit(1)
+
+print('You will have to manually close any simulator visualizations in your browser');
+if op == "stop":
+    print('ROS simulator has been successfully shutdown');
+    sys.exit(0)
+
+if isRobots:
+   launchFile = 'neato_no_spawn.launch neato_world:='+launchName
+else:
+   launchFile = launchName+'.launch'
+
+# start the Docker container
+#docker_cmd = [docker_bin, ' run -d --rm --name=neato -p 9090:9090 -p 8081:8081 -e ROS_PKG=', char(rosPkg), ' -e LAUNCH_FILE=', launchFile, ' -v ', homeDir, ':/root/hosthome -v ', fullfile(homeDir, 'R2020a_licenses'), ':/root/.matlab/R2020a_licenses qeacourse/robodocker:spring2021'];
+# warn the user since if they haven't pulled the QEA image it will pull it now and print tons of output
+print('If you have yet to download the software, you will see a ton of output');
+time.sleep(2);
+# we will run the container in background mode.  We can interact with it
+# through its name "neato"
+docker_args = [docker_bin, 'run','--rm','-d','--name=neato','--net=host','-e','ROS_PKG='+rosPkg,'-e','LAUNCH_FILE='+launchFile,'-v',homeDir+':/root/hosthome','-v',homeDir + '/R2020a_licenses:/root/.matlab/R2020a_licenses','qeacourse/robodocker:spring2021']
+print(' '.join(docker_args))
+output = subprocess.run(docker_args)
+if output.returncode != 0:
+    print('Had trouble starting the docker container')
+    sys.exit(1)
+
+print('ROS launched.  Waiting for ROS to be ready.');
+maxRetries = 10;
+# Now we poll the Gazebo Web Visualizer every few seconds to see if it is
+# ready.  Once it is, we move on.
+for retryCount in range(maxRetries):
+    a_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    location = ("127.0.0.1", 8081)
+    result_of_check = a_socket.connect_ex(location)
+    a_socket.close()
+    if result_of_check == 0:
+        break
+    else:
+        time.sleep(10)
+# print out a link to the visualizer and open the web-based visualizer in
+# the default browser
+print('Connection looks good.  Opening visualizer');
+webbrowser.open('http://localhost:8081')
