@@ -130,12 +130,12 @@ If this goes well, you should see something indicating that ``vmcompute`` is sta
 
 > ***If you still get an error after doing this, revisit the steps above but in step 7 use "Override system settings and put the toggle to "On" with "Use strict CFG" unchecked (we know that it is bizarre to try it both ways, but this is a weird error and there are reports of this working on the Docker forum.  It also worked for one of the Spring 2020 QEA students).***
 
-### Getting Docker to Play Nice with Virtual Box
+## Getting Docker to Play Nice with Virtual Box
 
 There are two strategies you can use If you are already running a virtual machine on your system (e.g., for SoftDes).
 
 
-***Option 1:*** You can run the QEA simulator inside of your Linux virtual machine (that is running in VirtualBox).  First, make sure you have at least 15 GB free in your VM, then follow the instructions in this document in the section [Notes for Working in Linux](#notes-for-working-in-linux).
+***Option 1:*** You can run the QEA simulator inside of your Linux virtual machine (that is running in VirtualBox).  First, make sure you have at least 20 GB free in your VM (we have put together [a guide on how to increase the VirtualBox disk size](increasing_virtualbox_disk) if your disk is running low on space), then follow the instructions in this document in the section [Notes for Working in Linux](#notes-for-working-in-linux).
 
 
 ***Option 2:*** You can temporarily disable the Windows Hyper-V feature and reboot your machine.  When you want to use Docker again, you will have to re-enable Hyper-V.  Yes, this is super annoying.  Sorry!  Here are some [instructions for toggling Hyper-V on and off](https://hazaveh.net/2015/11/easily-disable-hyper-v-to-run-vmware-and-virtual-box/) so you can switch back and forth between Virtual Box and Docker.
