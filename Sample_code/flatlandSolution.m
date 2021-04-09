@@ -1,4 +1,4 @@
-function flatlandSolution()
+function position = flatlandSolution()
 % to calculate wheel velocities for a given angular speed we need to know
 % the wheel base of the robot
 wheelBase = 0.235;              % meters
@@ -55,7 +55,7 @@ while ~shouldStop
     % as stated above, we can get the turn angle from the relationship
     % between the magnitude of the cross product and the angle between the
     % vectors
-    turnAngle = asin(norm(crossProd)/(norm(heading)*norm(gradValue)))
+    turnAngle = asin(norm(crossProd)/(norm(heading)*norm(gradValue)));
     
     % this is how long in seconds to turn for
     turnTime = double(turnAngle) / angularSpeed;
@@ -64,20 +64,21 @@ while ~shouldStop
     msg.Data = [-turnDirection*angularSpeed*wheelBase/2,
                 turnDirection*angularSpeed*wheelBase/2];
     send(pub, msg);
-    % wait record the start time and wait until the appropriate time has
-    % elapsed
+    % record the start time and wait until the desired time has elapsed
     startTurn = rostic;
     while rostoc(startTurn) < turnTime
         pause(0.01);
     end
     heading = gradValue;
+
     % this is how far we are going to move
-    forwardDistance = norm(gradValue*lambda)
+    forwardDistance = norm(gradValue*lambda);
     % this is how long to take to move there based on desired linear speed
     forwardTime = forwardDistance / linearSpeed;
+    % start the robot moving
     msg.Data = [linearSpeed, linearSpeed];
     send(pub, msg);
-    % record the start time and wait until the time has elapsed
+    % record the start time and wait until the desired time has elapsed
     startForward = rostic;
     while rostoc(startForward) < forwardTime
         pause(0.01)
@@ -91,8 +92,5 @@ end
 % stop the robot before exiting
 msg.Data = [0, 0];
 send(pub, msg);
-
-% display the final position (should be the maximum of the function)
-position
 
 end
