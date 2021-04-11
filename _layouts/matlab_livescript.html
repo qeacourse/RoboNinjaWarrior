@@ -1,0 +1,16 @@
+---
+layout: single
+classes: wide
+---
+<script>
+  function resizeIframe(obj) {
+    obj.style.height = obj.contentWindow.document.documentElement.scrollHeight + 'px';
+  }
+</script>
+<h1>Context and Summary</h1>
+{{ content }}
+
+<h1>Livescript Code and Sample Output</h1>
+<a href="{{ page.livescript_source }}">download source</a>
+
+<iframe src="{{ page.livescript_html }}" frameborder="0" width="100%" scrolling="no" onload="resizeIframe(this)" />
