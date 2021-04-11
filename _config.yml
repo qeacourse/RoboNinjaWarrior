@@ -3,6 +3,7 @@ logo: "https://qeacourse.github.io/RoboNinjaWarrior/website_graphics/olinlogo.pn
 title: "Robo Ninja Warrior"
 repository: qeacourse/RoboNinjaWarrior
 highlighter: rouge
+minimal_mistakes_skin    : "air" # "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum", "sunrise"
 
 plugins:
   - jekyll-paginate
