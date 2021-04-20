@@ -262,7 +262,7 @@ A browser window should open and display a desktop environment, a visualization 
 
 ![A visualization of a Neato in the gauntlet world along with MATLAB activation](Pictures/activation_client.png)
 
-It is important to note that you will be interacting with the simulator from here on out ***using the instance MATLAB running in this browser window***.  The only time you will need to return to the MATLAB instance running in Windows (the one you used to run ``qeasim``) is when you want to either start a new simulation environment or shutdown the simulator.
+It is important to note that you will be interacting with the simulator from here on out ***using the instance of MATLAB running in this browser window***.  The only time you will need to return to the MATLAB instance running in Windows (the one you used to run ``qeasim``) is when you want to either start a new simulation environment or shutdown the simulator.
 
 ### Activating MATLAB
 
@@ -330,6 +330,13 @@ Note that when you work with the simulator in the browser, any files you save wi
 
 If you are having this error, you probably need to allow your home directory to be shared with the Docker container (this facilitates working with your files inside the simulator).  To do this, go back to the [Docker Setup section](#docker-setup) and make sure you pay attention to the instructions for setting up your File Sharing settings.
 
+*Issue:* The simulator wouldn't start when you tried to run ``qeasim`` through MATLAB.  You may have seen output like the following.
+
+<p align="center">
+<img src="Pictures/qeasim-error.png" alt="An error message indicated that image operating linux cannot be used on this platform." width="100%">
+</p>
+
+If you are having this error, you probably configured Docker to use Windows containers instead of Linux containers.  Use the information at the following link [to switch Docker back to Linux containers](https://docs.docker.com/docker-for-windows/#switch-between-windows-and-linux-containers).
 
 ## Programming Your Robot
 
