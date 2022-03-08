@@ -365,7 +365,7 @@ ROS simulator has been succcessfully shutdown
 
 ### Step 0: Make sure you can connect to the simulated robot
 
-You should have performed the instructions outlined in [Connecting to the Simulated Robot](#connecting-to-the-physical-neatos).  You should be able to drive the simulated robot around and visualize its sensor data.
+You should have performed the instructions outlined in [Connecting to the Simulated Robot](#connecting-to-the-simulated-robot).  You should be able to drive the simulated robot around and visualize its sensor data.
 
 > Note: we have updated the ``qeasim.m`` script, so make sure to download an updated copy using the instructions in the section mentioned above.
 
