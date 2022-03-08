@@ -463,6 +463,8 @@ Perform the steps to [manage Docker as a non root user](https://docs.docker.com/
 
 ### Launching the Simulator
 
+> Note: if you did this last semester, you will have to rerun the following command if you'd like to connect to the physical robots.
+
 On your Linux system, open a terminal and run the following command.
 
 ```bash
@@ -493,6 +495,8 @@ Everything else should work as with Windows.
 Download [Docker Desktop for Mac](https://hub.docker.com/editions/community/docker-ce-desktop-mac)
 
 ### Launching the Simulator
+
+> Note: if you did this last semester, you will have to rerun the following command if you'd like to connect to the physical robots.
 
 Open a terminal and run the following command.
 
