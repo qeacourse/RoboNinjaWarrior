@@ -35,7 +35,7 @@ import time
 import webbrowser
 import socket
 
-usage = 'USAGE: qeasim start simulator_world\nUSAGE: qeasim stop simulator_world'
+usage = 'USAGE: qeasim start simulator_world\nUSAGE: qeasim start physical IPADDRESS\nUSAGE: qeasim stop simulator_world'
 
 if len(sys.argv) < 2:
     print(usage)
@@ -61,6 +61,7 @@ valid_worlds = ['dh',
                 'flatland_no_spawn',
                 'gauntlet_final',
                 'empty_world',
+                'physical',
                 'water',
                 'water_realistic',
                 'fourteen_boats',
@@ -76,6 +77,7 @@ rosPkgs = ["neato_gazebo",
            "neato_gazebo",
            "neato_gazebo",
            "gazebo_ros",
+           "neato_node",
            "usv_gazebo_plugins",
            "usv_gazebo_plugins",
            "usv_gazebo_plugins",
@@ -91,11 +93,16 @@ if op == "stop":
         sys.exit(1)
 elif op == "start":
     # make sure the user specified the simulator world they want to run
-    if len(sys.argv) != 3:
+    launchName = sys.argv[2];
+    if launchName != "physical" and len(sys.argv) != 3:
         print("Must supply the simulator world and no other argument")
         print(usage)
         sys.exit(1)
-    launchName = sys.argv[2];
+    if launchName == "physical" and len(sys.argv) != 4:
+        print("Must supply the IP address and no other argument")
+        print(usage)
+        sys.exit(1)
+
     # make sure simulator world is one we know about
     if launchName not in valid_worlds:
         print('Unknown world. Valid options are:\n' + '\n'.join(valid_worlds))
@@ -144,10 +151,13 @@ if op == "stop":
 if isRobots:
    launchFile = 'neato_no_spawn.launch neato_world:='+launchName
 else:
-   launchFile = launchName+'.launch'
+   if launchName == 'physical':
+       ipAddr = sys.argv[3]
+       launchFile = 'bringup_minimal.launch host:=' + ipAddr + ' use_udp:=false'
+   else:
+       launchFile = launchName+'.launch'
 
 # start the Docker container
-#docker_cmd = [docker_bin, ' run -d --rm --name=neato -p 9090:9090 -p 8081:8081 -e ROS_PKG=', char(rosPkg), ' -e LAUNCH_FILE=', launchFile, ' -v ', homeDir, ':/root/hosthome -v ', fullfile(homeDir, 'R2020a_licenses'), ':/root/.matlab/R2020a_licenses qeacourse/robodocker:spring2021'];
 # warn the user since if they haven't pulled the QEA image it will pull it now and print tons of output
 print('If you have yet to download the software, you will see a ton of output');
 time.sleep(2);
