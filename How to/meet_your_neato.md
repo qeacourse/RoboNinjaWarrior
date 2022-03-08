@@ -7,7 +7,7 @@ toc_sticky: true
 
 This document will help you to get you up and running with your Neato robot.  After following these instructions you will be able to connect to your robot (or a simulated robot), examine its sensor data, and drive it around.
 
-> ***Note for Spring 2021 QEA Students:*** Please excuse the references to the physical robot in this document.  As you probably guessed we won't be able to use them this year, but we did create a really cool simulator for you to use!
+> ***Note for Spring 2022 QEA Students:*** This semester marks the triumphant return of the physical Neato!  We will have a limited quantity on hand, so you should do most of your work in the simulator.  That said, you will have a chance to run your code on a real robot.
 
 ## Overview
 
@@ -139,86 +139,6 @@ There are two strategies you can use If you are already running a virtual machin
 
 
 ***Option 2:*** You can temporarily disable the Windows Hyper-V feature and reboot your machine.  When you want to use Docker again, you will have to re-enable Hyper-V.  Yes, this is super annoying.  Sorry!  Here are some [instructions for toggling Hyper-V on and off](https://hazaveh.net/2015/11/easily-disable-hyper-v-to-run-vmware-and-virtual-box/) so you can switch back and forth between Virtual Box and Docker.
-
-## Connecting to the Physical Neatos
-
-> Note: these instructions are not currently up-to-date.  When we go back to using the physical Neatos, we will update these instructions.
-
-### Step 1: Grab a battery for the raspberry Pi
-
-Checklist before performing this step:
-
-1. The battery indicator light should be at least level 2 (preferably full)
-
-### Step 2: Choose your Neato
-
-Checklist before performing this step:
-
-1. Make sure the Neato's batteries are charged.  To test this, pull the Neato away from it's charging station and for the newer Neato's hit the button near the front bumper of the Neato that has the home icon on it. For the older Neato's hit the larger orange power button.  The display should illuminate revealing a battery capacity indicator.  Sometimes you will have to click the button below the display to dismiss any errors that show up on the Neato’s screen before the battery level is displayed.
-
-### Step 3: Connect the USB battery pack to the Raspberry Pi's USB cable.
-
-It should take about 1 minute for the robot to be ready to use (see step 4 for a final checklist).
-
-### Step 4: Connecting to the Neato from Your Laptop
-
-Checklist before performing this step:
-
-1. Raspberry pi display backlight is illuminated and not flashing on and off (see troubleshooting section for what to do if this is not the case)
-2. Raspberry pi display shows that the Neato is connected to the OLIN-ROBOTICS network and has an IP address assigned to it.
-3. Raspberry pi display shows that the signal strength of the Neato's connection is at least 70 (the max is 99) for the wifi dongles with antennas, and at least 50 (max is 65) for the dongles without antennas.  Note: If the signal strength is too low see troubleshooting section for more information.
-4. Your laptop is either connected to the ethernet or the OLIN wifi network (Note: this will not work if you are on OLIN-GUEST).
-
-Open PowerShell, enter the following command, and hit enter (unfortunately, the command is super long, but all parts are necessary).  Replace the part that says HOST=192.168.16.68 with the IP address of your robot (the IP address can be found from looking at the display of the Raspberry Pi on your Neato).
-
-```powershell
-docker run -e HOST=192.168.16.68 --rm --sysctl net.ipv4.ip_local_port_range="32401 32767" -p 11311:11311 -p 32401-32767:32401-32767 -it qeacourse/robodocker:actual
-```
-
-You can verify this worked because the robot will start making a quiet whirring sound and the laser (visible from the side) will start rotating. You should also see in the command window that you are "connected".
-
-### Step 5: Shutting Down the Raspberry Pi
-
-When you are done working with the robot it is important to properly shutdown the raspberry pi. DO NOT just unplug the battery. To shutdown the pi, push the "down" button until you see the message "Press select to Shutdown". Press select and wait for the green "ACT" LED on the left side of the Pi to flash steadily ten times then stay off. It is then safe to unplug the battery.
-
-<p style="text-align: center;">
-<img alt="Visual instructions for turning off the Raspberry Pi" src="Pictures/s7vHYkMHZEmtoXhtdLxNdig.png"/>
-</p>
-
-### Step 6: Connect through MATLAB
-
-TBD (will update with instructions next time we run QEA with physical robots)
-
-
-### Troubleshooting Your Neato
-
-*Symptom:* Both the red and green LEDs on the raspberry pi are illuminated and not flashing.
-
-*Potential Cause:* the Pi was unable to boot from its SD card.
-
-<ul>
-
-<li>Solution 1: the first thing to check is that the Raspberry Pi's SD card is fully inserted into the Raspberry Pi.  See the image below for the location of the SD card.  You will know it is fully inserted if you push on the card and it clicks into place.
-
-<p align="center">
-<img src="Pictures/raspberry_pi_b_6_0_0.jpg" width="70%"/>
-</p>
-</li>
-<li>Solution 2: if the card is fully inserted, the SD card may have become corrupted (possibly because some people didn't properly shutdown the Raspberry Pi!).  Please send me (Paul.Ruvolo@olin.edu) an e-mail and tell me which robot is having the problem.  I'll fix it ASAP, but in the meantime just use another robot.</li>
-</ul>
-
-*Symptom:* the raspberry Pi display's backlight is flashing on and off.
-
-*Potential Cause:* the Pi cannot connect to the robot via the USB cable.
-
-* Solution: sometimes the Neato will turn off due to inactivity.  Press button near the front of the Neato’s bumper labeled with the home icon to wake your Neato up.  If that doesn't work, shutdown and then reboot the Pi.  If none of this works, the robot battery might be dead.  Try recharging the robot.  While the robot is recharging, switch to another robot.
-
-
-### *Symptom:* the Wifi signal strength indicator on the Raspberry Pi is below 60 even though you are right near an access point.
-
-*Problem:* The Pi has connected to an access point that is not the closest one (this will sometimes happen).
-
-* Solution: Assuming the Pi display is at the screen showing the IP address, press right to enter the network setup menu.  OLIN-ROBOTICS should be highlighted with an asterisk.  Press right again to reconnect the Pi to the Wifi.  If it doesn't work the first time, try one more time.  If it doesn't work then, switch to a new robot.
 
 
 ## Connecting to the Simulated Robot
@@ -440,6 +360,97 @@ Shutting down docker container in case it is running
 You will have to manually close any simulator visualizations in your browser
 ROS simulator has been succcessfully shutdown
 ```
+
+## Connecting to the Physical Neatos
+
+### Step 0: Make sure you can connect to the simulated robot
+
+You should have performed the instructions outlined in [Connecting to the Simulated Robot](#connecting-to-the-physical-neatos).  You should be able to drive the simulated robot around and visualize its sensor data.
+
+> Note: we have updated the ``qeasim.m`` script, so make sure to download an updated copy using the instructions in the section mentioned above.
+
+### Step 1: Grab a battery for the raspberry Pi
+
+Checklist before performing this step:
+
+1. The battery indicator light should be at least level 2 (preferably full)
+
+### Step 2: Choose your Neato
+
+Checklist before performing this step:
+
+1. Make sure the Neato's batteries are charged.  To test this, pull the Neato away from it's charging station and for the newer Neato's hit the button near the front bumper of the Neato that has the home icon on it. For the older Neato's hit the larger orange power button.  The display should illuminate revealing a battery capacity indicator.  Sometimes you will have to click the button below the display to dismiss any errors that show up on the Neato’s screen before the battery level is displayed.
+
+### Step 3: Connect the USB battery pack to the Raspberry Pi's USB cable.
+
+It should take about 1 minute for the robot to be ready to use (see step 4 for a final checklist).
+
+### Step 4: Connecting to the Neato from Your Laptop
+
+Checklist before performing this step:
+
+1. Raspberry pi display backlight is illuminated and not flashing on and off (see troubleshooting section for what to do if this is not the case)
+2. Raspberry pi display shows that the Neato is connected to the OLIN-ROBOTICS network and has an IP address assigned to it.
+3. Raspberry pi display shows that the signal strength of the Neato's connection is at least 70 (the max is 99) for the wifi dongles with antennas, and at least 50 (max is 65) for the dongles without antennas.  Note: If the signal strength is too low see troubleshooting section for more information.
+4. Your laptop is either connected to the ethernet or the OLIN wifi network (Note: this will not work if you are on OLIN-GUEST).
+
+Start up MATLAB on your computer and run the following command.
+
+***Note: replace the part of the command below that says 192.168.16.68 with the IP address of your robot that is shown on the Raspberry Pi's LCD display.***
+
+```matlab
+>> qeasim start physical 192.168.16.68
+```
+
+You can verify this worked because the robot will start making a quiet whirring sound and the laser (visible from the side) will start rotating. You should also see in the command window that you are "connected".
+
+When you are ready to disconnect from the robot, run the following command in the MATLAB window you used to connect to your robot.
+
+```matlab
+>> qeasim stop
+```
+
+### Step 5: Shutting Down the Raspberry Pi
+
+When you are done working with the robot it is important to properly shutdown the raspberry pi. DO NOT just unplug the battery. To shutdown the pi, push the "down" button until you see the message "Press select to Shutdown". Press select and wait for the green "ACT" LED on the left side of the Pi to flash steadily ten times then stay off. It is then safe to unplug the battery.
+
+<p style="text-align: center;">
+<img alt="Visual instructions for turning off the Raspberry Pi" src="Pictures/s7vHYkMHZEmtoXhtdLxNdig.png"/>
+</p>
+
+### Step 6: Connect through MATLAB
+
+The instructions for working with the physical Neato should be identical to the simulated Neato.  Please see the sections on [Connecting to the Simulated Robot](#connecting-to-the-simulated-robot) and [Programming Your Robot](#programming-your-robot) for details.
+
+### Troubleshooting Your Neato
+
+*Symptom:* Both the red and green LEDs on the raspberry pi are illuminated and not flashing.
+
+*Potential Cause:* the Pi was unable to boot from its SD card.
+
+<ul>
+
+<li>Solution 1: the first thing to check is that the Raspberry Pi's SD card is fully inserted into the Raspberry Pi.  See the image below for the location of the SD card.  You will know it is fully inserted if you push on the card and it clicks into place.
+
+<p align="center">
+<img src="Pictures/raspberry_pi_b_6_0_0.jpg" width="70%"/>
+</p>
+</li>
+<li>Solution 2: if the card is fully inserted, the SD card may have become corrupted (possibly because some people didn't properly shutdown the Raspberry Pi!).  Please send me (Paul.Ruvolo@olin.edu) an e-mail and tell me which robot is having the problem.  I'll fix it ASAP, but in the meantime just use another robot.</li>
+</ul>
+
+*Symptom:* the raspberry Pi display's backlight is flashing on and off.
+
+*Potential Cause:* the Pi cannot connect to the robot via the USB cable.
+
+* Solution: sometimes the Neato will turn off due to inactivity.  Press button near the front of the Neato’s bumper labeled with the home icon to wake your Neato up.  If that doesn't work, shutdown and then reboot the Pi.  If none of this works, the robot battery might be dead.  Try recharging the robot.  While the robot is recharging, switch to another robot.
+
+
+### *Symptom:* the Wifi signal strength indicator on the Raspberry Pi is below 60 even though you are right near an access point.
+
+*Problem:* The Pi has connected to an access point that is not the closest one (this will sometimes happen).
+
+* Solution: Assuming the Pi display is at the screen showing the IP address, press right to enter the network setup menu.  OLIN-ROBOTICS should be highlighted with an asterisk.  Press right again to reconnect the Pi to the Wifi.  If it doesn't work the first time, try one more time.  If it doesn't work then, switch to a new robot.
 
 
 ## Notes for working in Linux
