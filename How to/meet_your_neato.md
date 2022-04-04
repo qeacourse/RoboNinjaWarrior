@@ -492,6 +492,8 @@ Everything else should work as with Windows.
 
 ## Notes for Working in MacOSX
 
+> Note: this will only work on Intel Macs (not on ARM-based Macs like the M1)
+
 Download [Docker Desktop for Mac](https://hub.docker.com/editions/community/docker-ce-desktop-mac)
 
 ### Launching the Simulator
