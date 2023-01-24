@@ -24,13 +24,11 @@ Since you are not modifying the code running on the Raspberry Pi, each robot wil
 
 ## Connecting to the Physical Neatos
 
-### Step 0: Make sure you can connect to the simulated robot
+### Step 0: Make sure you have Matlab installed. 
 
-You should have performed the instructions outlined in [Connecting to the Simulated Robot](#connecting-to-the-simulated-robot).  You should be able to drive the simulated robot around and visualize its sensor data.
+We used Matlab last semester, but just in case...
 
-> Note: we have updated the ``qeasim.m`` script, so make sure to download an updated copy using the instructions in the section mentioned above.
-
-### Step 1: Grab a battery for the raspberry Pi
+### Step 1: Grab a USB battery pack for the raspberry Pi
 
 Checklist before performing this step:
 
@@ -40,7 +38,7 @@ Checklist before performing this step:
 
 Checklist before performing this step:
 
-1. Make sure the Neato's batteries are charged.  To test this, pull the Neato away from it's charging station and for the newer Neato's hit the button near the front bumper of the Neato that has the home icon on it. For the older Neato's hit the larger orange power button.  The display should illuminate revealing a battery capacity indicator.  Sometimes you will have to click the button below the display to dismiss any errors that show up on the Neato’s screen before the battery level is displayed.
+1. Make sure the Neato's batteries are charged.  To test this, pull the Neato away from its charging station and for the newer Neato's hit the button near the front bumper of the Neato that has the home icon on it. For the older Neato's hit the larger orange power button.  The display should illuminate revealing a battery capacity indicator.  Sometimes you will have to click the button below the display to dismiss any errors that show up on the Neato’s screen before the battery level is displayed.
 
 ### Step 3: Connect the USB battery pack to the Raspberry Pi's USB cable.
 
