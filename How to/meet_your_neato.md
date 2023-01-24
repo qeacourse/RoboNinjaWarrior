@@ -7,7 +7,7 @@ toc_sticky: true
 
 This document will help you to get you up and running with your Neato robot.  After following these instructions you will be able to connect to your robot (or a simulated robot), examine its sensor data, and drive it around.
 
-> ***Note for Spring 2022 QEA Students:*** This semester marks the triumphant return of the physical Neato!  We will have a limited quantity on hand, so you should do most of your work in the simulator.  That said, you will have a chance to run your code on a real robot.
+> ***Note for Spring 2023 QEA Students:*** This semester marks the triumphant return of the physical Neato!  
 
 ## Overview
 
