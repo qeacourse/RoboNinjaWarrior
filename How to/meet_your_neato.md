@@ -58,16 +58,15 @@ Start up MATLAB on your computer and run the following command.
 ***Note: replace the part of the command below that says 192.168.16.68 with the IP address of your robot that is shown on the Raspberry Pi's LCD display.***
 
 ```matlab
->> qeasim start physical 192.168.16.68
+>> [sensors velocities] = neato(192.168.16.68)
 ```
 
-You can verify this worked because the robot will start making a quiet whirring sound and the laser (visible from the side) will start rotating. You should also see in the command window that you are "connected".
+You can verify this worked because the robot will start making a quiet whirring sound and the laser (visible from the side) will start rotating. You should also see a window open with a display of the lidar sensor data. You should be able to control the robot with the j, k, l, and i keys. 'i' is forward, 'k' is stop, and 'j' and 'l' are turn left and right respectively. 
 
-When you are ready to disconnect from the robot, run the following command in the MATLAB window you used to connect to your robot.
+Note that "sensors" and "velocities" are variable names representing your sensor and velocity vectors - you could also call them something different e.g. [sens_robo vel_robo].
 
-```matlab
->> qeasim stop
-```
+When you are ready to disconnect from the robot, you can simply close the window with the lidar sensor display. 
+
 
 ### Step 5: Shutting Down the Raspberry Pi
 
