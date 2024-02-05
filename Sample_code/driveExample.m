@@ -4,8 +4,8 @@ vr=0.3;
 drivetime=7.7; %s
 
 %Connect to your Neato or the Simulator - choose one or the other
-%[sensors,vels]=neatoSim(); %uncomment for simulator
-[sensors,vels]=neato('192.168.16.106') %uncomment for physical neato
+[sensors,vels]=neatoSim(); %uncomment for simulator
+%[sensors,vels]=neato('192.168.16.106') %uncomment for physical neato
 fig = gcf;
 disp('press enter to continue');
 pause;
