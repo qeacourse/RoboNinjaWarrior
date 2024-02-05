@@ -15,7 +15,7 @@ t=toc; %initiate t as the time since you started
 while t<drivetime
     t=toc; %t update t
     vels.lrWheelVelocitiesInMetersPerSecond=[vl,vr]; 
-    %pause(.01) %you can add a short delay to be safe/for communication lag in the physical neato. 
+    pause(.05); %you can add a short delay so we aren't constantly changing the velocities. 
 end
 
 vels.lrWheelVelocitiesInMetersPerSecond=[0,0];
