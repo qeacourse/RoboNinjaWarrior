@@ -7,8 +7,8 @@ vr=.1;
 drivetime=20;
 
 
-%[sensors,vels]=neatoSim(); %uncomment for simulator
-[sensors,vels]=neato('192.168.16.144') %uncomment for physical neato
+[sensors,vels]=neatoSim(); %uncomment for simulator
+%[sensors,vels]=neato('192.168.16.144') %uncomment for physical neato
 fig = gcf;
 disp('press enter to continue');
 pause;
