@@ -22,13 +22,15 @@ while s<drivetime
     end
     s=toc; % s updates as the time since you started
     vels.lrWheelVelocitiesInMetersPerSecond=[vl,vr]; 
-    pause(.05) % you can add a short delay to be safe/for communication lag. 
+    pause(.20) % you can add a short delay to be safe/for communication lag. 
 end
 encoder_data=encoder_data(1:iter,:);
 vels.lrWheelVelocitiesInMetersPerSecond=[0,0]; 
 
 % Plot encoder data
-figure;
+encFigure = figure;
+% make sure we set the focus back to the figure in case it changes
+figure(encFigure);
 scatter(encoder_data(:,1),encoder_data(:,2:3));
 set(gca,'FontSize',24);
 xlabel("Time (s)")
